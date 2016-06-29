@@ -7,3 +7,5 @@
 3. Install Mako template engine with the following command:
 
         pip install mako
+
+4. [Reference](http://code.visualstudio.com)

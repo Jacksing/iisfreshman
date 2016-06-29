@@ -21,5 +21,6 @@ from tblwork import views as tblwork
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^hello/(\d*)/$', tblwork.hello),
+    url(r'^doc/$', tblwork.doc_list),
     url(r'^doc/(.*)/$', tblwork.doc),
 ]

@@ -1,0 +1,37 @@
+<html>
+
+<head>
+<style>
+  * {
+    font-size: 14px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  }
+  table {
+    white-space: nowrap;
+    border-collapse: collapse;
+  }
+  td {
+    border: 1px solid #c0c0c0;
+    padding: 2px 5px;
+    min-width: 30px;
+  }
+</style>
+</head>
+
+<body>
+  <table>
+  {% for row in content %}
+    <tr>
+    {% for cell in row %}
+      {% if cell != None %}
+      <td>{{ cell }}</td>
+      {% else %}
+      <td></td>
+      {% endif %}
+    {% endfor %}
+    </tr>
+  {% endfor %}
+  </table>
+</body>
+
+</html>

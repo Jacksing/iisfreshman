@@ -30,7 +30,7 @@
             "type": "python",
             "request": "launch",
             "stopOnEntry": false,
-            "program": "${workspaceRoot}/manage.py",
+            "program": "${workspaceRoot}/manage_dev.py",
             "args": [
                 "runserver",
                 "--noreload"

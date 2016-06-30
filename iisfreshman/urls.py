@@ -17,10 +17,11 @@ from django.conf.urls import url
 from django.contrib import admin
 
 from tblwork import views as tblwork
+from docwork import views as docwork
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^hello/(\d*)/$', tblwork.hello),
-    url(r'^doc/$', tblwork.doc_list),
-    url(r'^doc/(.*)/$', tblwork.doc),
+    url(r'^(.*)/(\d*)/$', tblwork.top),
+    url(r'^docs/$', docwork.list),
+    url(r'^docs/(.*)/$', docwork.doc),
 ]

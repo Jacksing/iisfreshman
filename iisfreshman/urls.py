@@ -21,7 +21,11 @@ from docwork import views as docwork
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^(.*)/(\d*)/$', tblwork.top),
+    
+    url(r'^paging/(?P<table_name>[^/]*)/(?P<page_size>[1-9]\d*)/(?P<page_no>[1-9]\d*)/$', tblwork.page),
+    url(r'^paging/(?P<table_name>[^/]*)/(?P<page_size>[1-9]\d*)/$', tblwork.page),
+    url(r'^paging/(?P<table_name>[^/]*)/$', tblwork.page),
+
     url(r'^docs/$', docwork.list),
     url(r'^docs/(.*)/$', docwork.doc),
 ]

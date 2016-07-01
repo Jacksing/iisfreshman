@@ -19,8 +19,8 @@ class MsSQL(object):
             return cur
 
     def get_col_name(self, table_name):
-        sql = "SELECT NAME FROM SYSCOLUMNS WHERE ID = OBJECT_ID(N'{table_name}')".format(table_name=table_name)
-        return (item[0] for item in self.exec_query(sql))
+        sql = "SELECT NAME FROM SYSCOLUMNS WHERE ID = OBJECT_ID(N'{table_name}') ORDER BY COLORDER".format(table_name=table_name)
+        return tuple(item[0] for item in self.exec_query(sql))
 
     def exec_query(self, sql):
         cur = self.__get_connect()

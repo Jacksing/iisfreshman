@@ -1,6 +1,7 @@
 <html>
 
 <head>
+  <title>{{ table_name }}</title>
 <style>
   * {
     font-size: 14px;
@@ -20,8 +21,15 @@
 
 <body>
   <table>
-  {% for row in content %}
     <tr>
+      <td></td>
+    {% for column in columns %}
+      <td>{{ column }}</td>
+    {% endfor %}
+    </tr>
+  {% for row in data %}
+    <tr>
+      <td>{{ forloop.counter }}</td>
     {% for cell in row %}
       {% if cell != None %}
       <td>{{ cell }}</td>

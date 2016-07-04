@@ -139,6 +139,10 @@
 </head>
 
 <body>
+
+    {% if required %}
+    <h3 class="error">The document <code>{{ required }}</code> can not be found. Please check the following list.</h3>
+    {% endif %}
     <h1>Working List</h1>
 
     <h2>2016/06/29</h2>
@@ -146,7 +150,7 @@
     <ol>
         {% for doc in doc_list %}
         <li>
-            <p><a href="{{ doc|safe }}">{{ doc }}</a></p>
+            <p><a href="{{ doc.1|safe }}">{{ doc.0 }}</a></p>
         </li>
         {% endfor %}
     </ol>

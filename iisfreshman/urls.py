@@ -26,6 +26,6 @@ urlpatterns = [
     url(r'^paging/(?P<table_name>[^/]*)/(?P<page_size>[1-9]\d*)/$', tblwork.page),
     url(r'^paging/(?P<table_name>[^/]*)/$', tblwork.page),
 
-    url(r'^docs/$', docwork.list),
-    url(r'^docs/(.*)/$', docwork.doc),
+    url(r'^docs/$', docwork.list, name='doc_list'),
+    url(r'^docs/(.*)/$', docwork.doc, name='doc'),
 ]

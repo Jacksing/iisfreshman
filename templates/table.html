@@ -23,22 +23,22 @@
   <table>
     <tr>
       <td></td>
-    {% for column in columns %}
+      {% for column in columns %}
       <td>{{ column }}</td>
-    {% endfor %}
+      {% endfor %}
     </tr>
-  {% for row in data %}
+    {% for row in data %}
     <tr>
       <td>{{ forloop.counter }}</td>
-    {% for cell in row %}
-      {% if cell != None %}
-      <td>{{ cell }}</td>
-      {% else %}
-      <td></td>
-      {% endif %}
-    {% endfor %}
+      {% for cell in row %}
+        {% if cell != None %}
+        <td>{{ cell }}</td>
+        {% else %}
+        <td></td>
+        {% endif %}
+      {% endfor %}
     </tr>
-  {% endfor %}
+    {% endfor %}
   </table>
 </body>
 

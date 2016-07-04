@@ -5,8 +5,8 @@
             "name": "Python",
             "type": "python",
             "request": "launch",
-            "stopOnEntry": true,
-            "program": "${file}",
+            "stopOnEntry": false,
+            "program": "${workspaceRoot}/log_convert.py",
             "debugOptions": [
                 "WaitOnAbnormalExit",
                 "WaitOnNormalExit",

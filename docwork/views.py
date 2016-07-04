@@ -1,6 +1,6 @@
 import os
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect, resolve_url
 
 import markdown2
 
@@ -14,18 +14,22 @@ def __read_css(css_file):
         return f.read()
 
 
-def list(request):
+def list(request, required=None):
     dl = []
     for _, _, files in os.walk(os.path.join(settings.BASE_DIR, 'markdowns')):
         for f in files:
-            dl.append(os.path.splitext(f)[0])
-    return render(request, 'doc_list.html', {'doc_list': dl})
+            name = os.path.splitext(f)[0]
+            dl.append([name, resolve_url('doc', name)])
+    return render(request, 'doc_list.html', {'doc_list': dl, 'required': required})
 
 
 def doc(request, doc_name):
     md_file = os.path.join(settings.BASE_DIR, 'markdowns/{doc_name}.md'.format(doc_name=doc_name))
-    with __open_to_read(md_file) as f:
-        md_file = f.read()
+    try:
+        with __open_to_read(md_file) as f:
+            md_file = f.read()
+    except FileNotFoundError:
+        return list(request, doc_name)
     md_text = markdown2.markdown(md_file)
 
     css_text = __read_css('md-avenir-white.css')

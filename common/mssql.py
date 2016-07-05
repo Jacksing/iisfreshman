@@ -1,5 +1,6 @@
 import pymssql
 
+
 class MsSQL(object):
     def __init__(self, host, db, user, psw):
         self.host = host
@@ -10,7 +11,6 @@ class MsSQL(object):
     def __get_connect(self):
         if not self.db:
             raise (NameError, "No database configuration.")
-        # self.conn = pymssql.connect(server=self.host, database=self.db, user=self.user, password=self.psw, charset='utf-8')
         self.conn = pymssql.connect(self.host, self.user, self.psw, self.db)
         cur = self.conn.cursor()
         if not cur:
@@ -45,3 +45,34 @@ class MsSQL(object):
         cur.execute(sql)
         self.conn.commit()
         self.conn.close()
+
+
+# Decorator which reading config information in request to create
+# a database helper object, and pass it to the decorated function.
+# If no config information in request, use the default configuration.
+def dbconn_required(db_auth_list):
+    def _dbconn_required(func):
+        def _get_dbconn(request, *args, **kwargs):
+            auth = {
+                'host': request.GET.get('host'),
+                'user': request.GET.get('user'),
+                'psw': request.GET.get('psw'),
+                'db': request.GET.get('db'),
+            }
+
+            def _has_none():
+                for k, v in auth.items():
+                    if v is None:
+                        return True
+
+            if _has_none():
+                db = request.GET.get('db')
+                if db in db_auth_list:
+                    auth = db_auth_list[db]
+                else:
+                    auth = db_auth_list['.']
+            
+            kwargs['db'] = MsSQL(host=auth['host'], user=auth['user'], psw=auth['psw'], db=auth['db'])
+            return func(request, *args, **kwargs)
+        return _get_dbconn
+    return _dbconn_required

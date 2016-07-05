@@ -9,22 +9,7 @@ from django.http import HttpResponse, JsonResponse, StreamingHttpResponse
 from django.shortcuts import render_to_response
 
 from iisfreshman import settings
-from common.mssql import MsSQL
-
-
-# Decorator which reading config information in request to create
-# a database helper object, and pass it to the decorated function.
-# If no config information in request, use the default configuration.
-def dbconn_required(func):
-    def _get_dbconn(request, *args, **kwargs):
-        db_auth = request.GET.get('db')
-        if db_auth in settings.DATABASE_AUTHS:
-            db = settings.DATABASE_AUTHS[db_auth]
-        else:
-            db = settings.DATABASE_AUTHS['.']
-        kwargs['db'] = MsSQL(host=db['host'], user=db['user'], psw=db['psw'], db=db['db'])
-        return func(request, *args, **kwargs)
-    return _get_dbconn
+from common.mssql import MsSQL, dbconn_required
 
 
 # Convert results that queried from database to string format.
@@ -37,7 +22,9 @@ def _covert_query_matrix(matrix, headers):
         t = []
         for c in r:
             tp = type(c)
-            if tp is Decimal or tp is UUID or tp is datetime:
+            if tp is datetime:
+                t.append(datetime.strftime(c, '%Y-%m-%d %H:%M:%S.%f'))
+            elif tp is Decimal or tp is UUID:
                 t.append(c.__str__())
             else:
                 t.append(c)
@@ -53,7 +40,7 @@ class Echo(object):
         return value
 
 
-@dbconn_required
+@dbconn_required(settings.DATABASE_AUTH_LIST)
 def page(request, *args, **kwargs):
     try:
         table_name = kwargs['table_name']
@@ -135,14 +122,17 @@ def page(request, *args, **kwargs):
             col_type = properties[col_name]['TYPE']
             col_is_nullable = properties[col_name]['ISNULLABLE'] == 0 and True or False
             
+            print(col_type)
             if cell_value is None:
                 return 'NULL'
             if col_type in ['uniqueidentifier', 'nvarchar']:
                 return "'{}'".format(cell_value)
-            elif col_type =='datatime':
-                return datetime.strptime(cell_value, '%Y-%m-%d %H-%M-%S.%f')
+            elif col_type =='datetime':
+                return "'{}'".format(cell_value[0: -3])
             elif col_type == 'int':
                 return str(cell_value)
+            elif col_type == 'bit':
+                return cell_value and '1' or '0'
             else:
                 return str(cell_value)
 

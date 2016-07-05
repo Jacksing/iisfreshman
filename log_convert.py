@@ -10,7 +10,7 @@ pattern = '时间:(?P<datetime>[\s\S]*?), Id:(?P<id>[\s\S]*?), 模块名称:(?P<
 class JsonConverter(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, datetime):
-            return datetime.strftime(obj, '%Y-%m-%d %H-%M-%S.%f')
+            return datetime.strftime(obj, '%Y-%m-%d %H:%M:%S.%f')
 
 def process_single_log(lg):
     return {

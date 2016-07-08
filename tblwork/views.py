@@ -125,7 +125,9 @@ def page(request, *args, **kwargs):
             print(col_type)
             if cell_value is None:
                 return 'NULL'
-            if col_type in ['uniqueidentifier', 'nvarchar']:
+            if col_type in ['nvarchar', 'varchar', 'text']:
+                return "'{}'".format(cell_value.replace("'", "''"))
+            elif col_type == 'uniqueidentifier':
                 return "'{}'".format(cell_value)
             elif col_type =='datetime':
                 return "'{}'".format(cell_value[0: -3])
@@ -134,6 +136,7 @@ def page(request, *args, **kwargs):
             elif col_type == 'bit':
                 return cell_value and '1' or '0'
             else:
+                print('Unsupported column type %s' % col_type)
                 return str(cell_value)
 
         def sql_generator():

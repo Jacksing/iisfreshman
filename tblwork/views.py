@@ -39,7 +39,17 @@ class Echo(object):
     def write(self, value):
         return value
 
-
+# API Usage:
+#   http://hostname/paging/{table_name}/{page_size}/{page_id}/?{query_string}
+# 
+# Optional query string:
+#   host:       Address of sql server host.
+#   user:       Username for sql server login.
+#   psw:        Password for sql server login.
+#   db:         Database name of sql server.
+#   columns:    Queried columns of `table_name`. Multi or single colum(s) allowed here.
+#   sort:       Ascending order query string. Multi or single colum(s) allowed here.
+#   accept:     Format of http response. (Allowed: json/csv/sql/html)
 @dbconn_required(settings.DATABASE_AUTH_LIST)
 def page(request, *args, **kwargs):
     try:
@@ -47,8 +57,8 @@ def page(request, *args, **kwargs):
 
         # Get query string parameters.
         page_size = 'page_size' in kwargs and int(kwargs['page_size']) or 15
-        page_no = 'page_no' in kwargs and int(kwargs['page_no']) or 1
-        start = (page_no - 1) * page_size
+        page_id = 'page_id' in kwargs and int(kwargs['page_id']) or 1
+        start = (page_id - 1) * page_size
         end = page_size + start
 
         # Database object is passed by decorator.
@@ -84,7 +94,7 @@ def page(request, *args, **kwargs):
     content = {
         'table_name': table_name,
         'page_size': page_size,
-        'page_no': page_no,
+        'page_id': page_id,
         'columns': columns,
         'data': data
     }

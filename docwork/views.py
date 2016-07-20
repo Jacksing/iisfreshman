@@ -32,6 +32,7 @@ def doc(request, doc_name):
         return list(request, doc_name)
     md_text = markdown2.markdown(md_file)
 
-    css_text = __read_css('md-avenir-white.css')
+    # css_text = __read_css('md-avenir-white.css')
+    css_text = ''
     
     return render(request, 'md_base.html', {'content': md_text, 'stylesheet': css_text})

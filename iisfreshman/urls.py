@@ -13,15 +13,20 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.conf.urls import url
+from django.conf.urls.static import static
 from django.contrib import admin
 
 from tblwork import views as tblwork
 from docwork import views as docwork
+from rismo import views as rismo
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     
+    url(r'^rismo/trade/', rismo.trade),
+
     url(r'^paging/(?P<table_name>[^/]*)/(?P<page_size>[1-9]\d*)/(?P<page_id>[1-9]\d*)/$', tblwork.page),
     url(r'^paging/(?P<table_name>[^/]*)/(?P<page_size>[1-9]\d*)/$', tblwork.page),
     url(r'^paging/(?P<table_name>[^/]*)/$', tblwork.page),
@@ -29,3 +34,5 @@ urlpatterns = [
     url(r'^docs/$', docwork.list, name='doc_list'),
     url(r'^docs/(.*)/$', docwork.doc, name='doc'),
 ]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

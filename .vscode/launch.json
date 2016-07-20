@@ -6,7 +6,7 @@
             "type": "python",
             "request": "launch",
             "stopOnEntry": false,
-            "program": "${workspaceRoot}/log_convert.py",
+            "program": "${workspaceRoot}/kingeki.py",
             "debugOptions": [
                 "WaitOnAbnormalExit",
                 "WaitOnNormalExit",
@@ -26,11 +26,28 @@
             ]
         },
         {
-            "name": "Django",
+            "name": "Django-dev",
             "type": "python",
             "request": "launch",
             "stopOnEntry": false,
             "program": "${workspaceRoot}/manage_dev.py",
+            "args": [
+                "runserver",
+                "--noreload"
+            ],
+            "debugOptions": [
+                "WaitOnAbnormalExit",
+                "WaitOnNormalExit",
+                "RedirectOutput",
+                "DjangoDebugging"
+            ]
+        },
+        {
+            "name": "Django",
+            "type": "python",
+            "request": "launch",
+            "stopOnEntry": false,
+            "program": "${workspaceRoot}/manage.py",
             "args": [
                 "runserver",
                 "--noreload"

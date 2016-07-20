@@ -1,8 +1,7 @@
 <html>
     <head>
-        <style>
-            {{ stylesheet|safe }}
-        </style>
+        {% load staticfiles %}
+        <link rel="stylesheet" type="text/css" href="{% static 'docwork/css/md8.css' %}" />
     </head>
     <body>
         {{ content|safe }}

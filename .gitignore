@@ -1,2 +1,4 @@
 *.pyc
+static/
+rismo/
 markdowns/schedule.md

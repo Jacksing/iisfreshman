@@ -35,4 +35,4 @@ def doc(request, doc_name):
     # css_text = __read_css('md-avenir-white.css')
     css_text = ''
     
-    return render(request, 'md_base.html', {'content': md_text, 'stylesheet': css_text})
+    return render(request, 'md_base.html', {'title':doc_name, 'content': md_text, 'stylesheet': css_text})

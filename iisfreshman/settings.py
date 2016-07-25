@@ -132,4 +132,18 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "statics"),
 )
 
+DATABASE_AUTH_LIST = {
+    '.': {
+        'host': '.',
+        'user': 'sa',
+        'psw': 'sa',
+        'db': 'sysdb',
+    },
+}
+
 PICKLE_CACHE_DIR = 'D:/_pickle'
+
+try:
+    from .rismo import *
+except:
+    pass

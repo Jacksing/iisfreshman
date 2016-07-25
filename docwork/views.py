@@ -1,9 +1,9 @@
+import six
 import os
 import json
-from urllib.parse import quote
 
 from django.conf import settings
-from django.shortcuts import render, redirect, resolve_url
+from django.shortcuts import render, resolve_url
 
 import markdown2
 import requests
@@ -11,6 +11,8 @@ import requests
 from iisfreshman import settings
 from common.utils import __open_to_read
 
+if six.PY2:
+    FileNotFoundError = IOError
 
 def __read_css(css_file):
     css_file = css_file.rstrip()
@@ -18,7 +20,7 @@ def __read_css(css_file):
         return f.read()
 
 
-def list(request, required=None):
+def doc_list(request, required=None):
     dl = []
     for _, _, files in os.walk(os.path.join(settings.BASE_DIR, 'markdowns')):
         for f in files:
@@ -58,7 +60,7 @@ def doc(request, doc_name):
         with __open_to_read(md_file) as f:
             md_file = f.read()
     except FileNotFoundError:
-        return list(request, doc_name)
+        return doc_list(request, doc_name)
     md_text = markdown2.markdown(md_file)
 
     md_text = _process_server(doc_name, md_text)

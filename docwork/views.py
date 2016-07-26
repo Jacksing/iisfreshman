@@ -1,8 +1,11 @@
-import six
 import os
 import json
 
+from six import PY2
+from six.moves import urllib
+
 from django.conf import settings
+from django.http import HttpResponseServerError
 from django.shortcuts import render, resolve_url
 
 import markdown2
@@ -11,8 +14,10 @@ import requests
 from iisfreshman import settings
 from common.utils import __open_to_read
 
-if six.PY2:
+
+if PY2:
     FileNotFoundError = IOError
+
 
 def __read_css(css_file):
     css_file = css_file.rstrip()
@@ -34,8 +39,20 @@ def _process_server(doc_name, md_text):
 
     query_api = settings.DEPLOY_STATUS_QUERY_API
     web_list = settings.DEPLOY_WEB_LIST
-    folders = ','.join([quote(v['folder']) for v in web_list.values()])
-    status_dict = json.loads(requests.get(query_api + folders).text)
+    folders = ','.join([urllib.parse.quote(v['folder']) for v in web_list.values()])
+
+    # in case of single server is being deploying, polling
+    # the server list untill a good response returned.
+    for query_api in settings.DEPLOY_STATUS_QUERY_API:
+        try:
+            status_dict = json.loads(requests.get(query_api + folders).text)
+            if status_dict:
+                break
+        except:
+            pass
+
+    if not status_dict:
+        raise HttpResponseServerError
 
     for k in web_list.keys():
         # store to dict for usage in the future.
@@ -54,6 +71,7 @@ def _process_server(doc_name, md_text):
 
     return md_text
 
+
 def doc(request, doc_name):
     md_file = os.path.join(settings.BASE_DIR, 'markdowns/{doc_name}.md'.format(doc_name=doc_name))
     try:
@@ -64,5 +82,5 @@ def doc(request, doc_name):
     md_text = markdown2.markdown(md_file)
 
     md_text = _process_server(doc_name, md_text)
-    
+
     return render(request, 'md_base.html', {'title':doc_name, 'content': md_text, })

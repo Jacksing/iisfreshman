@@ -1,0 +1,36 @@
+{
+  "name": "iisfreshman",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jacksing/iisfreshman.git"
+  },
+  "keywords": [
+    "python",
+    "django",
+    "react"
+  ],
+  "author": "jacksing",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jacksing/iisfreshman/issues"
+  },
+  "homepage": "https://github.com/Jacksing/iisfreshman#readme",
+  "devDependencies": {
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "css-loader": "^0.23.1",
+    "jquery": "^3.1.0",
+    "jsx-loader": "^0.13.2",
+    "node-sass": "^3.8.0",
+    "react": "^15.2.1",
+    "react-dom": "^15.2.1",
+    "sass-loader": "^4.0.0",
+    "webpack": "^1.13.1"
+  }
+}

@@ -1,5 +1,7 @@
 *.pyc
-static/
+node_modules/
+typings/
+static_deploy/
 rismo/
 markdowns/schedule.md
 iisfreshman/rismo.py

@@ -23,13 +23,14 @@ class MsSQL(object):
         return tuple(item[0] for item in self.exec_query(sql))
 
     def get_col_property(self, table_name):
-        sql = '''SELECT C.NAME, C.ISNULLABLE, T.NAME AS TYPE FROM SYSCOLUMNS C LEFT JOIN SYS.TYPES T on C.XUSERTYPE = T.USER_TYPE_ID 
+        sql = '''SELECT C.NAME, C.ISNULLABLE, T.NAME AS TYPE, C.LENGTH FROM SYSCOLUMNS C LEFT JOIN SYS.TYPES T on C.XUSERTYPE = T.USER_TYPE_ID 
                  WHERE C.ID = OBJECT_ID(N'{table_name}') ORDER BY C.COLORDER'''.format(table_name=table_name)
         return {
             item[0]: {
-                'ISNULLABLE': item[1],
-                'TYPE': item[2],
-            } 
+                'isnullable': item[1],
+                'type': item[2],
+                'length': item[3],
+            }
             for item in self.exec_query(sql)
         }
 

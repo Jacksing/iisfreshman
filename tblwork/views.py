@@ -109,7 +109,7 @@ def page(request, *args, **kwargs):
     # Generate destination data from query result.
     if accept == 'json':
         return JsonResponse(content)
-        
+
     elif accept == 'csv':
         csv_matrix = []
         csv_matrix.append(content['columns'])
@@ -130,9 +130,9 @@ def page(request, *args, **kwargs):
 
         # Get each cell value be prepared to be combined into a sql sentence.
         def convert_cell_value(col_name, cell_value):
-            col_type = properties[col_name]['TYPE']
-            col_is_nullable = properties[col_name]['ISNULLABLE'] == 0 and True or False
-            
+            col_type = properties[col_name]['type']
+            col_is_nullable = properties[col_name]['isnullable'] == 0 and True or False
+
             print(col_type)
             if cell_value is None:
                 return 'NULL'
@@ -171,3 +171,30 @@ def page(request, *args, **kwargs):
             
     else:
         return render_to_response('table.html', content)
+
+
+@dbconn_required(settings.DATABASE_AUTH_LIST)
+def test_set(request, *args, **kwargs):
+    table_name = kwargs['table_name']
+    
+    if not ('application/json' in request.META['HTTP_ACCEPT'] or request.GET.get('accept', None) == 'json'):
+        return render_to_response('test-helper.html', {'table_name': table_name})
+
+    db = kwargs['db']
+    properties = db.get_col_property(table_name)
+
+    # Format of properties looks like:
+    # 
+    # {
+    #   'column1': {
+    #     'type': 'nvarchar',
+    #     'length': 20,
+    #     'isnullable': True,
+    #   },
+    #   'column2': {
+    #     'type': 'nvarchar',
+    #     'length': 200,
+    #     'isnullable': True,
+    #   },
+    # }
+    return JsonResponse(properties)

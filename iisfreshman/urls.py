@@ -24,15 +24,18 @@ from docwork import views as docwork
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
-    url(r'^paging/(?P<table_name>[^/]*)/(?P<page_size>[1-9]\d*)/(?P<page_id>[1-9]\d*)/$', tblwork.page),
-    url(r'^paging/(?P<table_name>[^/]*)/(?P<page_size>[1-9]\d*)/$', tblwork.page),
-    url(r'^paging/(?P<table_name>[^/]*)/$', tblwork.page),
+    url(r'^table/paging/(?P<table_name>[^/]*)/(?P<page_size>[1-9]\d*)/(?P<page_id>[1-9]\d*)/$', tblwork.page),
+    url(r'^table/paging/(?P<table_name>[^/]*)/(?P<page_size>[1-9]\d*)/$', tblwork.page),
+    url(r'^table/paging/(?P<table_name>[^/]*)/$', tblwork.page),
+
+    url(r'^table/test/(?P<table_name>[^/]*)/$', tblwork.test_set),
 
     url(r'^docs/$', docwork.doc_list, name='doc_list'),
     url(r'^docs/(.*)/$', docwork.doc, name='doc'),
 ]
 
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 try:
     from rismo import views as rismo

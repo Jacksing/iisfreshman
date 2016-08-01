@@ -1,8 +1,9 @@
 *.pyc
 node_modules/
 typings/
-static_deploy/
+public/
+static/bundle/
 rismo/
 markdowns/schedule.md
-iisfreshman/rismo.py
 markdowns/servers.md
+iisfreshman/rismo.py

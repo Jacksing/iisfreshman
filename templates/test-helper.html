@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}Test Helper{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{% static 'js/test-helper.bundle.js' %}"></script>
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'rismo/css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div id="example"></div>
+{% endblock %}
+
+{% block js_extra %}
+    <script type="text/javascript">
+        var data_url = '/table/test/{{table_name}}/';
+    </script>
+{% endblock %}

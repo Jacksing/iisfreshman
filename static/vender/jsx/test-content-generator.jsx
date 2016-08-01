@@ -1,8 +1,10 @@
-var React = require('react');
-var ReactDom = require('react-dom');
-var $ = require('jquery');
+import React from 'react';
+import ReactDom from 'react-dom';
+import $ from 'jquery';
 
-var fullWidthChars = require('./full-width-chars');
+import {chinese} from './full-width-chars';
+
+var css = require('../sass/test-helper.scss');
 
 function hasValue(value) {
     return !(value == null || value == undefined || value == '');
@@ -18,7 +20,7 @@ function randomString(length, mix=true, byte=false) {
     };
 
     var randomFullWidthChar = () => {
-        return fullWidthChars.chinese[Math.floor(Math.random() * fullWidthChars.chinese.length)];
+        return chinese[Math.floor(Math.random() * chinese.length)];
     };
 
     var randomHalfChar = () => {
@@ -48,7 +50,7 @@ function randomString(length, mix=true, byte=false) {
     return resultStr;
 }
 
-var TradePattern = React.createClass({
+var TestSet = React.createClass({
     propTypes: {
         edage: React.PropTypes.number
     },
@@ -90,28 +92,79 @@ var TradePattern = React.createClass({
     },
     render: function () {
         return (
-            <div className="trade-pattern">
+            <div className="test-text-set">
+                <h4>{this.props.description}</h4>
                 <input type="text" ref="edage" value={this.state.edage} onChange={this.handleChange} />
                 <div>
-                    <span>{this.state.indrop}</span>
-                    <textarea name="" id="" cols="100" rows="5" value={this.state.indropText} readOnly></textarea>
+                    <span className="">{this.state.indrop}</span>
+                    <textarea cols="80" rows="3" value={this.state.indropText} readOnly></textarea>
                 </div>
                 <div>
                     <span>{this.state.edage}</span>
-                    <textarea name="" id="" cols="100" rows="5" value={this.state.edageText} readOnly></textarea>
+                    <textarea cols="80" rows="3" value={this.state.edageText} readOnly></textarea>
                 </div>
                 <div>
                     <span>{this.state.outdrop}</span>
-                    <textarea name="" id="" cols="100" rows="5" value={this.state.outdropText} readOnly></textarea>
+                    <textarea cols="80" rows="3" value={this.state.outdropText} readOnly></textarea>
                 </div>
             </div>
         );
     },
 });
 
+var TestSetCollection = React.createClass({
+    getInitialState: function() {
+        return {
+            loading: true,
+            error: null,
+            data: null,
+        }
+    },
+
+    componentDidMount: function () {
+        this.props.promise.then(
+            value => this.setState({loading: false, data: value}),
+            error => this.setState({loading: false, error: error})
+        );
+    },
+
+    render: function () {
+        if (this.state.loading) {
+            return <div>Loading...</div>
+        }
+        else if (this.state.error != null) {
+            return <div>Error: {this.state.error.message}</div>
+        }
+
+        var lengthDict = {};
+        var data = this.state.data;
+        for (var k in data) {
+            var length = data[k]['length'];
+            if (length in lengthDict) {
+                lengthDict[length].description = lengthDict[length].description + ', ' + k;
+            }
+            else {
+                lengthDict[length] = {description: k};
+            }
+        }
+
+        var testTextSetList = [];
+        for (var k in lengthDict) {
+            testTextSetList.push(
+                <TestSet key={k} description={lengthDict[k].description} edage={parseInt(k)} max={1000} min={1} />
+            )
+        }
+
+        return (
+            <div>{testTextSetList}</div>
+        );
+    }
+});
+
 $(function() {
     ReactDom.render(
-        <TradePattern edage={10} max={1000} min={1} />,
+        // <TestSet edage={10} max={1000} min={1} />,
+        <TestSetCollection promise={$.getJSON(data_url)} />,
         document.getElementById("example")
     );
 });

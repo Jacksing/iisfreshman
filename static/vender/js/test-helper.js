@@ -1,0 +1,1 @@
+import testContentGenerator from '../jsx/test-content-generator';

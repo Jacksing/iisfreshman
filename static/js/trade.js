@@ -1,1 +1,0 @@
-var tradeElement = require('../jsx/trade-element');

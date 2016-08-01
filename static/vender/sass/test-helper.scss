@@ -1,8 +1,42 @@
-.ddpp {
-    background: #ccc;
-}
+.test-set {
+    padding: 10px;
+    border-radius: 4px;
+    background: rgb(246,246,246);
 
-#content {
-    margin: 0 auto;
-    width: 70%;
+    &:not(:first-child) {
+        margin-top: 30px;
+    }
+
+    .tags {
+        span {
+            float: left;
+            margin: 2px 4px 2px 0;
+            padding: 1px 6px;
+            border: 1px #2aa198 solid;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: 700;
+            color: #2aa198;
+        }
+
+        &:after {
+            clear: both;
+            content: "";
+            display: table;
+        }
+    }
+
+    input.edage {
+        margin-top: 10px;
+    }
+
+    .title {
+        display: block;
+        margin-top: 10px;
+    }
+
+    .text {
+        width: 100%;
+        max-width: 100%;
+    }
 }

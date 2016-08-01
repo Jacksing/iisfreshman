@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import $ from 'jquery';
+import Clipboard from 'clipboard'
 
 import {chinese} from './full-width-chars';
 
-var css = require('../sass/test-helper.scss');
+require('../sass/base');
+var css = require('../sass/test-helper');
 
 function hasValue(value) {
     return !(value == null || value == undefined || value == '');
@@ -50,6 +52,34 @@ function randomString(length, mix=true, byte=false) {
     return resultStr;
 }
 
+function copyToClipboard(maintext){
+  if (window.clipboardData){
+    window.clipboardData.setData("Text", maintext);
+    }else if (window.netscape){
+      try{
+        netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+    }catch(e){
+        alert("该浏览器不支持一键复制！n请手工复制文本框链接地址～");
+    }
+
+    var clip = Components.classes['@mozilla.org/widget/clipboard;1'].createInstance(Components.interfaces.nsIClipboard);
+    if (!clip) return;
+    var trans = Components.classes['@mozilla.org/widget/transferable;1'].createInstance(Components.interfaces.nsITransferable);
+    if (!trans) return;
+    trans.addDataFlavor('text/unicode');
+    var str = new Object();
+    var len = new Object();
+    var str = Components.classes["@mozilla.org/supports-string;1"].createInstance(Components.interfaces.nsISupportsString);
+    var copytext=maintext;
+    str.data=copytext;
+    trans.setTransferData("text/unicode",str,copytext.length*2);
+    var clipid=Components.interfaces.nsIClipboard;
+    if (!clip) return false;
+    clip.setData(trans,null,clipid.kGlobalClipboard);
+  }
+  alert("以下内容已经复制到剪贴板nn" + maintext);
+}
+
 var TestSet = React.createClass({
     propTypes: {
         edage: React.PropTypes.number
@@ -92,20 +122,23 @@ var TestSet = React.createClass({
     },
     render: function () {
         return (
-            <div className="test-text-set">
-                <h4>{this.props.description}</h4>
-                <input type="text" ref="edage" value={this.state.edage} onChange={this.handleChange} />
+            <div className="test-set">
+                <div className="tags">{this.props.tags.map((v, k) => <span key={k}>{v}</span>)}</div>
+                <input className="edage" type="text" ref="edage" value={this.state.edage} onChange={this.handleChange} />
                 <div>
-                    <span className="">{this.state.indrop}</span>
-                    <textarea cols="80" rows="3" value={this.state.indropText} readOnly></textarea>
+                    <span className="title indrop">{this.state.indrop}</span>
+                    <textarea className="text indrop" cols="80" rows="3" value={this.state.indropText} readOnly></textarea>
+                    <button className="copy-btn" data-clipboard-text={this.state.indropText}>Copy</button>
                 </div>
                 <div>
-                    <span>{this.state.edage}</span>
-                    <textarea cols="80" rows="3" value={this.state.edageText} readOnly></textarea>
+                    <span className="title edage">{this.state.edage}</span>
+                    <textarea className="text edage" cols="80" rows="3" value={this.state.edageText} readOnly></textarea>
+                    <button className="copy-btn" data-clipboard-text={this.state.edageText}>Copy</button>
                 </div>
                 <div>
-                    <span>{this.state.outdrop}</span>
-                    <textarea cols="80" rows="3" value={this.state.outdropText} readOnly></textarea>
+                    <span className="title outdrop">{this.state.outdrop}</span>
+                    <textarea className="text outdrop" cols="80" rows="3" value={this.state.outdropText} readOnly></textarea>
+                    <button className="copy-btn" data-clipboard-text={this.state.outdropText}>Copy</button>
                 </div>
             </div>
         );
@@ -126,6 +159,7 @@ var TestSetCollection = React.createClass({
             value => this.setState({loading: false, data: value}),
             error => this.setState({loading: false, error: error})
         );
+        var clipboard = new Clipboard('.copy-btn');
     },
 
     render: function () {
@@ -141,17 +175,17 @@ var TestSetCollection = React.createClass({
         for (var k in data) {
             var length = data[k]['length'];
             if (length in lengthDict) {
-                lengthDict[length].description = lengthDict[length].description + ', ' + k;
+                lengthDict[length].tags.push(k);
             }
             else {
-                lengthDict[length] = {description: k};
+                lengthDict[length] = {tags: [k]};
             }
         }
 
         var testTextSetList = [];
         for (var k in lengthDict) {
             testTextSetList.push(
-                <TestSet key={k} description={lengthDict[k].description} edage={parseInt(k)} max={1000} min={1} />
+                <TestSet key={k} tags={lengthDict[k].tags} edage={parseInt(k)} max={1000} min={1} />
             )
         }
 

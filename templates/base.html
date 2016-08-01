@@ -17,8 +17,15 @@
         {% block css %}{% endblock %}
     </head>
     <body>
+        <header>
+            <div class="wrapper">
+                <h3>This Is an Rudiment Page, But Still Welcome Your Usage.</h3>
+            </div>
+        </header>
         <div id="content">
-            {% block content %}{% endblock %}
+            <div class="wrapper">
+                {% block content %}{% endblock %}
+            </div>
         </div>
         <div id="editor">
             {% include "trade.html" %}

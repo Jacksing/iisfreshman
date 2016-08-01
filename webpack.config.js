@@ -13,7 +13,7 @@ module.exports = {
         filename: '[name].bundle.js'
     },
     resolve: {
-        extensions: ['', '.js', '.jsx', 'scss']
+        extensions: ['', '.js', '.jsx', '.scss']
     },
     module: {
         loaders: [{

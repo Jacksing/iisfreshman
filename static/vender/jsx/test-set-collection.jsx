@@ -6,13 +6,18 @@ import Clipboard from 'clipboard'
 import {chinese} from './full-width-chars';
 
 require('../sass/base');
-var css = require('../sass/test-helper');
+require('../sass/test-helper');
 
 function hasValue(value) {
     return !(value == null || value == undefined || value == '');
 }
 
-function randomString(length, mix=true, byte=false) {
+/*
+ * @param length The number of the length of the result string.
+ * @param mode ('full' or 'half' or 'mix') to get a full-width or half-width or full/half-mixed result.
+ * @param byte ('true' or 'false') Length of string is count by byte or character.
+ */
+function randomString(length, mode='full', byte=false) {
     var randomChineseChar = () => {
         // parts of chinese char field.
         var charFrom = 19968,
@@ -38,9 +43,11 @@ function randomString(length, mix=true, byte=false) {
             break;
         }
 
-        var getHalfChar = (!mix || rest == 1) || Math.random() > 0.5;
+        var getHalfChar = mode =='half'
+            || (rest == 1 && byte)
+            || (mode == 'mix' && Math.random() > 0.5);
 
-        if (getHalfChar && false) {
+        if (getHalfChar) {
             resultStr += randomHalfChar();
             rest--;
         }
@@ -52,46 +59,20 @@ function randomString(length, mix=true, byte=false) {
     return resultStr;
 }
 
-function copyToClipboard(maintext){
-  if (window.clipboardData){
-    window.clipboardData.setData("Text", maintext);
-    }else if (window.netscape){
-      try{
-        netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
-    }catch(e){
-        alert("该浏览器不支持一键复制！n请手工复制文本框链接地址～");
-    }
-
-    var clip = Components.classes['@mozilla.org/widget/clipboard;1'].createInstance(Components.interfaces.nsIClipboard);
-    if (!clip) return;
-    var trans = Components.classes['@mozilla.org/widget/transferable;1'].createInstance(Components.interfaces.nsITransferable);
-    if (!trans) return;
-    trans.addDataFlavor('text/unicode');
-    var str = new Object();
-    var len = new Object();
-    var str = Components.classes["@mozilla.org/supports-string;1"].createInstance(Components.interfaces.nsISupportsString);
-    var copytext=maintext;
-    str.data=copytext;
-    trans.setTransferData("text/unicode",str,copytext.length*2);
-    var clipid=Components.interfaces.nsIClipboard;
-    if (!clip) return false;
-    clip.setData(trans,null,clipid.kGlobalClipboard);
-  }
-  alert("以下内容已经复制到剪贴板nn" + maintext);
-}
-
 var TestSet = React.createClass({
     propTypes: {
-        edage: React.PropTypes.number
+        edage: React.PropTypes.number,
+        mode: React.PropTypes.string.isRequired,
+        byte: React.PropTypes.bool.isRequired,
     },
     getInitialState: function () {
         return {
             edage: this.props.edage,
             indrop: this.props.edage - 1,
             outdrop: this.props.edage + 1,
-            indropText: randomString(this.props.edage - 1),
-            edageText: randomString(this.props.edage),
-            outdropText: randomString(this.props.edage + 1),
+            indropText: randomString(this.props.edage - 1, this.props.mode, this.props.byte),
+            edageText: randomString(this.props.edage, this.props.mode, this.props.byte),
+            outdropText: randomString(this.props.edage + 1, this.props.mode, this.props.byte),
         }
     },
     handleChange: function (event) {
@@ -185,7 +166,7 @@ var TestSetCollection = React.createClass({
         var testTextSetList = [];
         for (var k in lengthDict) {
             testTextSetList.push(
-                <TestSet key={k} tags={lengthDict[k].tags} edage={parseInt(k)} max={1000} min={1} />
+                <TestSet key={k} tags={lengthDict[k].tags} edage={parseInt(k)} max={1000} min={1} mode="full" byte={true} />
             )
         }
 

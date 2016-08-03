@@ -1,1 +1,1 @@
-import testContentGenerator from '../jsx/test-helper';
+import testContentGenerator from '../components/test-helper';

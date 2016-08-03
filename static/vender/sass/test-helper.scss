@@ -1,12 +1,4 @@
 .test-set {
-    padding: 10px;
-    border-radius: 4px;
-    background: rgb(246,246,246);
-
-    &:not(:first-child) {
-        margin-top: 30px;
-    }
-
     .tags {
         span {
             float: left;

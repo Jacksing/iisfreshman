@@ -2,6 +2,7 @@ import React from 'react';
 import Clipboard from 'clipboard'
 
 import {TestSet} from './test-set'
+import ApproachProperty from './rismo/approach-property'
 
 module.exports.TestSetCollection = React.createClass({
     getInitialState: function() {
@@ -59,8 +60,23 @@ module.exports.TestSetCollection = React.createClass({
             )
         }
 
+        let details = [
+            {code: 0, value: '0%(税率)', description: '0%(税率)'},
+            {code: 1, value: '3%(税率)', description: '3%(税率)'},
+            {code: 2, value: '6%(税率)', description: '6%(税率)'},
+            {code: 3, value: '11%(税率)', description: '11%(税率)'},
+            {code: 4, value: '13%(税率)', description: '13%(税率)'},
+            {code: 5, value: '17%(税率)', description: '17%(税率)'},
+            {code: 6, value: '3%(征收率)', description: '3%(征收率)'},
+            {code: 7, value: '4%(征收率)', description: '4%(征收率)'},
+            {code: 8, value: '5%(征收率)', description: '5%(征收率)'},
+            {code: 9, value: '6%(征收率)', description: '6%(征收率)'},
+            {code: 10, value: '不适用', description: '不适用'},
+        ];
+
         return (
             <div>
+                <ApproachProperty title="税率/征收率" details={details} />
                 <div className="ctl-panel">
                     <label htmlFor="count-as-byte"><input id="count-as-byte" type="checkbox" onClick={this.handleCountAsByte}/>Count as Byte</label>
                     <select name="" onChange={this.handleModeChange}>

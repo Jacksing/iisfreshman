@@ -2,7 +2,8 @@
     <head>
         <title>{% block title %}{% endblock %}</title>
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        {# <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> #}
+        <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.js"></script>
         
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -19,16 +20,13 @@
     <body>
         <header>
             <div class="wrapper">
-                <h3>This Is an Rudiment Page, But Still Welcome Your Usage.</h3>
+                <h3>This Is an Rudiment Page, But Welcome You to Use All The Same.</h3>
             </div>
         </header>
         <div id="content">
             <div class="wrapper">
                 {% block content %}{% endblock %}
             </div>
-        </div>
-        <div id="editor">
-            {% include "trade.html" %}
         </div>
         {% block js_extra %}{% endblock %}
     </body>

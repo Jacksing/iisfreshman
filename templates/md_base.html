@@ -1,10 +1,12 @@
-<html>
-    <head>
-        <title>{{ title }}</title>
-        {% load staticfiles %}
-        <link rel="stylesheet" type="text/css" href="{% static 'docwork/css/md8.css' %}" />
-    </head>
-    <body>
-        {{ content|safe }}
-    </body>
-</html>
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'docwork/css/md8.css' %}" />
+{% endblock %}
+
+{% block content %}
+    {{ content|safe }}
+{% endblock %}

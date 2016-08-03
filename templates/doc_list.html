@@ -1,12 +1,15 @@
-<html>
+{% extends "base.html" %}
+{% load staticfiles %}
 
-<head>
+{% block title %}Docs{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'docwork/css/md8.css' %}" />
+
     <style>
         body {
             font-family: "Avenir Next", Helvetica, Arial, sans-serif;
-            padding: 1em;
             margin: auto;
-            max-width: 42em;
             background: #fefefe;
         }
         
@@ -136,10 +139,9 @@
             color: #AA0000;
         }
     </style>
-</head>
+{% endblock %}
 
-<body>
-
+{% block content %}
     {% if required %}
     <h3 class="error">The document <code>{{ required }}</code> can not be found. Please check the following list.</h3>
     {% endif %}
@@ -154,7 +156,4 @@
         </li>
         {% endfor %}
     </ol>
-
-</body>
-
-</html>
+{% endblock %}

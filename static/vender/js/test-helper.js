@@ -1,1 +1,0 @@
-import testContentGenerator from '../components/test-helper';

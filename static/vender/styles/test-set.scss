@@ -36,25 +36,3 @@
         margin-top: 5px;
     }
 }
-
-.apro-prop {
-    .panel-heading {
-        padding: 0;
-    }
-
-    .navbar {
-        border: none;
-        margin-bottom: 0px;
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-
-    .list-group-item {
-        cursor: pointer;
-        transition: .1s;
-
-        &:not(.active):hover {
-            background: #eee;
-        }
-    }
-}

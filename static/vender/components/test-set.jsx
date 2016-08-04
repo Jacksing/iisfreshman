@@ -1,5 +1,7 @@
 import React from 'react';
-import {randomString} from './rand-str'
+import {randomString} from '../utils/rand-str'
+
+import '../styles/test-set'
 
 function hasValue(value) {
     return !(value == null || value == undefined || value == '');

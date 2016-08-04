@@ -1,6 +1,8 @@
 import React from 'react'
 import $ from 'jquery'
 
+import '../styles/approach-property'
+
 class ApproachPropertyDetail extends React.Component {
     constructor(props) {
         super(props);
@@ -39,7 +41,7 @@ class ApproachProperty extends React.Component {
     }
 
     render() {
-        let detailsItems = this.props.details.map(detail => {
+        let detailItems = this.props.details.map(detail => {
             return (
                 <ApproachPropertyDetail key={detail.code}
                                         value={detail.value}
@@ -50,7 +52,7 @@ class ApproachProperty extends React.Component {
         });
 
         return (
-            <div className="apro-prop panel panel-default">
+            <div className="approach-property panel panel-default">
                 <div ref="heading" className="panel-heading">
                     <nav className="navbar navbar-default">
                         <div className="container-fluid">
@@ -64,7 +66,7 @@ class ApproachProperty extends React.Component {
                     </nav>
                 </div>
                 <div ref="body" className="panel-body list-groups">
-                    {detailsItems}
+                    {detailItems}
                 </div>
             </div>
         );

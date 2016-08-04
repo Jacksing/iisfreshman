@@ -2,7 +2,7 @@ import React from 'react';
 import Clipboard from 'clipboard'
 
 import {TestSet} from './test-set'
-import Approach from './rismo/approach'
+import Approach from './approach'
 
 module.exports.TestSetCollection = React.createClass({
     getInitialState: function() {
@@ -62,7 +62,6 @@ module.exports.TestSetCollection = React.createClass({
 
         return (
             <div>
-                <Approach />
                 <div className="ctl-panel">
                     <label htmlFor="count-as-byte"><input id="count-as-byte" type="checkbox" onClick={this.handleCountAsByte}/>Count as Byte</label>
                     <select name="" onChange={this.handleModeChange}>

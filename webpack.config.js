@@ -4,9 +4,9 @@ var path = require('path');
 // var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
 
 module.exports = {
-    context: path.join(__dirname, './static/vender/js'),
+    context: path.join(__dirname, './static/vender'),
     entry: {
-        'test-helper': './test-helper.js',
+        'test-helper': './test-helper',
     },
     output: {
         path: './static/bundle/js',

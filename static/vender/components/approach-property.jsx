@@ -31,11 +31,74 @@ class ApproachPropertyDetail extends React.Component {
     }
 }
 
+class ApproachPropertyDetailCreater extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            mode: 'button'
+        };
+    }
+
+
+    static propTypes = {
+        mode: React.PropTypes.string,
+        onCreate: React.PropTypes.func,
+        onSave: React.PropTypes.func,
+        onCancel: React.PropTypes.func,
+    }
+
+    handleOnSwitchCreate() {
+        this.setState({mode: 'input'});
+    }
+
+    handleOnSave() {
+        return false;
+    }
+
+    handleOnCancel(event) {
+        this.setState({mode: 'button'});
+        event.preventDefault();
+    }
+
+    render() {
+        if (this.state.mode == 'button') {
+            return <li className="list-group-item add-button" onClick={this.handleOnSwitchCreate.bind(this)}><span>+</span></li>;
+        }
+
+        // mode == 'input'
+        return (
+            <li className="list-group-item creater">
+                <form className="form-horizontal">
+                    <div className="form-group">
+                        <label htmlFor="name" className="col-sm-2 control-label">Name</label>
+                        <div className="col-sm-10">
+                            <input type="email" className="form-control" id="name" placeholder="Name" />
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="description" className="col-sm-2 control-label">Description</label>
+                        <div className="col-sm-10">
+                            <input type="email" className="form-control" id="description" placeholder="Description" />
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <div className="col-sm-offset-2 col-sm-10">
+                        <button type="submit" className="btn btn-default" onSubmit={() => {return false;}} onClick={this.handleOnSave.bind(this)}>Save</button>
+                        <button type="submit" className="btn btn-default" onClick={this.handleOnCancel.bind(this)}>Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </li>
+        );
+    }
+}
+
 class ApproachProperty extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             value: props.value,
+            mode: 'button',
         };
     }
 
@@ -110,6 +173,7 @@ class ApproachProperty extends React.Component {
                     {selected ? '' : nonSelectedMsg}
                     <ul className="list-groups">
                         {detailItems}
+                        <ApproachPropertyDetailCreater />
                     </ul>
                 </div>
             </div>

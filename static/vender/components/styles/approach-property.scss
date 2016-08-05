@@ -12,14 +12,19 @@
         margin-bottom: 0px;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
+        background: transparent;
     }
 
-    .list-group-item {
-        cursor: pointer;
-        transition: .1s;
+    .list-groups {
+        padding: 0;
 
-        &:not(.active):hover {
-            background: #eee;
+        .list-group-item {
+            cursor: pointer;
+            transition: .1s;
+
+            &:not(.active):hover {
+                background: #eee;
+            }
         }
     }
 }

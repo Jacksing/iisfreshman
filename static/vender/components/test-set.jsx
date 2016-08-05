@@ -1,7 +1,7 @@
 import React from 'react';
-import {randomString} from '../utils/rand-str'
+import {randomString} from '../utils/rand-str';
 
-import '../styles/test-set'
+import './styles/test-set';
 
 function hasValue(value) {
     return !(value == null || value == undefined || value == '');
@@ -12,19 +12,22 @@ module.exports.TestSet = React.createClass({
         edage: React.PropTypes.number,
         mode: React.PropTypes.string.isRequired,
         byte: React.PropTypes.bool.isRequired,
+        max: React.PropTypes.number,
+        min: React.PropTypes.number,
+        tags: React.PropTypes.array,
     },
     getInitialState: function () {
         return {
             edage: this.props.edage,
             mode: this.props.mode,
             byte: this.props.byte,
-        }
+        };
     },
     componentWillReceiveProps: function (nextProps) {
         this.setState({
             byte: nextProps.byte,
             mode: nextProps.mode,
-        })
+        });
     },
     handleChange: function (event) {
         var value = event.target.value;
@@ -40,7 +43,7 @@ module.exports.TestSet = React.createClass({
     render: function () {
         var indropText = randomString(this.state.edage - 1, this.state.mode, this.state.byte),
             edageText = randomString(this.state.edage, this.state.mode, this.state.byte),
-        	outdropText = randomString(this.state.edage + 1, this.state.mode, this.state.byte);
+            outdropText = randomString(this.state.edage + 1, this.state.mode, this.state.byte);
 
         return (
             <div className="test-set panel panel-default">

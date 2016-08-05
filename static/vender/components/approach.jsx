@@ -3,30 +3,45 @@ import ApproachProperty from './approach-property'
 import $ from 'jquery'
 
 let details = [
-    {code: 0, value: '100元', description: '読み方は「ひゃくえん」です。', selected: false},
-    {code: 1, value: '少女', description: '読み方は「しょうじょ」です。', selected: false},
-    {code: 2, value: '知らん', description: '「知らない」の略です。', selected: false},
-    {code: 3, value: '運転', description: '読み方は「うんてん」です。', selected: false},
-    {code: 4, value: '嵐', description: '読み方は「あらし」です。', selected: false},
-    {code: 5, value: '確認', description: '読み方は「かくにん」です。', selected: false},
-    {code: 6, value: '木村拓哉', description: 'スーパースターです。', selected: false},
-    {code: 7, value: '久しぶりだ', description: '「ご無沙汰です」に似てる。', selected: false},
-    {code: 8, value: '松嶋菜々子', description: '美しい美人です。', selected: false},
-    {code: 9, value: '終わり', description: '野望と願いを阻んできた。', selected: false},
+    {value: 0, name: '100元', description: '読み方は「ひゃくえん」です。'},
+    {value: 1, name: '少女', description: '読み方は「しょうじょ」です。'},
+    {value: 2, name: '知らん', description: '「知らない」の略です。',},
+    {value: 3, name: '運転', description: '読み方は「うんてん」です。'},
+    {value: 4, name: '嵐', description: '読み方は「あらし」です。'},
+    {value: 5, name: '確認', description: '読み方は「かくにん」です。'},
+    {value: 6, name: '木村拓哉', description: 'スーパースターです。'},
+    {value: 7, name: '久しぶりだ', description: '「ご無沙汰です」に似てる。'},
+    {value: 8, name: '松嶋菜々子', description: '美しい美人です。'},
+    {value: 9, name: '終わり', description: '野望と願いを阻んできた。'},
 ];
 
 let properties = [
-    details,
-    $.extend(true, [], details),
-    $.extend(true, [], details),
-    $.extend(true, [], details),
+    {name: '単語１', detail: details},
+    // {name: '単語２', detail: details},
+    // {name: '単語３', detail: details},
+    // {name: '単語４', detail: details},
+    // {name: '単語５', detail: details},
+    {name: '単語２', detail: $.extend(true, [], details)},
+    {name: '単語３', detail: $.extend(true, [], details)},
+    {name: '単語４', detail: $.extend(true, [], details)},
+    {name: '単語５', detail: $.extend(true, [], details)},
 ];
 
+let propertyValues = {
+    '単語１': 1,
+    '単語２': 3,
+    '単語３': 16,
+    '単語４': 1,
+    '単語５': 9,
+};
 
 export default class Approach extends React.Component {
     render() {
         let propertyList = properties.map(property => {
-            return <ApproachProperty title="税率/征收率1" details={property} />
+            return <ApproachProperty key={property.name}
+                                     title={property.name} 
+                                     details={property.detail}
+                                     value={propertyValues[property.name]} />;
         });
 
         return (

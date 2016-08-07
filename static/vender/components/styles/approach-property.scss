@@ -5,6 +5,14 @@
 
     .panel-body {
         display: none;
+
+        .dominative {
+            padding-top: 8px;
+
+            span {
+                padding: 5px;
+            }
+        }
     }
 
     .navbar {
@@ -19,10 +27,13 @@
         padding: 0;
 
         .list-group-item {
-            cursor: pointer;
             transition: .1s;
 
-            &:not(.active):hover {
+            &:not(.creater) {
+                cursor: pointer;
+            }
+
+            &:not(.active):not(.creater):hover {
                 background: #eee;
             }
         }

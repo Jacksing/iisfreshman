@@ -6,11 +6,16 @@ import './styles/approach-property'
 class ApproachPropertyDetail extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            mode: 'view',
+            name: props.name,
+            description: props.description,
+        };
     }
 
     static propTypes = {
-        name: React.PropTypes.string,
         value: React.PropTypes.number,
+        name: React.PropTypes.string,
         description: React.PropTypes.string,
         selected: React.PropTypes.bool,
         onClick: React.PropTypes.func,
@@ -20,35 +25,69 @@ class ApproachPropertyDetail extends React.Component {
         selected: false
     }
 
+    handleOnModify() {
+        this.setState({
+            mode: 'edit',
+        });        
+    }
+
+    handleOnDelete() {
+
+    }
+
     render() {
-        let active = this.props.selected ? 'list-group-item active' : 'list-group-item';
+        if (this.state.mode == 'edit') {
+            return <ApproachPropertyDetailEditer mode='edit' value={this.props.value} name={this.state.name} description={this.state.description} />;
+        }
+
+
+        let active = this.props.selected ? 'list-group-item active clearfix' : 'list-group-item clearfix';
         return (
             <li className={active} data-value={this.props.value} onClick={this.props.onClick}>
-                <h4 className="list-group-item-heading">{this.props.name}</h4>
-                <p className="list-group-item-text">{this.props.description}</p>
+                <div className="col-sm-8">
+                    <h4 className="list-group-item-heading">{this.props.name}</h4>
+                    <p className="list-group-item-text">{this.props.description}</p>
+                </div>
+                <div className="col-sm-4 dominative">
+                    <span className="glyphicon glyphicon-cog pull-right" onClick={this.handleOnModify.bind(this)}></span>
+                    <span className="glyphicon glyphicon-trash pull-right" onClick={this.handleOnDelete.bind(this)}></span>
+                </div>
             </li>
         );
     }
 }
 
-class ApproachPropertyDetailCreater extends React.Component {
+class ApproachPropertyDetailEditer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            mode: 'button'
+            mode: props.mode,
+            value: props.value,
+            name: props.name,
+            description: props.description,
         };
     }
 
-
     static propTypes = {
         mode: React.PropTypes.string,
+        value: React.PropTypes.number,
+        name: React.PropTypes.string,
+        description: React.PropTypes.string,
+
         onCreate: React.PropTypes.func,
         onSave: React.PropTypes.func,
         onCancel: React.PropTypes.func,
     }
 
+    static defaultProps = {
+        mode: 'button',
+        value: -1,
+        name: '',
+        description: '',
+    }
+
     handleOnSwitchCreate() {
-        this.setState({mode: 'input'});
+        this.setState({mode: 'edit'});
     }
 
     handleOnSave() {
@@ -56,8 +95,13 @@ class ApproachPropertyDetailCreater extends React.Component {
     }
 
     handleOnCancel(event) {
-        this.setState({mode: 'button'});
         event.preventDefault();
+        if (this.state.value == -1) {
+            this.setState({mode: 'button'});
+        }
+        else {
+            this.setState({mode: 'view'});
+        }
     }
 
     render() {
@@ -65,20 +109,20 @@ class ApproachPropertyDetailCreater extends React.Component {
             return <li className="list-group-item add-button" onClick={this.handleOnSwitchCreate.bind(this)}><span>+</span></li>;
         }
 
-        // mode == 'input'
+        // mode == 'edit'
         return (
             <li className="list-group-item creater">
                 <form className="form-horizontal">
                     <div className="form-group">
                         <label htmlFor="name" className="col-sm-2 control-label">Name</label>
                         <div className="col-sm-10">
-                            <input type="email" className="form-control" id="name" placeholder="Name" />
+                            <input type="email" className="form-control" id="name" placeholder="Name" value={this.state.name} />
                         </div>
                     </div>
                     <div className="form-group">
                         <label htmlFor="description" className="col-sm-2 control-label">Description</label>
                         <div className="col-sm-10">
-                            <input type="email" className="form-control" id="description" placeholder="Description" />
+                            <input type="email" className="form-control" id="description" placeholder="Description" value={this.state.description} />
                         </div>
                     </div>
                     <div className="form-group">
@@ -172,8 +216,9 @@ class ApproachProperty extends React.Component {
                 <div ref="body" className="panel-body">
                     {selected ? '' : nonSelectedMsg}
                     <ul className="list-groups">
+                        <ApproachPropertyDetailEditer />
                         {detailItems}
-                        <ApproachPropertyDetailCreater />
+                        <ApproachPropertyDetailEditer />
                     </ul>
                 </div>
             </div>

@@ -7,7 +7,7 @@ class ApproachPropertyDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            mode: 'view',
+            isEditing: false,
             name: props.name,
             description: props.description,
         };
@@ -19,27 +19,69 @@ class ApproachPropertyDetail extends React.Component {
         description: React.PropTypes.string,
         selected: React.PropTypes.bool,
         onClick: React.PropTypes.func,
+        onSave: React.PropTypes.func,
     }
 
     static defaultProps = {
-        selected: false
+        value: null,
+        name: null,
+        description: null,
+        selected: false,
+        onClick: null,
+        onSave: null,
     }
 
-    handleOnModify() {
-        this.setState({
-            mode: 'edit',
-        });        
+    handleBeginModify(event) {
+        this.setState({isEditing: true});
+        event.preventDefault();
+        event.stopPropagation();
     }
 
     handleOnDelete() {
 
     }
 
+    handleOnSave() {
+
+    }
+
+    handleOnCancel(event) {
+        this.setState({isEditing: false});
+        event.preventDefault();
+    }
+
     render() {
-        if (this.state.mode == 'edit') {
-            return <ApproachPropertyDetailEditer mode='edit' value={this.props.value} name={this.state.name} description={this.state.description} />;
+        if (this.state.isEditing) {
+            return (
+                <li className="list-group-item creater">
+                    <form className="form-horizontal">
+                        <input type="hidden" name="value" value={this.props.value}/>
+                        <div className="form-group">
+                            <label htmlFor="name" className="col-sm-2 control-label">Name</label>
+                            <div className="col-sm-10">
+                                <input type="text" className="form-control" id="name" placeholder="Name" name="name" value={this.state.name} />
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="description" className="col-sm-2 control-label">Description</label>
+                            <div className="col-sm-10">
+                                <input type="text" className="form-control" id="description" placeholder="Description" name="description" value={this.state.description} />
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <div className="col-sm-offset-2 col-sm-10">
+                            <button type="submit" className="btn btn-default" onClick={this.handleOnSave.bind(this)}>Save</button>
+                            <button type="submit" className="btn btn-default" onClick={this.handleOnCancel.bind(this)}>Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </li>
+            );
         }
 
+        if (this.props.value == null) {
+            return <li className="list-group-item add-button" onClick={this.handleBeginModify.bind(this)}><span>+</span></li>;
+        }
 
         let active = this.props.selected ? 'list-group-item active clearfix' : 'list-group-item clearfix';
         return (
@@ -49,7 +91,7 @@ class ApproachPropertyDetail extends React.Component {
                     <p className="list-group-item-text">{this.props.description}</p>
                 </div>
                 <div className="col-sm-4 dominative">
-                    <span className="glyphicon glyphicon-cog pull-right" onClick={this.handleOnModify.bind(this)}></span>
+                    <span className="glyphicon glyphicon-cog pull-right" onClick={this.handleBeginModify.bind(this)}></span>
                     <span className="glyphicon glyphicon-trash pull-right" onClick={this.handleOnDelete.bind(this)}></span>
                 </div>
             </li>
@@ -216,9 +258,9 @@ class ApproachProperty extends React.Component {
                 <div ref="body" className="panel-body">
                     {selected ? '' : nonSelectedMsg}
                     <ul className="list-groups">
-                        <ApproachPropertyDetailEditer />
+                        <ApproachPropertyDetail />
                         {detailItems}
-                        <ApproachPropertyDetailEditer />
+                        <ApproachPropertyDetail />
                     </ul>
                 </div>
             </div>

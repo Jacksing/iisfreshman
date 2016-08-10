@@ -6,11 +6,37 @@
     .panel-body {
         display: none;
 
+        .list-groups {
+            padding: 0;
+
+            .list-group-item {
+                transition: .1s;
+
+                &:not(.creater) {
+                    cursor: pointer;
+                }
+
+                &:not(.active):not(.creater):hover {
+                    background: #eee;
+                }
+            }
+        }
+
         .dominative {
             padding-top: 8px;
 
             span {
                 padding: 5px;
+                border: 1px transparent solid;
+                border-radius: 2px;
+            }
+
+            span:hover {
+                border-color: #666;
+
+                @at-root .list-group-item.active span:hover {
+                    border-color: #fff !important;
+                }
             }
         }
     }
@@ -21,21 +47,5 @@
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
         background: transparent;
-    }
-
-    .list-groups {
-        padding: 0;
-
-        .list-group-item {
-            transition: .1s;
-
-            &:not(.creater) {
-                cursor: pointer;
-            }
-
-            &:not(.active):not(.creater):hover {
-                background: #eee;
-            }
-        }
     }
 }

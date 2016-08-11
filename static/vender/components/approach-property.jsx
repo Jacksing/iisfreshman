@@ -1,7 +1,7 @@
-import React from 'react'
-import $ from 'jquery'
+import React from 'react';
+import $ from 'jquery';
 
-import './styles/approach-property'
+import './styles/approach-property';
 
 class ApproachPropertyDetail extends React.Component {
     constructor(props) {
@@ -41,17 +41,24 @@ class ApproachPropertyDetail extends React.Component {
 
     }
 
-    handleOnNameChange (event) {
+    handleOnNameChange () {
         this.setState({name: $(this.refs.name).val()});
     }
 
-    handleOnDescriptionChange (event) {
+    handleOnDescriptionChange () {
         this.setState({description: $(this.refs.description).val()});
     }
 
-    handleOnSave() {
+    handleOnSave(event) {
+        event.preventDefault();
+        if (!this.state.name || this.state.name.trim() == '') return;
+        
         if (this.props.onSave != null) {
-            this.props.onSave();
+            this.props.onSave({
+                value: this.props.value,
+                name: this.state.name,
+                description: this.state.description,
+            });
         }
     }
 
@@ -94,8 +101,8 @@ class ApproachPropertyDetail extends React.Component {
                         </div>
                         <div className="form-group">
                             <div className="col-sm-offset-2 col-sm-10">
-                            <button type="submit" className="btn btn-default" onClick={this.handleOnSave.bind(this)}>Save</button>
-                            <button type="submit" className="btn btn-default" onClick={this.handleOnCancel.bind(this)}>Cancel</button>
+                            <button type="submit" className="btn btn-default" onClick={this.handleOnSave.bind(this)}>Save</button> <button
+                                    type="submit" className="btn btn-default" onClick={this.handleOnCancel.bind(this)}>Cancel</button>
                             </div>
                         </div>
                     </form>
@@ -118,86 +125,6 @@ class ApproachPropertyDetail extends React.Component {
                     <span className="glyphicon glyphicon-cog pull-right" onClick={this.handleBeginModify.bind(this)}></span>
                     <span className="glyphicon glyphicon-trash pull-right" onClick={this.handleOnDelete.bind(this)}></span>
                 </div>
-            </li>
-        );
-    }
-}
-
-class ApproachPropertyDetailEditer extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            mode: props.mode,
-            value: props.value,
-            name: props.name,
-            description: props.description,
-        };
-    }
-
-    static propTypes = {
-        mode: React.PropTypes.string,
-        value: React.PropTypes.number,
-        name: React.PropTypes.string,
-        description: React.PropTypes.string,
-
-        onCreate: React.PropTypes.func,
-        onSave: React.PropTypes.func,
-        onCancel: React.PropTypes.func,
-    }
-
-    static defaultProps = {
-        mode: 'button',
-        value: -1,
-        name: '',
-        description: '',
-    }
-
-    handleOnSwitchCreate() {
-        this.setState({mode: 'edit'});
-    }
-
-    handleOnSave() {
-        return false;
-    }
-
-    handleOnCancel(event) {
-        event.preventDefault();
-        if (this.state.value == -1) {
-            this.setState({mode: 'button'});
-        }
-        else {
-            this.setState({mode: 'view'});
-        }
-    }
-
-    render() {
-        if (this.state.mode == 'button') {
-            return <li className="list-group-item add-button" onClick={this.handleOnSwitchCreate.bind(this)}><span>+</span></li>;
-        }
-
-        // mode == 'edit'
-        return (
-            <li className="list-group-item creater">
-                <form className="form-horizontal">
-                    <div className="form-group">
-                        <label htmlFor="name" className="col-sm-2 control-label">Name</label>
-                        <div className="col-sm-10">
-                            <input type="email" className="form-control" id="name" placeholder="Name" value={this.state.name} />
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="description" className="col-sm-2 control-label">Description</label>
-                        <div className="col-sm-10">
-                            <input type="email" className="form-control" id="description" placeholder="Description" value={this.state.description} />
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <div className="col-sm-offset-2 col-sm-10">
-                        <button type="submit" className="btn btn-default" onClick={this.handleOnSave.bind(this)}>Save</button>
-                        <button type="submit" className="btn btn-default" onClick={this.handleOnCancel.bind(this)}>Cancel</button>
-                        </div>
-                    </div>
-                </form>
             </li>
         );
     }
@@ -236,8 +163,8 @@ class ApproachProperty extends React.Component {
         }
     }
 
-    handleDetailOnSave(detail) {
-        alert(detail.name + ' ' + detail.description);
+    handleDetailOnSave(data) {
+        alert(data.value + '_' + data.name + '_' + data.description);
     }
 
     toggleDetails() {
@@ -257,7 +184,7 @@ class ApproachProperty extends React.Component {
                                         name={detail.name}
                                         description={detail.description}
                                         onClick={this.handleDetailOnClick.bind(this, detail)}
-                                        onSave={this.handleDetailOnSave.bind(this, detail)} />
+                                        onSave={this.handleDetailOnSave.bind(this)} />
             );
         });
 
@@ -287,9 +214,9 @@ class ApproachProperty extends React.Component {
                 <div ref="body" className="panel-body">
                     {selected ? '' : nonSelectedMsg}
                     <ul className="list-groups">
-                        <ApproachPropertyDetail />
+                        <ApproachPropertyDetail onSave={this.handleDetailOnSave.bind(this)} />
                         {detailItems}
-                        <ApproachPropertyDetail />
+                        <ApproachPropertyDetail onSave={this.handleDetailOnSave.bind(this)}/>
                     </ul>
                 </div>
             </div>

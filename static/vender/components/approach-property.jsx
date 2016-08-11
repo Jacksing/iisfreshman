@@ -41,8 +41,18 @@ class ApproachPropertyDetail extends React.Component {
 
     }
 
-    handleOnSave() {
+    handleOnNameChange (event) {
+        this.setState({name: $(this.refs.name).val()});
+    }
 
+    handleOnDescriptionChange (event) {
+        this.setState({description: $(this.refs.description).val()});
+    }
+
+    handleOnSave() {
+        if (this.props.onSave != null) {
+            this.props.onSave();
+        }
     }
 
     handleOnCancel(event) {
@@ -59,13 +69,27 @@ class ApproachPropertyDetail extends React.Component {
                         <div className="form-group">
                             <label htmlFor="name" className="col-sm-2 control-label">Name</label>
                             <div className="col-sm-10">
-                                <input type="text" className="form-control" id="name" placeholder="Name" name="name" value={this.state.name} />
+                                <input type="text"
+                                       className="form-control"
+                                       id="name"
+                                       placeholder="Name"
+                                       ref="name"
+                                       name="name"
+                                       value={this.state.name}
+                                       onChange={this.handleOnNameChange.bind(this)} />
                             </div>
                         </div>
                         <div className="form-group">
                             <label htmlFor="description" className="col-sm-2 control-label">Description</label>
                             <div className="col-sm-10">
-                                <input type="text" className="form-control" id="description" placeholder="Description" name="description" value={this.state.description} />
+                                <input type="text"
+                                       className="form-control"
+                                       id="description"
+                                       placeholder="Description"
+                                       ref="description"
+                                       name="description"
+                                       value={this.state.description}
+                                       onChange={this.handleOnDescriptionChange.bind(this)} />
                             </div>
                         </div>
                         <div className="form-group">
@@ -169,7 +193,7 @@ class ApproachPropertyDetailEditer extends React.Component {
                     </div>
                     <div className="form-group">
                         <div className="col-sm-offset-2 col-sm-10">
-                        <button type="submit" className="btn btn-default" onSubmit={() => {return false;}} onClick={this.handleOnSave.bind(this)}>Save</button>
+                        <button type="submit" className="btn btn-default" onClick={this.handleOnSave.bind(this)}>Save</button>
                         <button type="submit" className="btn btn-default" onClick={this.handleOnCancel.bind(this)}>Cancel</button>
                         </div>
                     </div>
@@ -212,6 +236,10 @@ class ApproachProperty extends React.Component {
         }
     }
 
+    handleDetailOnSave(detail) {
+        alert(detail.name + ' ' + detail.description);
+    }
+
     toggleDetails() {
         $(this.refs.body).slideToggle(250);
     }
@@ -228,7 +256,8 @@ class ApproachProperty extends React.Component {
                                         selected={detail.value == this.state.value}
                                         name={detail.name}
                                         description={detail.description}
-                                        onClick={this.handleDetailOnClick.bind(this, detail)} />
+                                        onClick={this.handleDetailOnClick.bind(this, detail)}
+                                        onSave={this.handleDetailOnSave.bind(this, detail)} />
             );
         });
 

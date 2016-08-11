@@ -57,7 +57,7 @@ module.exports.TestSetCollection = React.createClass({
         for (var k in lengthDict) {
             testTextSetList.push(
                 <TestSet ref="TestSet" key={k} tags={lengthDict[k].tags} edage={parseInt(k)} max={1000} min={1} mode={this.state.mode} byte={this.state.byte} />
-            )
+            );
         }
 
         return (

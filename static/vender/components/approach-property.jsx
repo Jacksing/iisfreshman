@@ -23,9 +23,9 @@ class ApproachPropertyDetail extends React.Component {
     }
 
     static defaultProps = {
-        value: null,
-        name: null,
-        description: null,
+        value: undefined,
+        name: '',
+        description: '',
         selected: false,
         onClick: null,
         onSave: null,
@@ -37,8 +37,8 @@ class ApproachPropertyDetail extends React.Component {
         event.stopPropagation();
     }
 
-    handleOnDelete() {
-
+    handleOnDelete(event) {
+        event.stopPropagation();
     }
 
     handleOnNameChange () {
@@ -51,28 +51,31 @@ class ApproachPropertyDetail extends React.Component {
 
     handleOnSave(event) {
         event.preventDefault();
-        if (!this.state.name || this.state.name.trim() == '') return;
+        if (this.state.name.trim() == '') return;
         
         if (this.props.onSave != null) {
-            this.props.onSave({
+            var result = this.props.onSave({
                 value: this.props.value,
                 name: this.state.name,
                 description: this.state.description,
             });
+            if (result) {
+                this.setState({isEditing: false});
+            }
         }
     }
 
     handleOnCancel(event) {
-        this.setState({isEditing: false});
         event.preventDefault();
+        this.setState({isEditing: false});
     }
 
     render() {
         if (this.state.isEditing) {
+            let active = this.props.selected ? 'list-group-item creater active' : 'list-group-item creater';
             return (
-                <li className="list-group-item creater">
+                <li className={active}>
                     <form className="form-horizontal">
-                        <input type="hidden" name="value" value={this.props.value}/>
                         <div className="form-group">
                             <label htmlFor="name" className="col-sm-2 control-label">Name</label>
                             <div className="col-sm-10">
@@ -135,15 +138,16 @@ class ApproachProperty extends React.Component {
         super(props);
         this.state = {
             value: props.value,
-            mode: 'button',
         };
     }
 
     static propTypes = {
-        title: React.PropTypes.string,
+        index: React.PropTypes.number.isRequired,
+        name: React.PropTypes.string,
         details: React.PropTypes.array,
         value: React.PropTypes.number,
         nullable: React.PropTypes.bool,
+        onSave: React.PropTypes.func,
     }
 
     static defaultProps = {
@@ -164,7 +168,13 @@ class ApproachProperty extends React.Component {
     }
 
     handleDetailOnSave(data) {
-        alert(data.value + '_' + data.name + '_' + data.description);
+        var {value, name, description, ...other} = data;
+        return this.props.onSave({
+            index: this.props.index,
+            value: value,
+            name: name,
+            description: description,
+        });
     }
 
     toggleDetails() {
@@ -180,8 +190,8 @@ class ApproachProperty extends React.Component {
             return (
                 <ApproachPropertyDetail key={detail.value}
                                         value={detail.value}
-                                        selected={detail.value == this.state.value}
                                         name={detail.name}
+                                        selected={detail.value == this.state.value}
                                         description={detail.description}
                                         onClick={this.handleDetailOnClick.bind(this, detail)}
                                         onSave={this.handleDetailOnSave.bind(this)} />
@@ -200,7 +210,7 @@ class ApproachProperty extends React.Component {
                     <nav className="navbar navbar-default">
                         <div className="container-fluid">
                             <div className="navbar-header">
-                                <span className="navbar-brand">{this.props.title}</span>
+                                <span className="navbar-brand">{this.props.name}</span>
                             </div>
                             <div className="collapse navbar-collapse">
                                 <input className="btn btn-default navbar-btn navbar-right"
@@ -216,7 +226,7 @@ class ApproachProperty extends React.Component {
                     <ul className="list-groups">
                         <ApproachPropertyDetail onSave={this.handleDetailOnSave.bind(this)} />
                         {detailItems}
-                        <ApproachPropertyDetail onSave={this.handleDetailOnSave.bind(this)}/>
+                        <ApproachPropertyDetail onSave={this.handleDetailOnSave.bind(this)} />
                     </ul>
                 </div>
             </div>

@@ -1,6 +1,7 @@
 import React from 'react';
-import ApproachProperty from './approach-property';
 import $ from 'jquery';
+
+import ApproachProperty from './ApproachProperty';
 
 let japanese = [
     {value: 0, name: '100元', description: '読み方は「ひゃくえん」です。'},
@@ -39,45 +40,58 @@ let english = [
     {value: 7, name: 'Over', description: 'Eight words in all.'},
 ];
 
-let properties = [
-    {index: 0, name: '中文', detail: chinese},
-    {index: 1, name: 'English', detail: english},
-    {index: 2, name: '日本語', detail: japanese},
-    {index: 3, name: '中文２', detail: $.extend(true, [], chinese)},
+let meta = [
+    {index: 0, code: 'Chinese', name: '中文', details: chinese},
+    {index: 1, code: 'English', name: 'English', details: english},
+    {index: 2, code: 'Japanese', name: '日本語', details: japanese},
+    {index: 3, code: 'Chinese2', name: '中文２', details: $.extend(true, [], chinese)},
 ];
 
 let propertyValues = {
-    0: 1,
-    1: 3,
-    2: 16,
-    3: 1,
+    'Chinese': 1,
+    'English': 3,
+    'Japanese': 16,
+    'Chinese2': 1,
 };
 
 export default class Approach extends React.Component {
-    changeData() {
-        properties[0].detail[0] = {value: 9, name: '終わり', description: '野望と願いを阻んできた。'};
-    }
-
     constructor(props) {
         super(props);
         this.state = {
-            properties: properties,
+            loading: true,
+            meta: null,
+            error: null,
         };
+
+        this.handleOnPropertySave = this.handleOnPropertySave.bind(this);
+    }
+
+    static propTypes = {
+        promise: React.PropTypes.any,
+    }
+
+    componentDidMount() {
+        this.props.promise.then(
+            value => this.setState({loading: false, meta: value.meta}),
+            error => this.setState({loading: false, meta: meta, error: error})
+        );
     }
 
     handleOnPropertySave(data) {
         var {index, value, name, description, ...others} = data;
+
+        let meta = this.state.meta;
         
-        if (value == undefined) {
-            var newValue = properties[index].detail.length;
-            properties[index].detail.push({
+        if (value === undefined) {
+            var newValue = meta[index].details.length;
+            meta[index].details.push({
                 value: newValue,
                 name: name,
                 description: description,
             });
         }
         else {
-            properties[index].detail.forEach(function(detail) {
+            meta[index].details.forEach(function(detail) {
                 if (detail.value == value) {
                     detail.name = name;
                     detail.description = description;
@@ -85,28 +99,31 @@ export default class Approach extends React.Component {
             }, this);
         }
 
-        this.setState({
-            properties: properties
-        });
+        this.setState({meta: meta});
 
         return true;
     }
 
     render() {
-        let propertyList = this.state.properties.map(property => {
-            return <ApproachProperty key={property.index}
-                                     index={property.index}
-                                     name={property.name}
-                                     details={property.detail}
-                                     value={propertyValues[property.index]}
-                                     nullable={true}
-                                     onSave={this.handleOnPropertySave.bind(this)} />;
+        if (this.state.loading) {
+            return <div />;
+        }
+
+        let propertyList = this.state.meta.map(m => {
+            return (
+                <ApproachProperty
+                    key={m.index}
+                    data={m}
+                    value={propertyValues[m.index]}
+                    nullable={false}
+                    onSave={this.handleOnPropertySave}
+                />
+            );
         });
 
         return (
             <div>
                 {propertyList}
-                <button type="button" onClick={this.changeData}></button>
             </div>
         );
     }

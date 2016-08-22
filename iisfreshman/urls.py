@@ -39,6 +39,7 @@ if settings.DEBUG:
 
 try:
     from rismo import views as rismo
+    urlpatterns += url(r'^rismo/taxmarks/taxapproach/', rismo.taxapproach),
     urlpatterns += url(r'^rismo/trade/', rismo.trade),
     urlpatterns += url(r'^rismo/user/', rismo.user_info),
 except:

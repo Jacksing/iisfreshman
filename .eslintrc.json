@@ -34,9 +34,19 @@
             "warn",
             "single"
         ],
+        "jsx-quotes": [
+            "warn",
+            "prefer-double"
+        ],
         "semi": [
             "warn",
             "always"
-        ]
+        ],
+        "react/jsx-closing-bracket-location": "warn",
+        "react/jsx-curly-spacing": "warn",
+        "react/no-string-refs": "warn",
+        "react/wrap-multilines": "warn",
+        "react/self-closing-comp": "warn",
+        "react/jsx-no-bind": "error"
     }
 }

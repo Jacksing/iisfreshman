@@ -10,8 +10,8 @@ import './styles/base'
 $(function() {
     ReactDom.render(
         <div>
-            <Approach>
-            <TestSetCollection promise={$.getJSON(data_url)} mode="full" byte={false} />
+            <Approach promise={$.getJSON('/rismo/taxmarks/taxapproach/')}>
+                <TestSetCollection promise={$.getJSON(data_url)} mode="full" byte={false} />
             </Approach>
         </div>,
         document.getElementById("example")

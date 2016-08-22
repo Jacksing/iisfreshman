@@ -1,11 +1,11 @@
 import React from 'react';
-import ReactDom from 'react-dom'
+import ReactDom from 'react-dom';
 import $ from 'jquery';
 
-import {TestSetCollection} from './components/test-set-collection'
-import Approach from './components/approach'
+import {TestSetCollection} from './components/TestSetCollection';
+import Approach from './components/approach';
 
-import './styles/base'
+import './styles/base';
 
 $(function() {
     ReactDom.render(

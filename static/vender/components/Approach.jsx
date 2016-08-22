@@ -45,14 +45,24 @@ let meta = [
     {index: 1, code: 'English', name: 'English', details: english},
     {index: 2, code: 'Japanese', name: '日本語', details: japanese},
     {index: 3, code: 'Chinese2', name: '中文２', details: $.extend(true, [], chinese)},
+    {index: 4, code: 'English2', name: 'English２', details: $.extend(true, [], english)},
+    {index: 5, code: 'Japanese2', name: '日本語２', details: $.extend(true, [], japanese)},
 ];
 
-let propertyValues = {
-    'Chinese': 1,
-    'English': 3,
-    'Japanese': 16,
-    'Chinese2': 1,
-};
+let approaches = [
+    [
+        {code: 'Chinese', value: 1},
+        {code: 'English', value: 2},
+        {code: 'Japanese', value: 16},
+        {code: 'Chinese2', value: 5},
+    ],
+    [
+        {code: 'Chinese', value: 1},
+        {code: 'English', value: 2},
+        {code: 'Japanese', value: 16},
+        {code: 'Chinese2', value: 5},
+    ],
+];
 
 export default class Approach extends React.Component {
     constructor(props) {

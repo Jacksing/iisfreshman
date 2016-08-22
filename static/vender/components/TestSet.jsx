@@ -52,17 +52,17 @@ module.exports.TestSet = React.createClass({
                     <input className="edage" type="text" ref="edage" value={this.state.edage} onChange={this.handleChange} />
                     <div>
                         <span className="title indrop">{this.state.edage - 1}</span>
-                        <textarea className="text indrop" cols="80" rows="3" value={indropText} readOnly></textarea>
+                        <textarea className="text indrop" cols="80" rows="3" value={indropText} readOnly/>
                         <button className="btn btn-default" data-clipboard-text={indropText}>Copy</button>
                     </div>
                     <div>
                         <span className="title edage">{this.state.edage}</span>
-                        <textarea className="text edage" cols="80" rows="3" value={edageText} readOnly></textarea>
+                        <textarea className="text edage" cols="80" rows="3" value={edageText} readOnly/>
                         <button className="btn btn-default" data-clipboard-text={edageText}>Copy</button>
                     </div>
                     <div>
                         <span className="title outdrop">{this.state.edage + 1}</span>
-                        <textarea className="text outdrop" cols="80" rows="3" value={outdropText} readOnly></textarea>
+                        <textarea className="text outdrop" cols="80" rows="3" value={outdropText} readOnly/>
                         <button className="btn btn-default" data-clipboard-text={outdropText}>Copy</button>
                     </div>
                 </div>

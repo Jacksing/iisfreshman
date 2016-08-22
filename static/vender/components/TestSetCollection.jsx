@@ -1,8 +1,8 @@
 import React from 'react';
-import Clipboard from 'clipboard'
+import Clipboard from 'clipboard';
 
-import {TestSet} from './test-set'
-import Approach from './approach'
+import {TestSet} from './TestSet';
+import Approach from './approach';
 
 module.exports.TestSetCollection = React.createClass({
     getInitialState: function() {

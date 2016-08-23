@@ -10,12 +10,13 @@ class ApproachPropertyDetail extends React.Component {
             description: props.description,
         };
 
-        this.handleBeginModify = this.handleBeginModify.bind(this);
-        this.handleOnNameChange = this.handleOnNameChange.bind(this);
-        this.handleOnDescriptionChange = this.handleOnDescriptionChange.bind(this);
-        this.handleOnSave = this.handleOnSave.bind(this);
-        this.handleOnCancel = this.handleOnCancel.bind(this);
-        this.handleOnDelete = this.handleOnDelete.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.handleBeginEditing = this.handleBeginEditing.bind(this);
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+        this.handleSave = this.handleSave.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
     static propTypes = {
@@ -25,6 +26,7 @@ class ApproachPropertyDetail extends React.Component {
         selected: React.PropTypes.bool,
         onClick: React.PropTypes.func,
         onSave: React.PropTypes.func,
+        onDelete: React.PropTypes.func,
     }
 
     static defaultProps = {
@@ -38,25 +40,42 @@ class ApproachPropertyDetail extends React.Component {
 
     isCreater = this.props.value === undefined
 
-    handleBeginModify(event) {
-        this.setState({isEditing: true});
+    handleClick() {
+        if (this.props.onClick != null) {
+            this.props.onClick(this.props.value);
+        }
+    }
+
+    handleBeginEditing(event) {
         event.preventDefault();
         event.stopPropagation();
+        this.setState({
+            isEditing: true,
+            name: this.props.name,
+            description: this.props.description
+        });
     }
 
-    handleOnDelete(event) {
+    handleDelete(event) {
         event.stopPropagation();
+
+        if (this.props.onDelete == null) return;
+
+        var result = this.props.onDelete(this.props.value);
+        if (result) {
+            this.setState({isEditing: false});
+        }
     }
 
-    handleOnNameChange () {
+    handleNameChange () {
         this.setState({name: $(this.refs.name).val()});
     }
 
-    handleOnDescriptionChange () {
+    handleDescriptionChange () {
         this.setState({description: $(this.refs.description).val()});
     }
 
-    handleOnSave(event) {
+    handleSave(event) {
         event.preventDefault();
         if (this.state.name.trim() == '') return;
         
@@ -80,7 +99,7 @@ class ApproachPropertyDetail extends React.Component {
         }
     }
 
-    handleOnCancel(event) {
+    handleCancel(event) {
         event.preventDefault();
         if (this.isCreater) {
             this.setState({
@@ -114,7 +133,7 @@ class ApproachPropertyDetail extends React.Component {
                                     ref="name"
                                     name="name"
                                     value={this.state.name}
-                                    onChange={this.handleOnNameChange}
+                                    onChange={this.handleNameChange}
                                 />
                             </div>
                         </div>
@@ -129,14 +148,14 @@ class ApproachPropertyDetail extends React.Component {
                                     ref="description"
                                     name="description"
                                     value={this.state.description}
-                                    onChange={this.handleOnDescriptionChange}
+                                    onChange={this.handleDescriptionChange}
                                 />
                             </div>
                         </div>
                         <div className="form-group">
                             <div className="col-sm-offset-2 col-sm-10">
-                            <button type="submit" className="btn btn-default" onClick={this.handleOnSave}>Save</button> <button
-                                    type="submit" className="btn btn-default" onClick={this.handleOnCancel}>Cancel</button>
+                                <button type="submit" className="btn btn-default" onClick={this.handleSave}>Save
+                                </button> <button type="submit" className="btn btn-default" onClick={this.handleCancel}>Cancel</button>
                             </div>
                         </div>
                     </form>
@@ -145,19 +164,19 @@ class ApproachPropertyDetail extends React.Component {
         }
 
         if (this.isCreater) {
-            return <li className="list-group-item add-button" onClick={this.handleBeginModify}><span>+</span></li>;
+            return <li className="list-group-item add-button" onClick={this.handleBeginEditing}><span>+</span></li>;
         }
 
         let active = this.props.selected ? 'list-group-item active clearfix' : 'list-group-item clearfix';
         return (
-            <li className={active} data-value={this.props.value} onClick={this.props.onClick}>
+            <li className={active} data-value={this.props.value} onClick={this.handleClick}>
                 <div className="col-sm-8">
                     <h4 className="list-group-item-heading">{this.props.name}</h4>
                     <p className="list-group-item-text">{this.props.description}</p>
                 </div>
                 <div className="col-sm-4 dominative">
-                    <span className="glyphicon glyphicon-cog pull-right" onClick={this.handleBeginModify}></span>
-                    <span className="glyphicon glyphicon-trash pull-right" onClick={this.handleOnDelete}></span>
+                    <span className="glyphicon glyphicon-cog pull-right" onClick={this.handleBeginEditing}/>
+                    <span className="glyphicon glyphicon-trash pull-right" onClick={this.handleDelete}/>
                 </div>
             </li>
         );

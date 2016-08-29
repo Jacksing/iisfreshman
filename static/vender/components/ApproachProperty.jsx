@@ -133,7 +133,7 @@ class ApproachProperty extends React.Component {
                 <div ref="body" className="panel-body">
                     {selected ? '' : nonSelectedMsg}
                     <ul className="list-groups">
-                        <ApproachPropertyDetail onSave={this.handleDetailSave} />
+                        {/* <ApproachPropertyDetail onSave={this.handleDetailSave} /> */}
                         {detailItems}
                         <ApproachPropertyDetail onSave={this.handleDetailSave} />
                     </ul>

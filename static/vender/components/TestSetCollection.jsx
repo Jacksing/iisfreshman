@@ -12,7 +12,7 @@ module.exports.TestSetCollection = React.createClass({
             data: null,
             mode: this.props.mode,
             byte: this.props.byte,
-        }
+        };
     },
     componentDidMount: function () {
         this.props.promise.then(
@@ -56,14 +56,26 @@ module.exports.TestSetCollection = React.createClass({
         var testTextSetList = [];
         for (var k in lengthDict) {
             testTextSetList.push(
-                <TestSet ref="TestSet" key={k} tags={lengthDict[k].tags} edage={parseInt(k)} max={1000} min={1} mode={this.state.mode} byte={this.state.byte} />
+                <TestSet
+                    ref="TestSet"
+                    key={k}
+                    tags={lengthDict[k].tags}
+                    edage={parseInt(k)}
+                    max={1000}
+                    min={1}
+                    mode={this.state.mode}
+                    byte={this.state.byte}
+                />
             );
         }
 
         return (
             <div>
                 <div className="ctl-panel">
-                    <label htmlFor="count-as-byte"><input id="count-as-byte" type="checkbox" onClick={this.handleCountAsByte}/>Count as Byte</label>
+                    <label htmlFor="count-as-byte">
+                        <input id="count-as-byte" type="checkbox" onClick={this.handleCountAsByte}/>
+                        Count as Byte
+                    </label>
                     <select name="" onChange={this.handleModeChange}>
                         <option value="full">Full-Width Chars</option>
                         <option value="half">Half-Width Chars</option>

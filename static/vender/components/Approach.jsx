@@ -1,6 +1,7 @@
 import React from 'react';
 
 import ApproachProperty from './ApproachProperty';
+import ApproachPropertyList from './ApproachPropertyList';
 
 import './styles/approach';
 
@@ -48,6 +49,7 @@ export default class Approach extends React.Component {
         return (
             <div className="approach">
                 {propertyComponents}
+                <ApproachPropertyList/>
             </div>
         );
     }

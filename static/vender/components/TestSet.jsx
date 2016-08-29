@@ -47,7 +47,9 @@ module.exports.TestSet = React.createClass({
 
         return (
             <div className="test-set panel panel-default">
-                <div className="tags panel-heading">{this.props.tags.map((v, k) => <span key={k} className="text-uppercase">{v}</span>)}</div>
+                <div className="tags panel-heading">
+                    {this.props.tags.map((v, k) => <span key={k} className="text-uppercase">{v}</span>)}
+                </div>
                 <div className="panel-body">
                     <input className="edage" type="text" ref="edage" value={this.state.edage} onChange={this.handleChange} />
                     <div>

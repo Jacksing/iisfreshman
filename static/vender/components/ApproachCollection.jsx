@@ -49,7 +49,7 @@ export default class ApproachCollection extends React.Component {
                 <Approach
                     key={index}
                     meta={this.state.meta}
-                    properties={approach.filter(x => x.value != null)}  // Excluded these not configured properly.
+                    properties={approach.filter(x => x.value != null)}  // Excluded approach(es) that not configured properly.
                     propertyNullable={this.props.propertyNullable}
                     onRefresh={this.handleRefresh}
                 />

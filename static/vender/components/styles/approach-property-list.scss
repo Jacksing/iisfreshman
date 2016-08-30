@@ -1,8 +1,14 @@
 #prop-list {
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    background: rgba(220,115,0,.75);
+    height: 600px;
+    width: 500px;
+    margin: 0 auto;
+    padding-left: 0;
+
+    .list-group-item {
+        &:hover {
+            background: #286090;
+            color: #fff;
+            cursor: pointer;
+        }
+    }
 }

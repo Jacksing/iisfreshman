@@ -1,23 +1,28 @@
 import React from 'react';
+import ModalForm from './ModalForm';
 
 import './styles/approach-property-list';
-
-import {meta} from './test-data';
 
 export default class ApproachPropertyList extends React.Component {
     constructor(props) {
         super(props);
     }
+    
+    static propTypes = {
+        elements: React.PropTypes.array.isRequired,
+    }
 
     render() {
-        return (
-            <div id="prop-list">
-                {
-                    React.Children.map(meta, function() {
-                        return <span>{meta.code}</span>;
-                    })
-                }
-            </div>
+        var propertyItems = this.props.elements.map(x => {
+            return <li className="list-group-item clearfix" key={x.code}>{x.code}</li>;
+        });
+
+        var content = (
+            <ul id="prop-list" className="list-groups">
+                {propertyItems}
+            </ul>
         );
+
+        return <ModalForm content={content} />;
     }
 }

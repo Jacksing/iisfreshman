@@ -49,7 +49,6 @@ export default class Approach extends React.Component {
         return (
             <div className="approach">
                 {propertyComponents}
-                <ApproachPropertyList/>
             </div>
         );
     }

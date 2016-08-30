@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Approach from './Approach';
+import ApproachPropertyList from './ApproachPropertyList';
 
 import {meta, approaches} from './test-data';
 
@@ -59,6 +60,7 @@ export default class ApproachCollection extends React.Component {
         return (
             <div>
                 {approachComponents}
+                <ApproachPropertyList elements={this.state.meta}/>
             </div>
         );
     }

@@ -68,9 +68,9 @@ export default class Approach extends React.Component {
 
         return (
             <div className="approach">
+                {propertyComponents}
                 <input type="button" className="btn btn-default" onClick={this.handleShowPropertyList} value="Add Property" />
                 <div ref={(ref) => this.refPopupContainer = ref} />
-                {propertyComponents}
             </div>
         );
     }

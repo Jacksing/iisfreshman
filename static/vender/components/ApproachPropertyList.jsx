@@ -50,7 +50,7 @@ export default class ApproachPropertyList extends React.Component {
     }
 
     render() {
-        var propertyItems = this.props.elements.map(x => {
+        var propertyItems = this.props.elements.sort((x, y) => x.code > y.code).map(x => {
             return <li className="list-group-item clearfix" key={x.code} onClick={this.handleClick(x.code)}>{x.name}</li>;
         });
 

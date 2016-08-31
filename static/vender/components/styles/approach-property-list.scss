@@ -1,8 +1,14 @@
 #prop-list {
-    height: 600px;
-    width: 500px;
     margin: 0 auto;
-    padding-left: 0;
+    padding: 15px 10px;
+    border-radius: 3px;
+    width: 500px;
+    background: #fff;
+
+    .list-groups {
+        margin-bottom: 0;
+        padding-left: 0;
+    }
 
     .list-group-item {
         &:hover {

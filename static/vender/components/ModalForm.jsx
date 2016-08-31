@@ -6,27 +6,40 @@ import './styles/modal-form';
 export default class ModalForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            hide: ''
-        };
 
         this.handleClick = this.handleClick.bind(this);
+        this.handleStopPropagation = this.handleStopPropagation.bind(this);
     }
 
     static propTypes = {
-        content: React.PropTypes.any.isRequired
+        content: React.PropTypes.any.isRequired,
+    }
+
+    componentDidMount() {
+        // window.console.log('ModalForm did componentDidMount.');
+        // $(this.g_modal_wrap).children().on('click', this.handleStopPropagation);
+        $(document.body).css('overflow', 'hidden');
     }
 
     handleClick() {
-        this.setState({hide: 'hide'});
+        var $self = $(this.self);
+        $self.find('.g_modal_wrap').fadeOut(150, function() {
+            $self.remove();
+            $(document.body).css('overflow', '');
+        });
+    }
+
+    // Not in use.
+    // If stop propagation is needed, content component events can stop propagation by itself.
+    handleStopPropagation(event) {
+        event.stopPropagation();
     }
 
     render() {
-        var className = 'g_modal ' + this.state.hide;
         return (
-            <div className={className} onClick={this.handleClick}>
+            <div ref={(c) => this.self = c} className="g_modal" onClick={this.handleClick}>
                 <div className="g_modal_cell">
-                    <div className="g_modal_wrap">
+                    <div ref={(c) => this.g_modal_wrap = c} className="g_modal_wrap">
                         {this.props.content}
                     </div>
                 </div>

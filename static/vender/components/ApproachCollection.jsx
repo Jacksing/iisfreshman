@@ -60,7 +60,6 @@ export default class ApproachCollection extends React.Component {
         return (
             <div>
                 {approachComponents}
-                <ApproachPropertyList elements={this.state.meta}/>
             </div>
         );
     }

@@ -79,7 +79,7 @@ class ApproachProperty extends React.Component {
     }
 
     toggleDetails() {
-        let $body = $(this.refs.body);
+        let $body = $(this.refBody);
         $body.slideToggle(150, () => {
             this.setState({bodyHidden: $body.css('display') == 'none' ? true : false});
         });
@@ -113,7 +113,7 @@ class ApproachProperty extends React.Component {
 
         return (
             <div className={'approach-property panel ' + (selected ? 'panel-default' : 'panel-danger')}>
-                <div ref="heading" className="panel-heading">
+                <div ref={(ref) => this.refHeading = ref} className="panel-heading">
                     <nav className="navbar navbar-default">
                         <div className="container-fluid">
                             <div className="navbar-header">
@@ -130,7 +130,7 @@ class ApproachProperty extends React.Component {
                         </div>
                     </nav>
                 </div>
-                <div ref="body" className="panel-body">
+                <div ref={(ref) => this.refBody = ref} className="panel-body">
                     {selected ? '' : nonSelectedMsg}
                     <ul className="list-groups">
                         {/* <ApproachPropertyDetail onSave={this.handleDetailSave} /> */}

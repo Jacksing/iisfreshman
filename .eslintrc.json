@@ -47,6 +47,11 @@
         "react/no-string-refs": "warn",
         "react/wrap-multilines": "warn",
         "react/self-closing-comp": "warn",
-        "react/jsx-no-bind": "error"
+        "react/jsx-no-bind": [
+            "error",
+            {
+                "ignoreRefs": true
+            }
+        ]
     }
 }

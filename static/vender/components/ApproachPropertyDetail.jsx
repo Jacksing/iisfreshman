@@ -68,11 +68,11 @@ class ApproachPropertyDetail extends React.Component {
     }
 
     handleNameChange () {
-        this.setState({name: $(this.refs.name).val()});
+        this.setState({name: $(this.refName).val()});
     }
 
     handleDescriptionChange () {
-        this.setState({description: $(this.refs.description).val()});
+        this.setState({description: $(this.refDescription).val()});
     }
 
     handleSave(event) {
@@ -130,7 +130,7 @@ class ApproachPropertyDetail extends React.Component {
                                     className="form-control"
                                     id="name"
                                     placeholder="Name"
-                                    ref="name"
+                                    ref={(ref) => this.refName = ref}
                                     name="name"
                                     value={this.state.name}
                                     onChange={this.handleNameChange}
@@ -145,7 +145,7 @@ class ApproachPropertyDetail extends React.Component {
                                     className="form-control"
                                     id="description"
                                     placeholder="Description"
-                                    ref="description"
+                                    ref={(ref) => this.refDescription = ref}
                                     name="description"
                                     value={this.state.description}
                                     onChange={this.handleDescriptionChange}

@@ -3,14 +3,14 @@ import ModalForm from './ModalForm';
 
 import './styles/approach-property-list';
 
-export default class ApproachPropertyList extends React.Component {
+export default class ApproachPropertyList extends ModalForm {
     constructor(props) {
         super(props);
         this.state = {
             message: '',
         };
 
-        this.handleClick = this.handleClick.bind(this);
+        this.handleSelect = this.handleSelect.bind(this);
     }
     
     static propTypes = {
@@ -18,19 +18,16 @@ export default class ApproachPropertyList extends React.Component {
         onSelect: React.PropTypes.func,
     }
 
-    handleClick(code) {
-        return event => {
-            if (this.props.onSelect == null) {
-                event.stopPropagation();
-            }
-            else {
+    handleSelect(code) {
+        return () => {
+            if (this.props.onSelect != null) {
                 let ret = this.props.onSelect(code);
                 if (ret) {
                     this.setState({message: ret});
-                    event.stopPropagation();
                 }
                 else {
                     this.setState({message: ''});
+                    this.handleClose();
                 }
             }
         };
@@ -44,25 +41,21 @@ export default class ApproachPropertyList extends React.Component {
         );
     }
 
-    stopPropagation(event) {
-        // event.stopPropagation();
-        // event.nativeEvent.stopImmediatePropagation();
-    }
-
-    render() {
+    renderContent() {
         var propertyItems = this.props.elements.sort((x, y) => x.code > y.code).map(x => {
-            return <li className="list-group-item clearfix" key={x.code} onClick={this.handleClick(x.code)}>{x.name}</li>;
+            return <li className="list-group-item clearfix" key={x.code} onClick={this.handleSelect(x.code)}>{x.name}</li>;
         });
 
-        var content = (
-            <div id="prop-list" onClick={this.stopPropagation} >
-                {this.state.message ? this.getMessage(this.state.message) : ''}
-                <ul className="list-groups">
-                    {propertyItems}
-                </ul>
+        return (
+            <div id="prop-list" className="panel panel-primary" onClick={this.stopPropagation} >
+                <div className="panel-heading">Properties</div>
+                <div className="panel-body">
+                    {this.state.message ? this.getMessage(this.state.message) : ''}
+                    <ul className="list-groups">
+                        {propertyItems}
+                    </ul>
+                </div>
             </div>
         );
-
-        return <ModalForm content={content} />;
     }
 }

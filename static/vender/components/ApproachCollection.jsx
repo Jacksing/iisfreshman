@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Approach from './Approach';
-import ApproachPropertyList from './ApproachPropertyList';
 
 import {meta, approaches} from './test-data';
 

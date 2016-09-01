@@ -13,6 +13,7 @@ class ApproachProperty extends React.Component {
             bodyHidden: true,
         };
         
+        this.getValueArray = this.getValueArray.bind(this);
         this.handleDetailClick = this.handleDetailClick.bind(this);
         this.handleDetailSave = this.handleDetailSave.bind(this);
         this.handleDetailDelete = this.handleDetailDelete.bind(this);
@@ -22,16 +23,34 @@ class ApproachProperty extends React.Component {
     static propTypes = {
         meta: React.PropTypes.object,
         value: React.PropTypes.number,
+        multiSelect: React.PropTypes.bool,
         nullable: React.PropTypes.bool,
         onRefresh: React.PropTypes.func.isRequired,
     }
 
     static defaultProps = {
-        nullable: false
+        nullable: false,
+        multiSelect: true,
+    }
+
+    getValueArray() {
+        if (this.props.multiSelect) {
+            return this.state.value
+                .toString(2)
+                .split('')
+                .reverse()
+                .map((v, i) => v == 1 ? i : null)
+                .filter(i => i != null);
+        }
+        else {
+            return [this.state.value];
+        }
     }
 
     handleDetailClick(value) {
-        if (value != this.state.value) {
+        var valueArray = this.getValueArray();
+        if (valueArray.indexOf(value) == -1) {
+            valueArray.push(value);
             this.setState({
                 value: value,
             });
@@ -87,6 +106,7 @@ class ApproachProperty extends React.Component {
 
     render() {
         let selected = false;
+        let valueArray = this.getValueArray();
         let detailItems = this.props.meta.details.map(detail => {
             if (!selected && detail.value == this.state.value) {
                 selected = true;
@@ -96,7 +116,7 @@ class ApproachProperty extends React.Component {
                     key={detail.value}
                     value={detail.value}
                     name={detail.name}
-                    selected={detail.value == this.state.value}
+                    selected={valueArray.indexOf(detail.value) != -1}
                     description={detail.description}
                     onClick={this.handleDetailClick}
                     onSave={this.handleDetailSave}

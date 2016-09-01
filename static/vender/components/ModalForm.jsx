@@ -24,7 +24,7 @@ export default class ModalForm extends React.Component {
 
     handleClose() {
         var $self = $(this.self);
-        $self.find('.g_modal_wrap').fadeOut(150, function() {
+        $self.find('.g_modal_wrap').fadeOut(250, function() {
             $self.remove();
             $(document.body).css('overflow', '');
         });

@@ -3,17 +3,30 @@ import $ from 'jquery';
 
 import ApproachPropertyDetail from './ApproachPropertyDetail';
 
+import {covertIntToBitArray, convertBitArrayToInt} from '../utils/common';
+
 import './styles/approach-property';
 
 class ApproachProperty extends React.Component {
     constructor(props) {
         super(props);
+
+        let valueList;
+        if (this.props.value === null) {
+            valueList = [];
+        }
+        else {
+            if (this.props.multiSelect)
+                valueList = covertIntToBitArray(this.props.value);
+            else
+                valueList = [this.props.value];
+        }
+
         this.state = {
-            value: props.value,
+            valueList: valueList,
             bodyHidden: true,
         };
-        
-        this.getValueArray = this.getValueArray.bind(this);
+
         this.handleDetailClick = this.handleDetailClick.bind(this);
         this.handleDetailSave = this.handleDetailSave.bind(this);
         this.handleDetailDelete = this.handleDetailDelete.bind(this);
@@ -30,35 +43,34 @@ class ApproachProperty extends React.Component {
 
     static defaultProps = {
         nullable: false,
-        multiSelect: true,
+        multiSelect: false,
     }
 
-    getValueArray() {
+    /**
+     * Toggle the select status of {value}.
+     */
+    handleDetailClick(value: number) {
+        let valueList = this.state.valueList;
+        let indexOfValue = valueList.indexOf(value);
         if (this.props.multiSelect) {
-            return this.state.value
-                .toString(2)
-                .split('')
-                .reverse()
-                .map((v, i) => v == 1 ? i : null)
-                .filter(i => i != null);
+            if (indexOfValue == -1) {
+                valueList.push(value);
+                this.setState({valueList: valueList});
+            }
+            else {
+                if (valueList.length > 1 || this.props.nullable) {
+                    valueList.splice(indexOfValue, 1);
+                    this.setState({valueList: valueList});
+                }
+            }
         }
         else {
-            return [this.state.value];
-        }
-    }
-
-    handleDetailClick(value) {
-        var valueArray = this.getValueArray();
-        if (valueArray.indexOf(value) == -1) {
-            valueArray.push(value);
-            this.setState({
-                value: value,
-            });
-        }
-        else if (this.props.nullable) {
-            this.setState({
-                value: -1
-            });
+            if (indexOfValue == -1) {
+                this.setState({valueList: [value]});
+            }
+            else if (this.props.nullable) {
+                this.setState({valueList: []});
+            }
         }
     }
 
@@ -85,13 +97,31 @@ class ApproachProperty extends React.Component {
         return true;
     }
 
-    handleDetailDelete(value) {
+    handleDetailDelete(deleteValue: number) {
         if (!confirm('Sure to delete?')) return;
 
         let metaDetails = this.props.meta.details;
-        let toDelete = metaDetails.find(x => x.value == value);
+        let deleteDetail = metaDetails.find(x => x.value == deleteValue);
 
-        metaDetails.splice(metaDetails.indexOf(toDelete), 1);
+        metaDetails.splice(metaDetails.indexOf(deleteDetail), 1);
+
+        metaDetails.forEach(function(detail, index) {
+            detail.value = index;
+        }, this);
+
+        let newValueList = [];
+        this.state.valueList.forEach(function(value) {
+            // value equals with deleteValue will be deleted
+            // so it is not pushed to newValueArray.
+            if (value < deleteValue) {
+                newValueList.push(value);
+            }
+            else if (value > deleteValue) {
+                // decrease value(s) by 1 which larger than deleteValue.
+                newValueList.push(value - 1);
+            }
+        }, this);
+        this.setState({valueList: newValueList});
 
         this.props.onRefresh();
         return true;
@@ -105,18 +135,21 @@ class ApproachProperty extends React.Component {
     }
 
     render() {
-        let selected = false;
-        let valueArray = this.getValueArray();
+        let hasSelectedDetail = false;
+        let valueList = $.extend([], this.state.valueList);
+
         let detailItems = this.props.meta.details.map(detail => {
-            if (!selected && detail.value == this.state.value) {
-                selected = true;
+            let indexOfValue = valueList.indexOf(detail.value);
+            if (indexOfValue != -1) {
+                valueList.splice(indexOfValue, 1);
+                if (!hasSelectedDetail) hasSelectedDetail = true;
             }
             return (
                 <ApproachPropertyDetail
                     key={detail.value}
                     value={detail.value}
                     name={detail.name}
-                    selected={valueArray.indexOf(detail.value) != -1}
+                    selected={indexOfValue != -1}
                     description={detail.description}
                     onClick={this.handleDetailClick}
                     onSave={this.handleDetailSave}
@@ -125,14 +158,26 @@ class ApproachProperty extends React.Component {
             );
         });
 
-        let nonSelectedMsg = (
-            <div className="alert alert-danger" role="alert">
-                <strong>Oh snap!</strong> Change a few things up and try submitting again.
+        let noDetailSelectedMessage = (
+            <div className="alert alert-info" role="alert">
+                No item selected.
             </div>
         );
 
+        let outOfRangeMessage = (
+            <div className="alert alert-danger" role="alert">
+                The range of value is out of the available detail items.
+            </div>
+        );
+
+        let panelType = valueList.length > 0
+            ? 'panel-danger'
+            : !hasSelectedDetail
+                ? 'panel-info'
+                : 'panel-default';
+
         return (
-            <div className={'approach-property panel ' + (selected ? 'panel-default' : 'panel-danger')}>
+            <div className={'approach-property panel ' + panelType}>
                 <div ref={(ref) => this.refHeading = ref} className="panel-heading">
                     <nav className="navbar navbar-default">
                         <div className="container-fluid">
@@ -151,9 +196,9 @@ class ApproachProperty extends React.Component {
                     </nav>
                 </div>
                 <div ref={(ref) => this.refBody = ref} className="panel-body">
-                    {selected ? '' : nonSelectedMsg}
+                    {valueList.length == 0 ? '' : outOfRangeMessage}
+                    {hasSelectedDetail ? '' : noDetailSelectedMessage}
                     <ul className="list-groups">
-                        {/* <ApproachPropertyDetail onSave={this.handleDetailSave} /> */}
                         {detailItems}
                         <ApproachPropertyDetail onSave={this.handleDetailSave} />
                     </ul>

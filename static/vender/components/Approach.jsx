@@ -41,7 +41,7 @@ export default class Approach extends React.Component {
         if (properties.find(x => x.code == code)) {
             return 'Already had property <' + this.props.meta.find(x => x.code == code).name + '>.';
         }
-        properties.push({code: code, value: -1});
+        properties.push({code: code, value: null});
         this.setState({properties: properties});
         return '';
     }
@@ -60,6 +60,7 @@ export default class Approach extends React.Component {
                     key={property.code}
                     meta={this.getMetaProperty(property.code)}
                     value={property.value}
+                    multiSelect={property.multi}
                     nullable={this.props.propertyNullable}
                     onRefresh={this.handleRefresh}
                 />

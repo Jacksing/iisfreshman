@@ -24,7 +24,7 @@ export default class ApproachCollection extends React.Component {
     }
 
     static defaultProps = {
-        propertyNullable: false,  // Property can be left unselected or not.
+        propertyNullable: true,  // Property can be left unselected or not.
     }
 
     handleRefresh() {

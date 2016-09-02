@@ -55,27 +55,27 @@ export var meta = [
 
 export var approaches = [
     [
-        {code: 'Chinese', value: 1},
-        {code: 'English', value: 2},
-        {code: 'Japanese', value: 16},
-        {code: 'Shanghai', value: 1},
-        {code: 'Chinese2', value: 5},
+        {code: 'Chinese', value: 1, multi: false, },
+        {code: 'English', value: 2, multi: false, },
+        {code: 'Japanese', value: 16, multi: true, },
+        {code: 'Shanghai', value: 1, multi: false, },
+        {code: 'Chinese2', value: 5, multi: false, },
     ],
     [
-        {code: 'Shanghai', value: 2},
-        {code: 'Chinese', value: 12},
-        {code: 'Chinese2', value: 5},
+        {code: 'Shanghai', value: 2, multi: false, },
+        {code: 'Chinese', value: 12, multi: false, },
+        {code: 'Chinese2', value: 5, multi: false, },
     ],
     [
-        {code: 'Chinese', value: 1},
-        {code: 'English', value: 2},
-        {code: 'Japanese', value: 3},
-        {code: 'Chinese2', value: 5},
+        {code: 'Chinese', value: 1, multi: false, },
+        {code: 'English', value: 2, multi: false, },
+        {code: 'Japanese', value: 3, multi: true, },
+        {code: 'Chinese2', value: 5, multi: false, },
     ],
     [
-        {code: 'Chinese', value: 1},
-        {code: 'Chinese2', value: 15},
-        {code: 'English', value: 21},
-        {code: 'Japanese', value: 8},
+        {code: 'Chinese', value: 1, multi: false, },
+        {code: 'Chinese2', value: 15, multi: false, },
+        {code: 'English', value: 21, multi: false, },
+        {code: 'Japanese', value: 8, multi: true, },
     ],
 ];

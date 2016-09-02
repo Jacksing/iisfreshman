@@ -12,6 +12,10 @@
             .list-group-item {
                 transition: .1s;
 
+                &:not(:last-child) {
+                    margin-bottom: 1px;
+                }
+
                 &:not(.creater) {
                     cursor: pointer;
                 }

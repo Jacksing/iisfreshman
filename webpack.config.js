@@ -5,12 +5,23 @@ var path = require('path');
 
 module.exports = {
     context: path.join(__dirname, './static/vender'),
-    entry: {
-        'test-helper': './test-helper',
-    },
+    // contentBase: '',
+    // entry: {
+    //     'test-helper': './test-helper',
+    // },
+    entry: [
+        'webpack-dev-server/client?http://localhost:3000/', // WebpackDevServer host and port
+        'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
+        // './test-helper',
+        './',
+    ],
     output: {
-        path: './static/bundle/js',
-        filename: '[name].bundle.js'
+        // path: './static/bundle/js',
+        path: require('path').resolve('./static/bundle/js'),
+        filename: '[name].bundle.js',
+        publicPath: '/static/bundle/js/',
+        // hotUpdateChunkFilename: 'hot/[id].[hash].hot-update.js',
+        // hotUpdateMainFilename: 'hot/[hash].hot-update.json',
     },
     resolve: {
         extensions: ['', '.js', '.jsx', '.scss']
@@ -26,11 +37,17 @@ module.exports = {
         }, {
             test: /\.jsx$/,
             exclude: /(node_modules|bower_components)/,
+            // (1)
             // loader: 'babel-loader?presets[]=es2015!jsx-loader?harmony',
-            loader: 'babel-loader',
-            query: {
-                presets: ['es2015', 'react', 'stage-0']
-            }
+            // (2)
+            // loader: 'babel-loader',
+            // query: {
+            //     presets: ['es2015', 'react', 'stage-0']
+            // }
+            loaders: [
+                'react-hot-loader/webpack',
+                'babel?presets[]=es2015&presets[]=react&presets[]=stage-0',
+            ]
         }, {
             test: /\.scss$/,
             exclude: /(node_modules|bower_components)/,
@@ -38,4 +55,7 @@ module.exports = {
         }]
     },
     // plugins: [commonsPlugin]
+    plugins: [
+        new webpack.HotModuleReplacementPlugin()
+    ]
 };

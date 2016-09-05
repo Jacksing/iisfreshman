@@ -11,12 +11,14 @@ class ApproachProperty extends React.Component {
     constructor(props) {
         super(props);
 
+        this.multiSelect = this.props.meta.multiSelect;
+
         let valueList;
         if (this.props.value === null) {
             valueList = [];
         }
         else {
-            if (this.props.multiSelect)
+            if (this.multiSelect)
                 valueList = covertIntToBitArray(this.props.value);
             else
                 valueList = [this.props.value];
@@ -36,14 +38,12 @@ class ApproachProperty extends React.Component {
     static propTypes = {
         meta: React.PropTypes.object,
         value: React.PropTypes.number,
-        multiSelect: React.PropTypes.bool,
         nullable: React.PropTypes.bool,
         onRefresh: React.PropTypes.func.isRequired,
     }
 
     static defaultProps = {
         nullable: false,
-        multiSelect: false,
     }
 
     /**
@@ -52,7 +52,7 @@ class ApproachProperty extends React.Component {
     handleDetailClick(value: number) {
         let valueList = this.state.valueList;
         let indexOfValue = valueList.indexOf(value);
-        if (this.props.multiSelect) {
+        if (this.multiSelect) {
             if (indexOfValue == -1) {
                 valueList.push(value);
                 this.setState({valueList: valueList});
@@ -179,7 +179,7 @@ class ApproachProperty extends React.Component {
         return (
             <div className={'approach-property panel ' + panelType}>
                 <div ref={(ref) => this.refHeading = ref} className="panel-heading">
-                    <nav className="navbar navbar-default">
+                    <nav className="navbar">
                         <div className="container-fluid">
                             <div className="navbar-header">
                                 <span className="navbar-brand">{this.props.meta.name}</span>

@@ -6,7 +6,7 @@
             "type": "python",
             "request": "launch",
             "stopOnEntry": false,
-            "program": "${workspaceRoot}/common/pickle_helper.py",
+            "program": "${workspaceRoot}/common/msdes.py",
             "debugOptions": [
                 "WaitOnAbnormalExit",
                 "WaitOnNormalExit",
@@ -75,6 +75,15 @@
                 "WaitOnNormalExit",
                 "RedirectOutput"
             ]
+        },
+        {
+            "name": "Javascript",
+            "type": "node",
+            "request": "launch",
+            "stopOnEntry": true,
+            "program": "${workspaceRoot}/server.js",
+            "args": [],
+            "cwd": "${workspaceRoot}"
         }
     ]
 }

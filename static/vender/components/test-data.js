@@ -44,38 +44,38 @@ var english = [
 ];
 
 export var meta = [
-    {code: 'Chinese', name: '中文', details: chinese},
-    {code: 'English', name: 'English', details: english},
-    {code: 'Japanese', name: '日本語', details: japanese},
-    {code: 'Shanghai', name: '上海话', details: shanghai},
-    {code: 'Chinese2', name: '中文２', details: $.extend(true, [], chinese)},
-    {code: 'English2', name: 'English２', details: $.extend(true, [], english)},
-    {code: 'Japanese2', name: '日本語２', details: $.extend(true, [], japanese)},
+    {code: 'Chinese', name: '中文', details: chinese, multi: false, },
+    {code: 'English', name: 'English', details: english, multi: false, },
+    {code: 'Japanese', name: '日本語', details: japanese, multi: false, },
+    {code: 'Shanghai', name: '上海话', details: shanghai, multi: false, },
+    {code: 'Chinese2', name: '中文２', details: $.extend(true, [], chinese), multi: true, },
+    {code: 'English2', name: 'English２', details: $.extend(true, [], english), multi: true, },
+    {code: 'Japanese2', name: '日本語２', details: $.extend(true, [], japanese), multi: true, },
 ];
 
 export var approaches = [
     [
-        {code: 'Chinese', value: 1, multi: false, },
-        {code: 'English', value: 2, multi: false, },
-        {code: 'Japanese', value: 16, multi: true, },
-        {code: 'Shanghai', value: 1, multi: false, },
-        {code: 'Chinese2', value: 5, multi: false, },
+        {code: 'Chinese', value: 1, },
+        {code: 'English', value: 2, },
+        {code: 'Japanese', value: 16, },
+        {code: 'Shanghai', value: 1, },
+        {code: 'Chinese2', value: 5, },
     ],
     [
-        {code: 'Shanghai', value: 2, multi: false, },
-        {code: 'Chinese', value: 12, multi: false, },
-        {code: 'Chinese2', value: 5, multi: false, },
+        {code: 'Shanghai', value: 2, },
+        {code: 'Chinese', value: 12, },
+        {code: 'Chinese2', value: 5, },
     ],
     [
-        {code: 'Chinese', value: 1, multi: false, },
-        {code: 'English', value: 2, multi: false, },
-        {code: 'Japanese', value: 3, multi: true, },
-        {code: 'Chinese2', value: 5, multi: false, },
+        {code: 'Chinese', value: 1, },
+        {code: 'English', value: 2, },
+        {code: 'Japanese', value: 3, },
+        {code: 'Chinese2', value: 5, },
     ],
     [
-        {code: 'Chinese', value: 1, multi: false, },
-        {code: 'Chinese2', value: 15, multi: false, },
-        {code: 'English', value: 21, multi: false, },
-        {code: 'Japanese', value: 8, multi: true, },
+        {code: 'Chinese', value: 1, },
+        {code: 'Chinese2', value: 15, },
+        {code: 'English', value: 21, },
+        {code: 'Japanese', value: 8, },
     ],
 ];

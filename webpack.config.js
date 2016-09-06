@@ -6,15 +6,19 @@ var path = require('path');
 module.exports = {
     context: path.join(__dirname, './static/vender'),
     // contentBase: '',
-    // entry: {
-    //     'test-helper': './test-helper',
-    // },
-    entry: [
-        'webpack-dev-server/client?http://localhost:3000/', // WebpackDevServer host and port
-        'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
-        // './test-helper',
-        './',
-    ],
+    entry: {
+        // testHelper: './test-helper',
+        index: [
+            'webpack-dev-server/client?http://localhost:3000/', // WebpackDevServer host and port
+            'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
+            './test-helper',
+        ]
+    },
+    // entry: [
+    //     'webpack-dev-server/client?http://localhost:3000/', // WebpackDevServer host and port
+    //     'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
+    //     './test-helper',
+    // ],
     output: {
         // path: './static/bundle/js',
         path: require('path').resolve('./static/bundle/js'),

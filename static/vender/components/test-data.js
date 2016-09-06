@@ -44,13 +44,13 @@ var english = [
 ];
 
 export var meta = [
-    {code: 'Chinese', name: '中文', details: chinese, multi: false, },
-    {code: 'English', name: 'English', details: english, multi: false, },
-    {code: 'Japanese', name: '日本語', details: japanese, multi: false, },
-    {code: 'Shanghai', name: '上海话', details: shanghai, multi: false, },
-    {code: 'Chinese2', name: '中文２', details: $.extend(true, [], chinese), multi: true, },
-    {code: 'English2', name: 'English２', details: $.extend(true, [], english), multi: true, },
-    {code: 'Japanese2', name: '日本語２', details: $.extend(true, [], japanese), multi: true, },
+    {code: 'Chinese', name: '中文', details: chinese, multiSelect: false, },
+    {code: 'English', name: 'English', details: english, multiSelect: false, },
+    {code: 'Japanese', name: '日本語', details: japanese, multiSelect: false, },
+    {code: 'Shanghai', name: '上海话', details: shanghai, multiSelect: false, },
+    {code: 'Chinese2', name: '中文２', details: $.extend(true, [], chinese), multiSelect: true, },
+    {code: 'English2', name: 'English２', details: $.extend(true, [], english), multiSelect: true, },
+    {code: 'Japanese2', name: '日本語２', details: $.extend(true, [], japanese), multiSelect: true, },
 ];
 
 export var approaches = [

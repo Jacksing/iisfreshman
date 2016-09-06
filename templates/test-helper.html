@@ -4,7 +4,6 @@
 {% block title %}Test Helper{% endblock %}
 
 {% block js %}
-    <script type="text/javascript" src="{% static 'js/test-helper.bundle.js' %}"></script>
 {% endblock %}
 
 {% block css %}
@@ -19,4 +18,5 @@
     <script type="text/javascript">
         var data_url = '/table/test/{{table_name}}/';
     </script>
+    <script type="text/javascript" src="{% static 'js/testHelper.bundle.js' %}"></script>
 {% endblock %}

@@ -176,13 +176,25 @@ class ApproachProperty extends React.Component {
                 ? 'panel-info'
                 : 'panel-default';
 
+        let navbarType = valueList.length > 0
+            ? 'navbar-danger'
+            : !hasSelectedDetail
+                ? 'navbar-info'
+                : 'navbar-default';
+
         return (
             <div className={'approach-property panel ' + panelType}>
                 <div ref={(ref) => this.refHeading = ref} className="panel-heading">
-                    <nav className="navbar">
+                    <nav className={'navbar ' + navbarType}>
                         <div className="container-fluid">
                             <div className="navbar-header">
                                 <span className="navbar-brand">{this.props.meta.name}</span>
+                                <button type="button" className="navbar-toggle" onClick={this.toggleDetails}>
+                                    <span className="sr-only">Toggle navigation</span>
+                                    <span className="icon-bar"/>
+                                    <span className="icon-bar"/>
+                                    <span className="icon-bar"/>
+                                </button>
                             </div>
                             <div className="collapse navbar-collapse">
                                 <input 

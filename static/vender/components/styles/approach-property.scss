@@ -52,4 +52,21 @@
         border-bottom-right-radius: 0;
         background: transparent;
     }
+
+    @mixin navbarStyle($color) {
+        .navbar-toggle {
+            border-color: darken($color, 15);
+            .icon-bar {
+                background-color: darken($color, 30);
+            }
+        }
+    }
+
+    .navbar-danger {
+        @include navbarStyle(#f2dede);
+    }
+
+    .navbar-info {
+        @include navbarStyle(#d9edf7);
+    }
 }

@@ -69,4 +69,15 @@
     .navbar-info {
         @include navbarStyle(#d9edf7);
     }
+
+    .navbar-header {
+        float: none;
+
+        .navbar-toggle {
+            display: block;
+            @media (min-width: 768px) {
+                margin-right: 0;
+            }
+        }
+    }
 }

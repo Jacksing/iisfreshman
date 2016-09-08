@@ -196,14 +196,7 @@ class ApproachProperty extends React.Component {
                                     <span className="icon-bar"/>
                                 </button>
                             </div>
-                            <div className="collapse navbar-collapse">
-                                <input 
-                                    className="btn btn-default navbar-btn navbar-right"
-                                    type="button"
-                                    value={this.state.bodyHidden ? 'Show' : 'Hide'}
-                                    onClick={this.toggleDetails}
-                                />
-                            </div>
+                            {/**<div className="collapse navbar-collapse" /> */}
                         </div>
                     </nav>
                 </div>

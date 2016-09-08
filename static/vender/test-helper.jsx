@@ -8,7 +8,7 @@ import './styles/base';
 
 ReactDom.render(
     <div>
-        <ApproachCollection promise={$.getJSON('http://localhost:8000/rismo/taxmarks/taxapproach/')} />
+        <ApproachCollection promise={$.getJSON('/rismo/taxmarks/taxapproach/')} />
         { /**<TestSetCollection promise={$.getJSON(data_url)} mode="full" byte={false} /> */}
     </div>,
     document.getElementById('example')

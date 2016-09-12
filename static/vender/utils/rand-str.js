@@ -19,11 +19,11 @@ var poems = [
         '白居易',
         '离离原上草，一岁一枯荣。野火烧不尽，春风吹又生。远芳侵古道，晴翠接荒城。又送王孙去，萋萋满别情。'
     ],
-];
+]
 
-var characters = poems.map(x => x.join('')).join('');
+var characters = poems.map(x => x.join('')).join('')
 
-var chinese = characters.replace(/[，。；、]/g, '');
+var chinese = characters.replace(/[，。；、]/g, '')
 
 /*
  * @param length The number of the length of the result string.
@@ -35,41 +35,41 @@ function randomString(length, mode='full', byte=false) {
         // parts of chinese char field.
         var charFrom = 19968,
             charTo = 20968,
-            maxLen = charTo - charFrom;
-        return String.fromCharCode(charFrom + Math.floor(Math.random() * maxLen));
-    };
+            maxLen = charTo - charFrom
+        return String.fromCharCode(charFrom + Math.floor(Math.random() * maxLen))
+    }
 
     var randomFullWidthChar = () => {
-        return chinese[Math.floor(Math.random() * chinese.length)];
-    };
+        return chinese[Math.floor(Math.random() * chinese.length)]
+    }
 
     var randomHalfChar = () => {
-        var strRepo = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';
-        return strRepo.charAt(Math.floor(Math.random() * strRepo.length));
-    };
+        var strRepo = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678'
+        return strRepo.charAt(Math.floor(Math.random() * strRepo.length))
+    }
 
-    var rest = length;
-    var resultStr = '';
+    var rest = length
+    var resultStr = ''
 
     while (true) {
         if (rest == 0) {
-            break;
+            break
         }
 
         var getHalfChar = mode =='half'
             || (rest == 1 && byte)
-            || (mode == 'mix' && Math.random() > 0.5);
+            || (mode == 'mix' && Math.random() > 0.5)
 
         if (getHalfChar) {
-            resultStr += randomHalfChar();
-            rest--;
+            resultStr += randomHalfChar()
+            rest--
         }
         else {
-            resultStr += randomFullWidthChar();
-            rest -= byte ? 2 : 1;
+            resultStr += randomFullWidthChar()
+            rest -= byte ? 2 : 1
         }
     }
-    return resultStr;
+    return resultStr
 }
 
 module.exports = {

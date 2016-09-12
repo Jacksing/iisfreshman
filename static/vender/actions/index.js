@@ -1,9 +1,9 @@
-import {ADD_META_DETAL, MOD_META_DETAIL, DEL_META_DETAIL} from '../constants/MetaDetailActions'
-import {ADD_PROPERTY, DEL_PROPERTY} from '../constants/PropertyActions'
+import {ADD_DETAL, MOD_DETAIL, DEL_DETAIL} from '../constants/MetaActions'
+import {ADD_PROPERTY, DEL_PROPERTY} from '../constants/ApproachActions'
 
 export const addMetaDetail = (code, name, description) => {
     return {
-        type: ADD_META_DETAL,
+        type: ADD_DETAL,
         name,
         description,
     }
@@ -11,7 +11,7 @@ export const addMetaDetail = (code, name, description) => {
 
 export const modMetaDetail = (code, value, name, description) => {
     return {
-        type: MOD_META_DETAIL,
+        type: MOD_DETAIL,
         value,
         name,
         description,
@@ -20,16 +20,22 @@ export const modMetaDetail = (code, value, name, description) => {
 
 export const delMetaDetail = (code, value) => {
     return {
-        type: DEL_META_DETAIL,
+        type: DEL_DETAIL,
         code,
         value,
     }
 }
 
-export const addProperty = () => {
-
+export const addProperty = (code) => {
+    return {
+        type: ADD_PROPERTY,
+        code,
+    }
 }
 
-export const delProperty = () => {
-
+export const delProperty = (code) => {
+    return {
+        type: DEL_PROPERTY,
+        code,
+    }
 }

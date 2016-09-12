@@ -1,22 +1,22 @@
-import React from 'react';
-import ReactDom from 'react-dom';
+import React from 'react'
+import ReactDom from 'react-dom'
 
-import ApproachProperty from './ApproachProperty';
-import ApproachPropertyList from './ApproachPropertyList';
+import ApproachProperty from './ApproachProperty'
+import ApproachPropertyList from './ApproachPropertyList'
 
-import './styles/approach';
+import './styles/approach'
 
 export default class Approach extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             properties: props.properties,
-        };
+        }
 
-        this.handleRefresh = this.handleRefresh.bind(this);
-        this.getMetaProperty = this.getMetaProperty.bind(this);
-        this.handleShowPropertyList = this.handleShowPropertyList.bind(this);
-        this.handleAddProperty = this.handleAddProperty.bind(this);
+        this.handleRefresh = this.handleRefresh.bind(this)
+        this.getMetaProperty = this.getMetaProperty.bind(this)
+        this.handleShowPropertyList = this.handleShowPropertyList.bind(this)
+        this.handleAddProperty = this.handleAddProperty.bind(this)
     }
 
     static propTypes = {
@@ -27,30 +27,30 @@ export default class Approach extends React.Component {
     }
 
     getMetaProperty(code) {
-        if (this.props.meta == null) return null;
-        return this.props.meta.find(x => x.code == code);
+        if (this.props.meta == null) return null
+        return this.props.meta.find(x => x.code == code)
     }
 
     handleRefresh() {
-        this.props.onRefresh();
-        return true;
+        this.props.onRefresh()
+        return true
     }
 
     handleAddProperty(code) {
-        let properties = this.state.properties;
+        let properties = this.state.properties
         if (properties.find(x => x.code == code)) {
-            return 'Already had property <' + this.props.meta.find(x => x.code == code).name + '>.';
+            return 'Already had property <' + this.props.meta.find(x => x.code == code).name + '>.'
         }
-        properties.push({code: code, value: null});
-        this.setState({properties: properties});
-        return '';
+        properties.push({code: code, value: null})
+        this.setState({properties: properties})
+        return ''
     }
 
     handleShowPropertyList() {
         ReactDom.render(
             <ApproachPropertyList elements={this.props.meta} onSelect={this.handleAddProperty} />,
             this.refPopupContainer
-        );
+        )
     }
 
     render() {
@@ -64,8 +64,8 @@ export default class Approach extends React.Component {
                     nullable={this.props.propertyNullable}
                     onRefresh={this.handleRefresh}
                 />
-            );
-        });
+            )
+        })
 
         return (
             <div className="approach">
@@ -73,6 +73,6 @@ export default class Approach extends React.Component {
                 <input type="button" className="btn btn-info" onClick={this.handleShowPropertyList} value="Add Property" />
                 <div ref={(ref) => this.refPopupContainer = ref} />
             </div>
-        );
+        )
     }
 }

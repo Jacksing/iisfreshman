@@ -1,13 +1,13 @@
-import React from 'react';
-import $ from 'jquery';
+import React from 'react'
+import $ from 'jquery'
 
-import './styles/modal-form';
+import './styles/modal-form'
 
 export default class ModalForm extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
 
-        this.handleClose = this.handleClose.bind(this);
+        this.handleClose = this.handleClose.bind(this)
     }
 
     static propTypes = {
@@ -15,23 +15,23 @@ export default class ModalForm extends React.Component {
     }
 
     componentDidMount() {
-        $(document.body).css('overflow', 'hidden');
+        $(document.body).css('overflow', 'hidden')
     }
 
     stopPropagation(event) {
-        event.stopPropagation();
+        event.stopPropagation()
     }
 
     handleClose() {
-        var $self = $(this.self);
+        var $self = $(this.self)
         $self.find('.g_modal_wrap').fadeOut(250, function() {
-            $self.remove();
-            $(document.body).css('overflow', '');
-        });
+            $self.remove()
+            $(document.body).css('overflow', '')
+        })
     }
 
     render() {
-        let content = this.renderContent ? this.renderContent() : null; 
+        let content = this.renderContent ? this.renderContent() : null 
 
         return (
             <div ref={(c) => this.self = c} className="g_modal" onClick={this.handleClose}>
@@ -41,6 +41,6 @@ export default class ModalForm extends React.Component {
                     </div>
                 </div>
             </div>
-        );
+        )
     }
 }

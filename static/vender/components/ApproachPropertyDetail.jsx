@@ -1,22 +1,22 @@
-import React from 'react';
-import $ from 'jquery';
+import React from 'react'
+import $ from 'jquery'
 
 class ApproachPropertyDetail extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             isEditing: false,
             name: props.name,
             description: props.description,
-        };
+        }
 
-        this.handleClick = this.handleClick.bind(this);
-        this.handleBeginEditing = this.handleBeginEditing.bind(this);
-        this.handleNameChange = this.handleNameChange.bind(this);
-        this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
-        this.handleSave = this.handleSave.bind(this);
-        this.handleCancel = this.handleCancel.bind(this);
-        this.handleDelete = this.handleDelete.bind(this);
+        this.handleClick = this.handleClick.bind(this)
+        this.handleBeginEditing = this.handleBeginEditing.bind(this)
+        this.handleNameChange = this.handleNameChange.bind(this)
+        this.handleDescriptionChange = this.handleDescriptionChange.bind(this)
+        this.handleSave = this.handleSave.bind(this)
+        this.handleCancel = this.handleCancel.bind(this)
+        this.handleDelete = this.handleDelete.bind(this)
     }
 
     static propTypes = {
@@ -42,83 +42,83 @@ class ApproachPropertyDetail extends React.Component {
 
     handleClick() {
         if (this.props.onClick != null) {
-            this.props.onClick(this.props.value);
+            this.props.onClick(this.props.value)
         }
     }
 
     handleBeginEditing(event) {
-        event.preventDefault();
-        event.stopPropagation();
+        event.preventDefault()
+        event.stopPropagation()
         this.setState({
             isEditing: true,
             name: this.props.name,
             description: this.props.description
-        });
+        })
     }
 
     handleDelete(event) {
-        event.stopPropagation();
+        event.stopPropagation()
 
-        if (this.props.onDelete == null) return;
+        if (this.props.onDelete == null) return
 
-        var result = this.props.onDelete(this.props.value);
+        var result = this.props.onDelete(this.props.value)
         if (result) {
-            this.setState({isEditing: false});
+            this.setState({isEditing: false})
         }
     }
 
     handleNameChange () {
-        this.setState({name: $(this.refName).val()});
+        this.setState({name: $(this.refName).val()})
     }
 
     handleDescriptionChange () {
-        this.setState({description: $(this.refDescription).val()});
+        this.setState({description: $(this.refDescription).val()})
     }
 
     handleSave(event) {
-        event.preventDefault();
-        if (this.state.name.trim() == '') return;
+        event.preventDefault()
+        if (this.state.name.trim() == '') return
         
         if (this.props.onSave != null) {
             var result = this.props.onSave({
                 value: this.props.value,
                 name: this.state.name,
                 description: this.state.description,
-            });
+            })
             if (result) {
                 if (this.isCreater) {
                     this.setState({
                         isEditing: false,
                         name: '',
                         description: '',
-                    });
+                    })
                 } else {
-                    this.setState({isEditing: false});
+                    this.setState({isEditing: false})
                 }
             }
         }
     }
 
     handleCancel(event) {
-        event.preventDefault();
+        event.preventDefault()
         if (this.isCreater) {
             this.setState({
                 isEditing: false,
                 name: '',
                 description: '',
-            });
+            })
         } else {
             this.setState({
                 isEditing: false,
                 name: this.props.name,
                 description: this.props.description,
-            });
+            })
         }
     }
 
     render() {
         if (this.state.isEditing) {
-            let active = this.props.selected ? 'list-group-item creater active' : 'list-group-item creater';
+            let active = this.props.selected ? 'list-group-item creater active' : 'list-group-item creater'
             return (
                 <li className={active}>
                     <form className="form-horizontal">
@@ -160,14 +160,14 @@ class ApproachPropertyDetail extends React.Component {
                         </div>
                     </form>
                 </li>
-            );
+            )
         }
 
         if (this.isCreater) {
-            return <li className="list-group-item add-button" onClick={this.handleBeginEditing}><span>+</span></li>;
+            return <li className="list-group-item add-button" onClick={this.handleBeginEditing}><span>+</span></li>
         }
 
-        let active = this.props.selected ? 'list-group-item active clearfix' : 'list-group-item clearfix';
+        let active = this.props.selected ? 'list-group-item active clearfix' : 'list-group-item clearfix'
         return (
             <li className={active} data-value={this.props.value} onClick={this.handleClick}>
                 <div className="col-sm-8">
@@ -179,8 +179,8 @@ class ApproachPropertyDetail extends React.Component {
                     <span className="glyphicon glyphicon-trash pull-right" onClick={this.handleDelete}/>
                 </div>
             </li>
-        );
+        )
     }
 }
 
-export default ApproachPropertyDetail;
+export default ApproachPropertyDetail

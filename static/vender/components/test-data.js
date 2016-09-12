@@ -1,10 +1,10 @@
-import $ from 'jquery';
+import $ from 'jquery'
 
 var shanghai = [
     {value: 0, name: '侬好', description: '意思是你好。'},
     {value: 1, name: '老克拉', description: '时髦老头。'},
     {value: 2, name: '上只角', description: 'Uptown。',},
-];
+]
 
 var japanese = [
     {value: 0, name: '100元', description: '読み方は「ひゃくえん」です。'},
@@ -17,7 +17,7 @@ var japanese = [
     {value: 7, name: '久しぶりだ', description: '「ご無沙汰です」に似てる。'},
     {value: 8, name: '松嶋菜々子', description: '美しい美人です。'},
     {value: 9, name: '終わり', description: '野望と願いを阻んできた。'},
-];
+]
 
 var chinese = [
     {value: 0, name: '100元', description: '也就是十个十元。'},
@@ -30,7 +30,7 @@ var chinese = [
     {value: 7, name: '好久不见', description: '好久不见。'},
     {value: 8, name: '古畑任三郎', description: '我是古畑任三郎。'},
     {value: 9, name: '结束', description: '一共十个属性。'},
-];
+]
 
 var english = [
     {value: 0, name: '100 USD', description: 'One hundred dollar.'},
@@ -41,7 +41,7 @@ var english = [
     {value: 5, name: 'Confirm', description: 'I am almost forgot all the english words.'},
     {value: 6, name: 'Kimura Takuya', description: 'A superstart of SMAP.'},
     {value: 7, name: 'Over', description: 'Eight words in all.'},
-];
+]
 
 export var meta = [
     {code: 'Chinese', name: '中文', details: chinese, multiSelect: false, },
@@ -51,7 +51,7 @@ export var meta = [
     {code: 'Chinese2', name: '中文２', details: $.extend(true, [], chinese), multiSelect: true, },
     {code: 'English2', name: 'English２', details: $.extend(true, [], english), multiSelect: true, },
     {code: 'Japanese2', name: '日本語２', details: $.extend(true, [], japanese), multiSelect: true, },
-];
+]
 
 export var approaches = [
     [
@@ -78,4 +78,4 @@ export var approaches = [
         {code: 'English', value: 21, },
         {code: 'Japanese', value: 8, },
     ],
-];
+]

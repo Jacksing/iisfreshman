@@ -1,10 +1,10 @@
-import React from 'react';
-import {randomString} from '../utils/rand-str';
+import React from 'react'
+import {randomString} from '../utils/rand-str'
 
-import './styles/test-set';
+import './styles/test-set'
 
 function hasValue(value) {
-    return !(value == null || value == undefined || value == '');
+    return !(value == null || value == undefined || value == '')
 }
 
 module.exports.TestSet = React.createClass({
@@ -21,29 +21,29 @@ module.exports.TestSet = React.createClass({
             edage: this.props.edage,
             mode: this.props.mode,
             byte: this.props.byte,
-        };
+        }
     },
     componentWillReceiveProps: function (nextProps) {
         this.setState({
             byte: nextProps.byte,
             mode: nextProps.mode,
-        });
+        })
     },
     handleChange: function (event) {
-        var value = event.target.value;
+        var value = event.target.value
         if (!hasValue(value)) {
-            this.setState({edage: -1});
-            return;
+            this.setState({edage: -1})
+            return
         }
         if (isNaN(value) || value > this.props.max || value < this.props.min) {
-            return;
+            return
         }
-        this.setState({edage: parseInt(value)});
+        this.setState({edage: parseInt(value)})
     },
     render: function () {
         var indropText = randomString(this.state.edage - 1, this.state.mode, this.state.byte),
             edageText = randomString(this.state.edage, this.state.mode, this.state.byte),
-            outdropText = randomString(this.state.edage + 1, this.state.mode, this.state.byte);
+            outdropText = randomString(this.state.edage + 1, this.state.mode, this.state.byte)
 
         return (
             <div className="test-set panel panel-default">
@@ -69,6 +69,6 @@ module.exports.TestSet = React.createClass({
                     </div>
                 </div>
             </div>
-        );
+        )
     },
-});
+})

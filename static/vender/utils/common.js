@@ -1,4 +1,4 @@
-import {extend} from 'jquery';
+import {extend} from 'jquery'
 
 function covertIntToBitArray(value) {
     return value
@@ -6,26 +6,26 @@ function covertIntToBitArray(value) {
         .split('')
         .reverse()
         .map((v, i) => v == 1 ? i : null)
-        .filter(i => i != null);
+        .filter(i => i != null)
 }
 
 function convertBitArrayToInt(array) {
-    if (!Array.isArray(array)) throw TypeError('{array} is not an Array object.');
-    if (array.length == 0) return null;
-    array = extend([], array).sort((x, y) => y - x);
-    let bitString = '';
+    if (!Array.isArray(array)) throw TypeError('{array} is not an Array object.')
+    if (array.length == 0) return null
+    array = extend([], array).sort((x, y) => y - x)
+    let bitString = ''
     for (let i=array[0]; i>=0; i--) {
         if (array.indexOf(i) == -1) {
-            bitString += '0';
+            bitString += '0'
         }
         else {
-            bitString += '1';
+            bitString += '1'
         }
     }
-    return parseInt(bitString, 2);
+    return parseInt(bitString, 2)
 }
 
 module.exports = {
     covertIntToBitArray: covertIntToBitArray,
     convertBitArrayToInt: convertBitArrayToInt,
-};
+}

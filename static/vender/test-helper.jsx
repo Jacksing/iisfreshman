@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDom from 'react-dom';
+import React from 'react'
+import ReactDom from 'react-dom'
 
-// import {TestSetCollection} from './components/TestSetCollection';
-import ApproachCollection from './components/ApproachCollection';
+// import {TestSetCollection} from './components/TestSetCollection'
+import ApproachCollection from './components/ApproachCollection'
 
-import './styles/base';
+import './styles/base'
 
 ReactDom.render(
     <div>
@@ -12,9 +12,9 @@ ReactDom.render(
         { /**<TestSetCollection promise={$.getJSON(data_url)} mode="full" byte={false} /> */}
     </div>,
     document.getElementById('example')
-);
+)
 
 // ? What is the principle of the usage of module.hot.
 if (module.hot) {
-    module.hot.accept();
+    module.hot.accept()
 }

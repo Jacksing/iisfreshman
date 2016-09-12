@@ -1,20 +1,20 @@
-import React from 'react';
+import React from 'react'
 
-import Approach from './Approach';
+import Approach from './Approach'
 
-import {meta, approaches} from './test-data';
+import {meta, approaches} from './test-data'
 
 export default class ApproachCollection extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             loading: true,
             meta: null,
             approaches: null,
             error: null,
-        };
+        }
 
-        this.handleRefresh = this.handleRefresh.bind(this);
+        this.handleRefresh = this.handleRefresh.bind(this)
     }
 
     static propTypes = {
@@ -28,7 +28,7 @@ export default class ApproachCollection extends React.Component {
     }
 
     handleRefresh() {
-        this.setState({meta: this.state.meta});
+        this.setState({meta: this.state.meta})
     }
 
     // Get json data through web api, otherwise use the test data.
@@ -36,12 +36,12 @@ export default class ApproachCollection extends React.Component {
         this.props.promise.then(
             value => this.setState({loading: false, meta: value.meta, approaches: value.elements}),
             error => this.setState({loading: false, error: error, meta: meta, approaches: approaches})
-        );
+        )
     }
 
     render() {
         if (this.state.loading) {
-            return <div>Loading...</div>;
+            return <div>Loading...</div>
         }
 
         let approachComponents = this.state.approaches.map((approach, index) => {
@@ -53,13 +53,13 @@ export default class ApproachCollection extends React.Component {
                     propertyNullable={this.props.propertyNullable}
                     onRefresh={this.handleRefresh}
                 />
-            );
-        });
+            )
+        })
 
         return (
             <div>
                 {approachComponents}
             </div>
-        );
+        )
     }
 }

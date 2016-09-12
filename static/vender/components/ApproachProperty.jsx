@@ -1,38 +1,38 @@
-import React from 'react';
-import $ from 'jquery';
+import React from 'react'
+import $ from 'jquery'
 
-import ApproachPropertyDetail from './ApproachPropertyDetail';
+import ApproachPropertyDetail from './ApproachPropertyDetail'
 
-import {covertIntToBitArray, convertBitArrayToInt} from '../utils/common';
+import {covertIntToBitArray, convertBitArrayToInt} from '../utils/common'
 
-import './styles/approach-property';
+import './styles/approach-property'
 
 class ApproachProperty extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
 
-        this.multiSelect = this.props.meta.multiSelect;
+        this.multiSelect = this.props.meta.multiSelect
 
-        let valueList;
+        let valueList
         if (this.props.value === null) {
-            valueList = [];
+            valueList = []
         }
         else {
             if (this.multiSelect)
-                valueList = covertIntToBitArray(this.props.value);
+                valueList = covertIntToBitArray(this.props.value)
             else
-                valueList = [this.props.value];
+                valueList = [this.props.value]
         }
 
         this.state = {
             valueList: valueList,
             bodyHidden: true,
-        };
+        }
 
-        this.handleDetailClick = this.handleDetailClick.bind(this);
-        this.handleDetailSave = this.handleDetailSave.bind(this);
-        this.handleDetailDelete = this.handleDetailDelete.bind(this);
-        this.toggleDetails = this.toggleDetails.bind(this);
+        this.handleDetailClick = this.handleDetailClick.bind(this)
+        this.handleDetailSave = this.handleDetailSave.bind(this)
+        this.handleDetailDelete = this.handleDetailDelete.bind(this)
+        this.toggleDetails = this.toggleDetails.bind(this)
     }
 
     static propTypes = {
@@ -50,99 +50,99 @@ class ApproachProperty extends React.Component {
      * Toggle the select status of {value}.
      */
     handleDetailClick(value: number) {
-        let valueList = this.state.valueList;
-        let indexOfValue = valueList.indexOf(value);
+        let valueList = this.state.valueList
+        let indexOfValue = valueList.indexOf(value)
         if (this.multiSelect) {
             if (indexOfValue == -1) {
-                valueList.push(value);
-                this.setState({valueList: valueList});
+                valueList.push(value)
+                this.setState({valueList: valueList})
             }
             else {
                 if (valueList.length > 1 || this.props.nullable) {
-                    valueList.splice(indexOfValue, 1);
-                    this.setState({valueList: valueList});
+                    valueList.splice(indexOfValue, 1)
+                    this.setState({valueList: valueList})
                 }
             }
         }
         else {
             if (indexOfValue == -1) {
-                this.setState({valueList: [value]});
+                this.setState({valueList: [value]})
             }
             else if (this.props.nullable) {
-                this.setState({valueList: []});
+                this.setState({valueList: []})
             }
         }
     }
 
     handleDetailSave(detail) {
-        var {value, name, description, ...other} = detail;
+        var {value, name, description, ...other} = detail
 
-        let metaDetails = this.props.meta.details;
+        let metaDetails = this.props.meta.details
 
         if (value === undefined) {
-            let newValue = metaDetails.length;
+            let newValue = metaDetails.length
             metaDetails.push({
                 value: newValue,
                 name: name,
                 description: description,
-            });
+            })
         }
         else {
-            let metaDetail = metaDetails.find(x => x.value == value);
-            metaDetail.name = name;
-            metaDetail.description = description;
+            let metaDetail = metaDetails.find(x => x.value == value)
+            metaDetail.name = name
+            metaDetail.description = description
         }
 
-        this.props.onRefresh();
-        return true;
+        this.props.onRefresh()
+        return true
     }
 
     handleDetailDelete(deleteValue: number) {
-        if (!confirm('Sure to delete?')) return;
+        if (!confirm('Sure to delete?')) return
 
-        let metaDetails = this.props.meta.details;
-        let deleteDetail = metaDetails.find(x => x.value == deleteValue);
+        let metaDetails = this.props.meta.details
+        let deleteDetail = metaDetails.find(x => x.value == deleteValue)
 
-        metaDetails.splice(metaDetails.indexOf(deleteDetail), 1);
+        metaDetails.splice(metaDetails.indexOf(deleteDetail), 1)
 
         metaDetails.forEach(function(detail, index) {
-            detail.value = index;
-        }, this);
+            detail.value = index
+        }, this)
 
-        let newValueList = [];
+        let newValueList = []
         this.state.valueList.forEach(function(value) {
             // value equals with deleteValue will be deleted
             // so it is not pushed to newValueArray.
             if (value < deleteValue) {
-                newValueList.push(value);
+                newValueList.push(value)
             }
             else if (value > deleteValue) {
                 // decrease value(s) by 1 which larger than deleteValue.
-                newValueList.push(value - 1);
+                newValueList.push(value - 1)
             }
-        }, this);
-        this.setState({valueList: newValueList});
+        }, this)
+        this.setState({valueList: newValueList})
 
-        this.props.onRefresh();
-        return true;
+        this.props.onRefresh()
+        return true
     }
 
     toggleDetails() {
-        let $body = $(this.refBody);
+        let $body = $(this.refBody)
         $body.slideToggle(150, () => {
-            this.setState({bodyHidden: $body.css('display') == 'none' ? true : false});
-        });
+            this.setState({bodyHidden: $body.css('display') == 'none' ? true : false})
+        })
     }
 
     render() {
-        let hasSelectedDetail = false;
-        let valueList = $.extend([], this.state.valueList);
+        let hasSelectedDetail = false
+        let valueList = $.extend([], this.state.valueList)
 
         let detailItems = this.props.meta.details.map(detail => {
-            let indexOfValue = valueList.indexOf(detail.value);
+            let indexOfValue = valueList.indexOf(detail.value)
             if (indexOfValue != -1) {
-                valueList.splice(indexOfValue, 1);
-                if (!hasSelectedDetail) hasSelectedDetail = true;
+                valueList.splice(indexOfValue, 1)
+                if (!hasSelectedDetail) hasSelectedDetail = true
             }
             return (
                 <ApproachPropertyDetail
@@ -155,32 +155,32 @@ class ApproachProperty extends React.Component {
                     onSave={this.handleDetailSave}
                     onDelete={this.handleDetailDelete}
                 />
-            );
-        });
+            )
+        })
 
         let noDetailSelectedMessage = (
             <div className="alert alert-info" role="alert">
                 No item selected.
             </div>
-        );
+        )
 
         let outOfRangeMessage = (
             <div className="alert alert-danger" role="alert">
                 The range of value is out of the available detail items.
             </div>
-        );
+        )
 
         let panelType = valueList.length > 0
             ? 'panel-danger'
             : !hasSelectedDetail
                 ? 'panel-info'
-                : 'panel-default';
+                : 'panel-default'
 
         let navbarType = valueList.length > 0
             ? 'navbar-danger'
             : !hasSelectedDetail
                 ? 'navbar-info'
-                : 'navbar-default';
+                : 'navbar-default'
 
         return (
             <div className={'approach-property panel ' + panelType}>
@@ -209,8 +209,8 @@ class ApproachProperty extends React.Component {
                     </ul>
                 </div>
             </div>
-        );
+        )
     }
 }
 
-export default ApproachProperty;
+export default ApproachProperty

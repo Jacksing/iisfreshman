@@ -39,8 +39,8 @@
             "prefer-double"
         ],
         "semi": [
-            "warn",
-            "always"
+            2,
+            "never"
         ],
         "react/jsx-closing-bracket-location": "warn",
         "react/jsx-curly-spacing": "warn",

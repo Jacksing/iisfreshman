@@ -43,14 +43,14 @@ var english = [
     {value: 7, name: 'Over', description: 'Eight words in all.'},
 ]
 
-export var meta = [
+export var metaCollection = [
     {code: 'Chinese', name: '中文', details: chinese, multiSelect: false, },
     {code: 'English', name: 'English', details: english, multiSelect: false, },
     {code: 'Japanese', name: '日本語', details: japanese, multiSelect: false, },
     {code: 'Shanghai', name: '上海话', details: shanghai, multiSelect: false, },
-    {code: 'Chinese2', name: '中文２', details: $.extend(true, [], chinese), multiSelect: true, },
-    {code: 'English2', name: 'English２', details: $.extend(true, [], english), multiSelect: true, },
-    {code: 'Japanese2', name: '日本語２', details: $.extend(true, [], japanese), multiSelect: true, },
+    {code: 'Chinese2', name: '中文-多选', details: $.extend(true, [], chinese), multiSelect: true, },
+    {code: 'English2', name: 'English-MultiSelection', details: $.extend(true, [], english), multiSelect: true, },
+    {code: 'Japanese2', name: '日本語-複数選択', details: $.extend(true, [], japanese), multiSelect: true, },
 ]
 
 export var approaches = [
@@ -79,3 +79,8 @@ export var approaches = [
         {code: 'Japanese', value: 8, },
     ],
 ]
+
+export var data = {
+    metaCollection: metaCollection,
+    approaches: approaches,
+}

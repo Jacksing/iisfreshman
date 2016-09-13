@@ -1,6 +1,8 @@
 import React from 'react'
+import {createStore} from 'redux'
 
 import Approach from './Approach'
+import reducers from '../reducers'
 
 import {meta, approaches} from './test-data'
 
@@ -35,7 +37,11 @@ export default class ApproachCollection extends React.Component {
     componentDidMount() {
         this.props.promise.then(
             value => this.setState({loading: false, meta: value.meta, approaches: value.elements}),
-            error => this.setState({loading: false, error: error, meta: meta, approaches: approaches})
+            // error => this.setState({loading: false, error: error, meta: meta, approaches: approaches})
+            error => {
+                let store = createStore(reducers)
+                this.setState({loading: false, error: error, meta: store.getState().meta, approaches: store.getState().approach})
+            }
         )
     }
 

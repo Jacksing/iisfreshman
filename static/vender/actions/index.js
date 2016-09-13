@@ -26,6 +26,8 @@ export const delMetaDetail = (code, value) => {
     }
 }
 
+// export const selMetaDetail = ()
+
 export const addProperty = (code) => {
     return {
         type: ADD_PROPERTY,

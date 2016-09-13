@@ -1,4 +1,4 @@
-import {keyMirror} from 'fbjs/lib/KeyMirror'
+import keyMirror from 'fbjs/lib/keyMirror'
 
 export default keyMirror({
     ADD_PROPERTY: null,

@@ -3,9 +3,9 @@ import {createStore} from 'redux'
 import {Provider} from 'react-redux'
 
 import Approach from './Approach'
-import reducers from '../reducers'
+import Text from './Text'
 
-import {meta, approaches} from './test-data'
+import reducers from '../reducers'
 
 export default class ApproachCollection extends React.Component {
     constructor(props) {
@@ -72,6 +72,7 @@ export default class ApproachCollection extends React.Component {
         return (
             <Provider store={this.store}>
                 <div>
+                    <Text store={this.store} />
                     {approachComponents}
                 </div>
             </Provider>

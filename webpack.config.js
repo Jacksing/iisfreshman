@@ -1,7 +1,7 @@
-var webpack = require('webpack');
-var path = require('path');
+var webpack = require('webpack')
+var path = require('path')
 
-// var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
+// var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js')
 
 module.exports = {
     context: path.join(__dirname, './static/vender'),
@@ -36,7 +36,7 @@ module.exports = {
             exclude: /(node_modules|bower_components)/,
             loader: 'babel-loader',
             query: {
-                presets: ['es2015']
+                presets: ['es2015', 'stage-0']
             }
         }, {
             test: /\.jsx$/,
@@ -62,4 +62,4 @@ module.exports = {
     plugins: [
         new webpack.HotModuleReplacementPlugin()
     ]
-};
+}

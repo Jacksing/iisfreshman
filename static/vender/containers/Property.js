@@ -7,7 +7,7 @@ import {setPropertyValue} from '../actions'
 import {default as Presentation} from '../components/ApproachProperty'
 
 const getValueList = (value, multiSelect) => {
-    if (value == undefined)
+    if (value == null)
         return []
     else if (multiSelect)
         return covertIntToBitArray(value)
@@ -47,7 +47,7 @@ const handleDetailClick = dispatch => {
                 if (position == -1) {
                     value = detailValue
                 } else {
-                    value = undefined
+                    value = null
                 }
             }
 
@@ -71,7 +71,7 @@ const mergeProps = (stateProps, dispatchProps) => {
             stateProps.index,
             stateProps.multiSelect,
             stateProps.valueList,
-        )
+        ),
     }
 }
 

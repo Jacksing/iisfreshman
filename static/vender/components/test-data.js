@@ -62,7 +62,10 @@ export var approaches = [
         {code: 'Chinese2', value: 5, },
     ],
     [
-        {code: 'Shanghai', value: 2, },
+        {code: 'Shanghai', value: 1, },
+    ],
+    [
+        {code: 'Shanghai', value: 1, },
         {code: 'Chinese', value: 12, },
         {code: 'Chinese2', value: 5, },
     ],

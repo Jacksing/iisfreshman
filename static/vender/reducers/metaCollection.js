@@ -1,3 +1,5 @@
+import $ from 'jquery'
+
 import {ADD_DETAIL, MOD_DETAIL, DEL_DETAIL} from '../constants/MetaActions'
 import {metaCollection as data} from '../components/test-data'
 
@@ -20,7 +22,7 @@ const details = (state=[], action) => {
         detail = state.find(d => d.value == action.value)
         detail.name = action.name
         detail.description = action.description
-        return state
+        return $.extend(true, [], state)
 
     case DEL_DETAIL:
         detail = state.find(d => d.value == action.value)
@@ -37,6 +39,7 @@ const details = (state=[], action) => {
 
 const metaCollection = (state=data, action) => {
     let meta
+    state = $.extend(true, [], state)
 
     switch (action.type) {
     case ADD_DETAIL:

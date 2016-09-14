@@ -4,6 +4,7 @@ import $ from 'jquery'
 class ApproachPropertyDetail extends React.Component {
     constructor(props) {
         super(props)
+
         this.state = {
             isEditing: false,
             name: props.name,
@@ -34,16 +35,19 @@ class ApproachPropertyDetail extends React.Component {
         name: '',
         description: '',
         selected: false,
-        onClick: null,
-        onSave: null,
+        onClick: undefined,
+        onSave: undefined,
+        onDelete: undefined
     }
 
+    // In creation mode, this component will show as a block with a plus sign.
+    // Once the plus block clicked, component switch to editing mode with
+    // name and description left blank.
     isCreater = this.props.value === undefined
 
     handleClick() {
-        if (this.props.onClick != null) {
-            this.props.onClick(this.props.value)
-        }
+        let {onClick, value} = this.props
+        if (onClick) onClick(value)
     }
 
     handleBeginEditing(event) {
@@ -56,36 +60,20 @@ class ApproachPropertyDetail extends React.Component {
         })
     }
 
-    handleDelete(event) {
-        event.stopPropagation()
-
-        if (this.props.onDelete == null) return
-
-        var result = this.props.onDelete(this.props.value)
-        if (result) {
-            this.setState({isEditing: false})
-        }
-    }
-
-    handleNameChange () {
-        this.setState({name: $(this.refName).val()})
-    }
-
-    handleDescriptionChange () {
-        this.setState({description: $(this.refDescription).val()})
-    }
-
     handleSave(event) {
         event.preventDefault()
         if (this.state.name.trim() == '') return
+
+        let {onSave, value} = this.props
         
-        if (this.props.onSave != null) {
-            var result = this.props.onSave({
-                value: this.props.value,
+        if (onSave != null) {
+            let event = {
                 name: this.state.name,
                 description: this.state.description,
-            })
-            if (result) {
+                value,
+            }
+
+            if (onSave(event)) {
                 if (this.isCreater) {
                     this.setState({
                         isEditing: false,
@@ -101,6 +89,7 @@ class ApproachPropertyDetail extends React.Component {
 
     handleCancel(event) {
         event.preventDefault()
+
         if (this.isCreater) {
             this.setState({
                 isEditing: false,
@@ -116,53 +105,68 @@ class ApproachPropertyDetail extends React.Component {
         }
     }
 
-    render() {
-        if (this.state.isEditing) {
-            let active = this.props.selected ? 'list-group-item creater active' : 'list-group-item creater'
-            return (
-                <li className={active}>
-                    <form className="form-horizontal">
-                        <div className="form-group">
-                            <label htmlFor="name" className="col-sm-2 control-label">Name</label>
-                            <div className="col-sm-10">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="name"
-                                    placeholder="Name"
-                                    ref={(ref) => this.refName = ref}
-                                    name="name"
-                                    value={this.state.name}
-                                    onChange={this.handleNameChange}
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="description" className="col-sm-2 control-label">Description</label>
-                            <div className="col-sm-10">
-                                <input 
-                                    type="text"
-                                    className="form-control"
-                                    id="description"
-                                    placeholder="Description"
-                                    ref={(ref) => this.refDescription = ref}
-                                    name="description"
-                                    value={this.state.description}
-                                    onChange={this.handleDescriptionChange}
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group">
-                            <div className="col-sm-offset-2 col-sm-10">
-                                <button type="submit" className="btn btn-default" onClick={this.handleSave}>Save
-                                </button> <button type="submit" className="btn btn-default" onClick={this.handleCancel}>Cancel</button>
-                            </div>
-                        </div>
-                    </form>
-                </li>
-            )
-        }
+    handleDelete(event) {
+        event.stopPropagation()
 
+        let {onDelete, value} = this.props
+        if (onDelete) onDelete(value)
+    }
+
+    handleNameChange () {
+        this.setState({name: $(this.refName).val()})
+    }
+
+    handleDescriptionChange () {
+        this.setState({description: $(this.refDescription).val()})
+    }
+
+    renderEditing() {
+        let active = this.props.selected ? 'list-group-item creater active' : 'list-group-item creater'
+        return (
+            <li className={active}>
+                <form className="form-horizontal">
+                    <div className="form-group">
+                        <label htmlFor="name" className="col-sm-2 control-label">Name</label>
+                        <div className="col-sm-10">
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="name"
+                                placeholder="Name"
+                                ref={(ref) => this.refName = ref}
+                                name="name"
+                                value={this.state.name}
+                                onChange={this.handleNameChange}
+                            />
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="description" className="col-sm-2 control-label">Description</label>
+                        <div className="col-sm-10">
+                            <input 
+                                type="text"
+                                className="form-control"
+                                id="description"
+                                placeholder="Description"
+                                ref={(ref) => this.refDescription = ref}
+                                name="description"
+                                value={this.state.description}
+                                onChange={this.handleDescriptionChange}
+                            />
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <div className="col-sm-offset-2 col-sm-10">
+                            <button type="submit" className="btn btn-default" onClick={this.handleSave}>Save
+                            </button> <button type="submit" className="btn btn-default" onClick={this.handleCancel}>Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </li>
+        )
+    }
+
+    renderDisplay() {
         if (this.isCreater) {
             return <li className="list-group-item add-button" onClick={this.handleBeginEditing}><span>+</span></li>
         }
@@ -180,6 +184,13 @@ class ApproachPropertyDetail extends React.Component {
                 </div>
             </li>
         )
+    }
+
+    render() {
+        if (this.state.isEditing)
+            return this.renderEditing()
+        else
+            return this.renderDisplay()
     }
 }
 

@@ -1,7 +1,8 @@
 import React from 'react'
 import $ from 'jquery'
 
-import ApproachPropertyDetail from './ApproachPropertyDetail'
+// import ApproachPropertyDetail from './ApproachPropertyDetail'
+import ApproachPropertyDetail from '../containers/PropertyDetail'
 
 import {covertIntToBitArray, convertBitArrayToInt} from '../utils/common'
 
@@ -147,13 +148,9 @@ class ApproachProperty extends React.Component {
             return (
                 <ApproachPropertyDetail
                     key={detail.value}
+                    code={this.props.meta.code}
                     value={detail.value}
-                    name={detail.name}
                     selected={indexOfValue != -1}
-                    description={detail.description}
-                    onClick={this.handleDetailClick}
-                    onSave={this.handleDetailSave}
-                    onDelete={this.handleDetailDelete}
                 />
             )
         })
@@ -205,7 +202,9 @@ class ApproachProperty extends React.Component {
                     {hasSelectedDetail ? '' : noDetailSelectedMessage}
                     <ul className="list-groups">
                         {detailItems}
-                        <ApproachPropertyDetail onSave={this.handleDetailSave} />
+                        {/*<ApproachPropertyDetail
+                            code={this.props.meta.code}
+                        />*/}
                     </ul>
                 </div>
             </div>

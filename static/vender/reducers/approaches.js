@@ -1,8 +1,11 @@
+import $ from 'jquery'
+
 import {ADD_PROPERTY, DEL_PROPERTY} from '../constants/ApproachActions'
 import {approaches as data} from '../components/test-data'
 
 const approaches = (state=data, action) => {
     let index
+    state = $.extend(true, [], state)
 
     switch (action.type) {
     case ADD_PROPERTY:

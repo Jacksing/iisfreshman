@@ -1,6 +1,7 @@
 import keyMirror from 'fbjs/lib/keyMirror'
 
-export default keyMirror({
+module.exports = keyMirror({
     ADD_PROPERTY: null,
-    DEL_PPROPERTY: null,
+    DEL_PROPERTY: null,
+    SET_PROPERTY_VALUE: null,
 })

@@ -1,5 +1,6 @@
 import React from 'react'
 import {createStore} from 'redux'
+import {Provider} from 'react-redux'
 
 import Approach from './Approach'
 import reducers from '../reducers'
@@ -39,8 +40,13 @@ export default class ApproachCollection extends React.Component {
             value => this.setState({loading: false, meta: value.meta, approaches: value.elements}),
             // error => this.setState({loading: false, error: error, meta: meta, approaches: approaches})
             error => {
-                let store = createStore(reducers)
-                this.setState({loading: false, error: error, meta: store.getState().meta, approaches: store.getState().approach})
+                this.store = createStore(reducers)
+                this.setState({
+                    loading: false, 
+                    error: error, 
+                    meta: this.store.getState().metaCollection, 
+                    approaches: this.store.getState().approaches
+                })
             }
         )
     }
@@ -63,9 +69,11 @@ export default class ApproachCollection extends React.Component {
         })
 
         return (
-            <div>
-                {approachComponents}
-            </div>
+            <Provider store={this.store}>
+                <div>
+                    {approachComponents}
+                </div>
+            </Provider>
         )
     }
 }

@@ -28,24 +28,31 @@ export const delMetaDetail = (code, value) => {
     }
 }
 
-export const addProperty = (code) => {
+// +++++++++++++++++++++++++++++++
+//   Approach actions
+// +++++++++++++++++++++++++++++++
+
+export const addProperty = (approachIndex, code) => {
     return {
         type: ADD_PROPERTY,
+        approachIndex,
         code,
     }
 }
 
-export const delProperty = (code) => {
+export const delProperty = (approachIndex, code) => {
     return {
         type: DEL_PROPERTY,
+        approachIndex,
         code,
     }
 }
 
-export const setPropertyValue = (index, value) => {
+export const setPropertyValue = (approachIndex, propertyIndex, value) => {
     return {
         type: SET_PROPERTY_VALUE,
-        index,
+        approachIndex,
+        propertyIndex,
         value,
     }
 }

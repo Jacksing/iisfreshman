@@ -12,6 +12,7 @@ const mapStateToProps = (state, ownProps) => {
         name: detail.name,
         description: detail.description,
         selected: ownProps.selected,
+        onClick: ownProps.onClick,
     }
 }
 
@@ -43,6 +44,8 @@ const ApproachPropertyDetail = connect(
 ApproachPropertyDetail.propTypes = {
     code: PropTypes.string.isRequired,
     value: PropTypes.number,
+    selected: PropTypes.bool,
+    onClick: PropTypes.func,
 }
 
 ApproachPropertyDetail.defaultProps = {

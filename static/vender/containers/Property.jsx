@@ -7,8 +7,8 @@ import {setPropertyValue} from '../actions'
 import {default as Presentation} from '../components/ApproachProperty'
 
 const getValueList = (value, multiSelect) => {
-    if (value === undefined)
-        return undefined
+    if (value == undefined)
+        return []
     else if (multiSelect)
         return covertIntToBitArray(value)
     else
@@ -16,47 +16,74 @@ const getValueList = (value, multiSelect) => {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    let meta = state.metaCollection.find(meta => meta.code == ownProps.code)
+    let {approachIndex, index} = ownProps
+    let property = state.approaches[approachIndex][index]
+    let {code, value} = property
+    let meta = state.metaCollection.find(meta => meta.code == code)
     let multiSelect = meta.multiSelect
     return {
         meta: meta,
-        multiSelect: multiSelect,
-        valueList: getValueList(ownProps.value, multiSelect)
+        valueList: getValueList(value, multiSelect),
+        multiSelect,
+        approachIndex,
+        index,
     }
 }
 
-const handleDetailClick = (dispatch, multiSelect) => {
-    if (multiSelect) {
-        
-    } else {
-        dispatch(setPropertyValue())
+const handleDetailClick = dispatch => {
+    return (approachIndex, index, multiSelect, prevValueList) => {
+        return detailValue => {
+            let value
+            let position = prevValueList.indexOf(detailValue)
+
+            if (multiSelect) {
+                if (position == -1) {
+                    value = convertBitArrayToInt([...prevValueList, detailValue])
+                } else {
+                    prevValueList.splice(position, 1)
+                    value = convertBitArrayToInt(prevValueList)
+                }
+            } else {
+                if (position == -1) {
+                    value = detailValue
+                } else {
+                    value = undefined
+                }
+            }
+
+            dispatch(setPropertyValue(approachIndex, index, value))
+        }
     }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        onDetailClick: handleDetailClick,
+        handleDetailClick: handleDetailClick(dispatch),
     }
 }
 
-const mergeProps = (stateProps, dispatchProps, ownProps) => {
+const mergeProps = (stateProps, dispatchProps) => {
     return {
-
+        meta: stateProps.meta,
+        valueList: stateProps.valueList,
+        onDetailClick: dispatchProps.handleDetailClick(
+            stateProps.approachIndex,
+            stateProps.index,
+            stateProps.multiSelect,
+            stateProps.valueList,
+        )
     }
 }
 
 const ApproachProperty = connect(
     mapStateToProps,
-    mapDispatchToProps
+    mapDispatchToProps,
+    mergeProps,
 )(Presentation)
 
 ApproachProperty.propTypes = {
-    code: PropTypes.string.isRequired,
-    value: PropTypes.number,
-}
-
-ApproachProperty.defaultProps = {
-    value: undefined,
+    approachIndex: PropTypes.number.isRequired,
+    index: PropTypes.number.isRequired,
 }
 
 export default ApproachProperty

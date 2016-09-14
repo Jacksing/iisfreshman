@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 import $ from 'jquery'
 
 // import ApproachPropertyDetail from './ApproachPropertyDetail'
@@ -12,120 +12,108 @@ class ApproachProperty extends React.Component {
     constructor(props) {
         super(props)
 
-        this.multiSelect = this.props.meta.multiSelect
-
-        let valueList
-        if (this.props.value === null) {
-            valueList = []
-        }
-        else {
-            if (this.multiSelect)
-                valueList = covertIntToBitArray(this.props.value)
-            else
-                valueList = [this.props.value]
-        }
-
         this.state = {
-            valueList: valueList,
             bodyHidden: true,
         }
 
         this.handleDetailClick = this.handleDetailClick.bind(this)
-        this.handleDetailSave = this.handleDetailSave.bind(this)
-        this.handleDetailDelete = this.handleDetailDelete.bind(this)
         this.toggleDetails = this.toggleDetails.bind(this)
     }
 
     static propTypes = {
-        meta: React.PropTypes.object,
-        value: React.PropTypes.number,
-        nullable: React.PropTypes.bool,
-        onRefresh: React.PropTypes.func.isRequired,
+        meta: PropTypes.object.isRequired,
+        valueList: PropTypes.array,
+        onDetailClick: PropTypes.func,
     }
 
     static defaultProps = {
-        nullable: false,
+        
     }
 
-    /**
-     * Toggle the select status of {value}.
-     */
-    handleDetailClick(value: number) {
-        let valueList = this.state.valueList
-        let indexOfValue = valueList.indexOf(value)
-        if (this.multiSelect) {
-            if (indexOfValue == -1) {
-                valueList.push(value)
-                this.setState({valueList: valueList})
-            }
-            else {
-                if (valueList.length > 1 || this.props.nullable) {
-                    valueList.splice(indexOfValue, 1)
-                    this.setState({valueList: valueList})
-                }
-            }
-        }
-        else {
-            if (indexOfValue == -1) {
-                this.setState({valueList: [value]})
-            }
-            else if (this.props.nullable) {
-                this.setState({valueList: []})
-            }
-        }
-    }
+    // /**
+    //  * Toggle the select status of {value}.
+    //  */
+    // handleDetailClick(value: number) {
+    //     let valueList = this.state.valueList
+    //     let indexOfValue = valueList.indexOf(value)
+    //     if (this.multiSelect) {
+    //         if (indexOfValue == -1) {
+    //             valueList.push(value)
+    //             this.setState({valueList: valueList})
+    //         }
+    //         else {
+    //             if (valueList.length > 1 || this.props.nullable) {
+    //                 valueList.splice(indexOfValue, 1)
+    //                 this.setState({valueList: valueList})
+    //             }
+    //         }
+    //     }
+    //     else {
+    //         if (indexOfValue == -1) {
+    //             this.setState({valueList: [value]})
+    //         }
+    //         else if (this.props.nullable) {
+    //             this.setState({valueList: []})
+    //         }
+    //     }
+    // }
 
-    handleDetailSave(detail) {
-        var {value, name, description, ...other} = detail
+    // handleDetailSave(detail) {
+    //     var {value, name, description, ...other} = detail
 
-        let metaDetails = this.props.meta.details
+    //     let metaDetails = this.props.meta.details
 
-        if (value === undefined) {
-            let newValue = metaDetails.length
-            metaDetails.push({
-                value: newValue,
-                name: name,
-                description: description,
-            })
-        }
-        else {
-            let metaDetail = metaDetails.find(x => x.value == value)
-            metaDetail.name = name
-            metaDetail.description = description
-        }
+    //     if (value === undefined) {
+    //         let newValue = metaDetails.length
+    //         metaDetails.push({
+    //             value: newValue,
+    //             name: name,
+    //             description: description,
+    //         })
+    //     }
+    //     else {
+    //         let metaDetail = metaDetails.find(x => x.value == value)
+    //         metaDetail.name = name
+    //         metaDetail.description = description
+    //     }
 
-        this.props.onRefresh()
-        return true
-    }
+    //     this.props.onRefresh()
+    //     return true
+    // }
 
-    handleDetailDelete(deleteValue: number) {
-        if (!confirm('Sure to delete?')) return
+    // handleDetailDelete(deleteValue: number) {
+    //     if (!confirm('Sure to delete?')) return
 
-        let metaDetails = this.props.meta.details
-        let deleteDetail = metaDetails.find(x => x.value == deleteValue)
+    //     let metaDetails = this.props.meta.details
+    //     let deleteDetail = metaDetails.find(x => x.value == deleteValue)
 
-        metaDetails.splice(metaDetails.indexOf(deleteDetail), 1)
+    //     metaDetails.splice(metaDetails.indexOf(deleteDetail), 1)
 
-        metaDetails.forEach(function(detail, index) {
-            detail.value = index
-        }, this)
+    //     metaDetails.forEach(function(detail, index) {
+    //         detail.value = index
+    //     }, this)
 
-        let newValueList = []
-        this.state.valueList.forEach(function(value) {
-            // value equals with deleteValue will be deleted
-            // so it is not pushed to newValueArray.
-            if (value < deleteValue) {
-                newValueList.push(value)
-            }
-            else if (value > deleteValue) {
-                // decrease value(s) by 1 which larger than deleteValue.
-                newValueList.push(value - 1)
-            }
-        }, this)
-        this.setState({valueList: newValueList})
+    //     let newValueList = []
+    //     this.state.valueList.forEach(function(value) {
+    //         // value equals with deleteValue will be deleted
+    //         // so it is not pushed to newValueArray.
+    //         if (value < deleteValue) {
+    //             newValueList.push(value)
+    //         }
+    //         else if (value > deleteValue) {
+    //             // decrease value(s) by 1 which larger than deleteValue.
+    //             newValueList.push(value - 1)
+    //         }
+    //     }, this)
+    //     this.setState({valueList: newValueList})
 
-        this.props.onRefresh()
-        return true
+    //     this.props.onRefresh()
+    //     return true
+    // }
+
+    handleDetailClick(detailValue) {
+        let {onDetailClick} = this.props
+        if (onDetailClick) onDetailClick(detailValue)
     }
 
     toggleDetails() {
@@ -137,7 +125,7 @@ class ApproachProperty extends React.Component {
 
     render() {
         let hasSelectedDetail = false
-        let valueList = $.extend([], this.state.valueList)
+        let valueList = $.extend([], this.props.valueList)
 
         let detailItems = this.props.meta.details.map(detail => {
             let indexOfValue = valueList.indexOf(detail.value)
@@ -151,6 +139,7 @@ class ApproachProperty extends React.Component {
                     code={this.props.meta.code}
                     value={detail.value}
                     selected={indexOfValue != -1}
+                    onClick={this.handleDetailClick}
                 />
             )
         })

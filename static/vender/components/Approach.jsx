@@ -1,7 +1,8 @@
 import React from 'react'
 import ReactDom from 'react-dom'
 
-import ApproachProperty from './ApproachProperty'
+// import ApproachProperty from './ApproachProperty'
+import ApproachProperty from '../containers/Property'
 import ApproachPropertyList from './ApproachPropertyList'
 
 import './styles/approach'
@@ -54,15 +55,12 @@ export default class Approach extends React.Component {
     }
 
     render() {
-        let propertyComponents = this.state.properties.sort((x, y) => x.code > y.code).map(property => {
+        let propertyComponents = this.state.properties.sort((x, y) => x.code > y.code).map((property, index) => {
             return (
                 <ApproachProperty
                     key={property.code}
-                    meta={this.getMetaProperty(property.code)}
-                    value={property.value}
-                    multiSelect={property.multi}
-                    nullable={this.props.propertyNullable}
-                    onRefresh={this.handleRefresh}
+                    approachIndex={this.props.index}
+                    index={index}
                 />
             )
         })

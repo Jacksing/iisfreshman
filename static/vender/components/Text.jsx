@@ -3,7 +3,7 @@ import $ from 'jquery'
 
 const Text = ({store}) => {
     function rerender() {
-        $('#state-info').val(JSON.stringify(store.getState(), null, 4))
+        $('#state-info').val(JSON.stringify(store.getState(), null, 2))
     }
 
     store.subscribe(rerender)
@@ -13,7 +13,7 @@ const Text = ({store}) => {
             <textarea
                 id="state-info"
                 style={{width: '100%', height: '200px', position: 'fixed', top: 0, zIndex: '99'}}
-                value={JSON.stringify(store.getState(), null, 4)}
+                value={JSON.stringify(store.getState(), null, 2)}
                 readOnly
             />
         </div>

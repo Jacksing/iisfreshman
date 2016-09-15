@@ -1,7 +1,7 @@
 import $ from 'jquery'
 
 import {ADD_DETAIL, MOD_DETAIL, DEL_DETAIL} from '../constants/MetaActions'
-import {metaCollection as data} from '../components/test-data'
+import {metaCollection as data} from '../tests/test-data'
 
 const details = (state=[], action) => {
     let detail

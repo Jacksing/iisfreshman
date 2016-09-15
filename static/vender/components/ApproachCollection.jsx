@@ -5,7 +5,7 @@ import {Provider} from 'react-redux'
 import Approach from './Approach'
 import Text from './Text'
 
-import reducers from '../reducers'
+import approachApp from '../reducers'
 
 export default class ApproachCollection extends React.Component {
     constructor(props) {
@@ -40,7 +40,7 @@ export default class ApproachCollection extends React.Component {
             value => this.setState({loading: false, meta: value.meta, approaches: value.elements}),
             // error => this.setState({loading: false, error: error, meta: meta, approaches: approaches})
             error => {
-                this.store = createStore(reducers)
+                this.store = createStore(approachApp)
                 this.setState({
                     loading: false, 
                     error: error, 

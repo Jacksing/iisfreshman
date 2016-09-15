@@ -5,6 +5,15 @@ import {addMetaDetail, modMetaDetail, delMetaDetail} from '../actions'
 import {default as Presentation} from '../components/ApproachPropertyDetail'
 
 const mapStateToProps = (state, ownProps) => {
+    if (ownProps.value == null) {
+        return {
+            value: undefined,
+            name: '',
+            description: '',
+            onClick: ownProps.onClick,
+        }
+    }
+
     let meta = state.metaCollection.find(meta => meta.code == ownProps.code)
     let detail = meta.details.find(dtl => dtl.value == ownProps.value)
     return {

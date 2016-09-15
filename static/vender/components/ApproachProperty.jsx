@@ -1,10 +1,9 @@
 import React, {PropTypes} from 'react'
 import $ from 'jquery'
 
-// import ApproachPropertyDetail from './ApproachPropertyDetail'
 import ApproachPropertyDetail from '../containers/PropertyDetail'
 
-import {covertIntToBitArray, convertBitArrayToInt} from '../utils/common'
+import {NavbarToggleButton, AlertInfo, AlertDanger} from './doodad'
 
 import './styles/approach-property'
 
@@ -26,90 +25,10 @@ class ApproachProperty extends React.Component {
         onDetailClick: PropTypes.func,
     }
 
-    static defaultProps = {
-        
-    }
+    static defaultProps = {}
 
-    // /**
-    //  * Toggle the select status of {value}.
-    //  */
-    // handleDetailClick(value: number) {
-    //     let valueList = this.state.valueList
-    //     let indexOfValue = valueList.indexOf(value)
-    //     if (this.multiSelect) {
-    //         if (indexOfValue == -1) {
-    //             valueList.push(value)
-    //             this.setState({valueList: valueList})
-    //         }
-    //         else {
-    //             if (valueList.length > 1 || this.props.nullable) {
-    //                 valueList.splice(indexOfValue, 1)
-    //                 this.setState({valueList: valueList})
-    //             }
-    //         }
-    //     }
-    //     else {
-    //         if (indexOfValue == -1) {
-    //             this.setState({valueList: [value]})
-    //         }
-    //         else if (this.props.nullable) {
-    //             this.setState({valueList: []})
-    //         }
-    //     }
-    // }
-
-    // handleDetailSave(detail) {
-    //     var {value, name, description, ...other} = detail
-
-    //     let metaDetails = this.props.meta.details
-
-    //     if (value === undefined) {
-    //         let newValue = metaDetails.length
-    //         metaDetails.push({
-    //             value: newValue,
-    //             name: name,
-    //             description: description,
-    //         })
-    //     }
-    //     else {
-    //         let metaDetail = metaDetails.find(x => x.value == value)
-    //         metaDetail.name = name
-    //         metaDetail.description = description
-    //     }
-
-    //     this.props.onRefresh()
-    //     return true
-    // }
-
-    // handleDetailDelete(deleteValue: number) {
-    //     if (!confirm('Sure to delete?')) return
-
-    //     let metaDetails = this.props.meta.details
-    //     let deleteDetail = metaDetails.find(x => x.value == deleteValue)
-
-    //     metaDetails.splice(metaDetails.indexOf(deleteDetail), 1)
-
-    //     metaDetails.forEach(function(detail, index) {
-    //         detail.value = index
-    //     }, this)
-
-    //     let newValueList = []
-    //     this.state.valueList.forEach(function(value) {
-    //         // value equals with deleteValue will be deleted
-    //         // so it is not pushed to newValueArray.
-    //         if (value < deleteValue) {
-    //             newValueList.push(value)
-    //         }
-    //         else if (value > deleteValue) {
-    //             // decrease value(s) by 1 which larger than deleteValue.
-    //             newValueList.push(value - 1)
-    //         }
-    //     }, this)
-    //     this.setState({valueList: newValueList})
-
-    //     this.props.onRefresh()
-    //     return true
-    // }
+    static noDetailSelectedMessage = <AlertInfo message="No item selected." />
+    static outOfRangeMessage = <AlertDanger message="The range of value is out of the available detail items." />
 
     handleDetailClick(detailValue) {
         let {onDetailClick} = this.props
@@ -144,18 +63,6 @@ class ApproachProperty extends React.Component {
             )
         })
 
-        let noDetailSelectedMessage = (
-            <div className="alert alert-info" role="alert">
-                No item selected.
-            </div>
-        )
-
-        let outOfRangeMessage = (
-            <div className="alert alert-danger" role="alert">
-                The range of value is out of the available detail items.
-            </div>
-        )
-
         let panelType = valueList.length > 0
             ? 'panel-danger'
             : !hasSelectedDetail
@@ -175,25 +82,18 @@ class ApproachProperty extends React.Component {
                         <div className="container-fluid">
                             <div className="navbar-header">
                                 <span className="navbar-brand">{this.props.meta.name}</span>
-                                <button type="button" className="navbar-toggle" onClick={this.toggleDetails}>
-                                    <span className="sr-only">Toggle navigation</span>
-                                    <span className="icon-bar"/>
-                                    <span className="icon-bar"/>
-                                    <span className="icon-bar"/>
-                                </button>
+                                <NavbarToggleButton text="Toggle navigation" onClick={this.toggleDetails} />
                             </div>
                             {/**<div className="collapse navbar-collapse" /> */}
                         </div>
                     </nav>
                 </div>
                 <div ref={(ref) => this.refBody = ref} className="panel-body">
-                    {valueList.length == 0 ? '' : outOfRangeMessage}
-                    {hasSelectedDetail ? '' : noDetailSelectedMessage}
+                    {valueList.length == 0 ? '' : ApproachProperty.outOfRangeMessage}
+                    {hasSelectedDetail ? '' : ApproachProperty.noDetailSelectedMessage}
                     <ul className="list-groups">
                         {detailItems}
-                        {/*<ApproachPropertyDetail
-                            code={this.props.meta.code}
-                        />*/}
+                        <ApproachPropertyDetail code={this.props.meta.code} />
                     </ul>
                 </div>
             </div>

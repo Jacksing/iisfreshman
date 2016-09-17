@@ -44,41 +44,65 @@ var english = [
 ]
 
 export var metaCollection = [
+    // meta0
     {code: 'Chinese', name: '中文', details: chinese, multiSelect: false, },
+    // meta1
     {code: 'English', name: 'English', details: english, multiSelect: false, },
+    // meta2
     {code: 'Japanese', name: '日本語', details: japanese, multiSelect: false, },
+    // meta3
     {code: 'Shanghai', name: '上海话', details: shanghai, multiSelect: false, },
+    // meta4
     {code: 'Chinese2', name: '中文-多选', details: $.extend(true, [], chinese), multiSelect: true, },
+    // meta5
     {code: 'English2', name: 'English-MultiSelection', details: $.extend(true, [], english), multiSelect: true, },
+    // meta6
     {code: 'Japanese2', name: '日本語-複数選択', details: $.extend(true, [], japanese), multiSelect: true, },
 ]
 
 export var approaches = [
     [
+        // property0
         {code: 'Chinese', value: 1, },
+        // property1
         {code: 'English', value: 2, },
+        // property2
         {code: 'Japanese', value: 16, },
+        // property3
         {code: 'Shanghai', value: 1, },
+        // property4
         {code: 'Chinese2', value: 5, },
     ],
     [
+        // property0
         {code: 'Shanghai', value: 1, },
     ],
     [
+        // property0
         {code: 'Shanghai', value: 1, },
+        // property1
         {code: 'Chinese', value: 12, },
+        // property2
         {code: 'Chinese2', value: 5, },
     ],
     [
+        // property0
         {code: 'Chinese', value: 1, },
+        // property1
         {code: 'English', value: 2, },
+        // property2
         {code: 'Japanese', value: 3, },
+        // property3
         {code: 'Chinese2', value: 5, },
     ],
     [
+        // property0
         {code: 'Chinese', value: 1, },
+        // property1
         {code: 'Chinese2', value: 15, },
+        // property2
         {code: 'English', value: 21, },
+        // property3
         {code: 'Japanese', value: 8, },
     ],
 ]

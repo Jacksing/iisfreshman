@@ -1,5 +1,8 @@
 import {ADD_DETAIL, MOD_DETAIL, DEL_DETAIL} from '../constants/MetaActions'
-import {ADD_PROPERTY, DEL_PROPERTY, SET_PROPERTY_VALUE} from '../constants/ApproachActions'
+import {
+    ADD_PROPERTY, DEL_PROPERTY, SET_PROPERTY_VALUE, 
+    SHOW_PROPERTY_LIST, HIDE_PROPERTY_LIST,
+} from '../constants/ApproachActions'
 
 export const addMetaDetail = (code, name, description) => {
     return {
@@ -32,19 +35,19 @@ export const delMetaDetail = (code, value) => {
 //   Approach actions
 // +++++++++++++++++++++++++++++++
 
-export const addProperty = (approachIndex, code) => {
+export const addProperty = (approachIndex, propertyCode) => {
     return {
         type: ADD_PROPERTY,
         approachIndex,
-        code,
+        propertyCode,
     }
 }
 
-export const delProperty = (approachIndex, code) => {
+export const delProperty = (approachIndex, propertyIndex) => {
     return {
         type: DEL_PROPERTY,
         approachIndex,
-        code,
+        propertyIndex,
     }
 }
 
@@ -54,5 +57,19 @@ export const setPropertyValue = (approachIndex, propertyIndex, value) => {
         approachIndex,
         propertyIndex,
         value,
+    }
+}
+
+export const showPropertyList = (targetApproachIndex, elements) => {
+    return {
+        type: SHOW_PROPERTY_LIST,
+        targetApproachIndex,
+        elements,
+    }
+}
+
+export const hidePropertyList = () => {
+    return {
+        type: HIDE_PROPERTY_LIST,
     }
 }

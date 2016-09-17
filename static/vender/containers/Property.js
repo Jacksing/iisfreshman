@@ -20,6 +20,8 @@ const mapStateToProps = (state, ownProps) => {
     let property = state.approaches[approachIndex][index]
     let {code, value} = property
     let meta = state.metaCollection.find(meta => meta.code == code)
+    // let {value} = property
+    // let meta = ownProps.meta
     let multiSelect = meta.multiSelect
     return {
         meta: meta,

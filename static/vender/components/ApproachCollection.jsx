@@ -2,8 +2,9 @@ import React from 'react'
 import {createStore} from 'redux'
 import {Provider} from 'react-redux'
 
-import Approach from './Approach'
+import Approach from '../containers/Approach'
 import Text from './Text'
+import PropertyList from '../containers/PropertyList'
 
 import approachApp from '../reducers'
 
@@ -58,14 +59,7 @@ export default class ApproachCollection extends React.Component {
 
         let approachComponents = this.state.approaches.map((approach, index) => {
             return (
-                <Approach
-                    key={index}
-                    index={index}
-                    meta={this.state.meta}
-                    properties={approach.filter(x => x.value != null)}  // Excluded approach(es) that not configured properly.
-                    propertyNullable={this.props.propertyNullable}
-                    onRefresh={this.handleRefresh}
-                />
+                <Approach key={index} index={index} />
             )
         })
 
@@ -74,6 +68,7 @@ export default class ApproachCollection extends React.Component {
                 <div>
                     <Text store={this.store} />
                     {approachComponents}
+                    <PropertyList />
                 </div>
             </Provider>
         )

@@ -18,11 +18,40 @@
     <script type="text/javascript">
     var data_url = '/table/test/{{table_name}}/';
     </script>
+
+    <script type="text/javascript">
+        var express = {
+            'message': 'ok',
+            'nu': '606850091640',
+            'ischeck': '1',
+            'com': 'shunfeng',
+            'status': '200',
+            'condition': 'F00',
+            'state': '3',
+            'data': [
+                {
+                    'time': '2016-09-09 15:09:13',
+                    'context': '已签收,感谢使用顺丰,期待再次为您服务',
+                    'ftime': '2016-09-09 15:09:13'
+                },
+                {
+                    'time': '2016-09-09 15:04:37',
+                    'context': '快件派送不成功(因电话无人接听/关机/无信号，暂无法联系到收方客户),正在处理中,待再次派送',
+                    'ftime': '2016-09-09 15:04:37'
+                },
+            ]
+        }
+
+        function handleClick() {
+            jacksing(express);
+        }
+    </script>
 </head>
 
 <body>
     <div id="example"></div>
     <script src="/static/bundle/js/express-app.bundle.js"></script>
+    <input type="button" onClick='handleClick()' value="Click">
 </body>
 
 </html>

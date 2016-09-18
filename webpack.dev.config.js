@@ -9,6 +9,8 @@ module.exports = {
     entry: {
         // testHelper: './test-helper',
         'approach-app': [
+            'webpack-dev-server/client?http://localhost:3000/', // WebpackDevServer host and port
+            'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
             './ApproachApp',
         ],
     },
@@ -58,6 +60,7 @@ module.exports = {
     },
     // plugins: [commonsPlugin]
     plugins: [
+        new webpack.HotModuleReplacementPlugin()
     ],
     externals: {
         'jquery': 'jQuery',

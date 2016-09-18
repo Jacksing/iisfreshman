@@ -1,7 +1,7 @@
 import $ from 'jquery'
 
 import {ADD_PROPERTY, DEL_PROPERTY, SET_PROPERTY_VALUE} from '../constants/ApproachActions'
-import {approaches as data} from '../tests/test-data'
+import {approaches as data} from '../tests/approach-data'
 
 const approaches = (state=data, action) => {
     state = $.extend(true, [], state)

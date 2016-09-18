@@ -13,6 +13,7 @@ module.exports = {
             'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
             './ApproachApp',
         ],
+        'express-app': './ExpressApp',
     },
     // entry: [
     //     'webpack-dev-server/client?http://localhost:3000/', // WebpackDevServer host and port

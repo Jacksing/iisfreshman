@@ -1,4 +1,4 @@
-export default {
+const express = {
     'message': 'ok',
     'nu': '606850091640',
     'ischeck': '1',
@@ -79,3 +79,5 @@ export default {
         }
     ]
 }
+
+export default express

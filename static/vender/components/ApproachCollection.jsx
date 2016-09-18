@@ -3,7 +3,7 @@ import {createStore} from 'redux'
 import {Provider} from 'react-redux'
 
 import Approach from '../containers/Approach'
-import Text from './Text'
+import ApproachAppStateView from './ApproachAppStateView'
 import PropertyList from '../containers/PropertyList'
 
 import approachApp from '../reducers'
@@ -66,7 +66,7 @@ export default class ApproachCollection extends React.Component {
         return (
             <Provider store={this.store}>
                 <div>
-                    <Text store={this.store} />
+                    <ApproachAppStateView />
                     {approachComponents}
                     <PropertyList />
                 </div>

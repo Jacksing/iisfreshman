@@ -16,7 +16,7 @@ const emptyList2 = {
     ],
 }
 
-const propertyList = (state=emptyList2, action) => {
+const propertyList = (state=emptyList, action) => {
     switch (action.type) {
     case SHOW_PROPERTY_LIST:
         return {

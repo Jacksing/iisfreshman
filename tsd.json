@@ -15,7 +15,13 @@
       "commit": "ce71f72bcec4d09702b969d6743b52d9780a661f"
     },
     "react/react.d.ts": {
-      "commit": "ce71f72bcec4d09702b969d6743b52d9780a661f"
+      "commit": "7c9f3114a756f052ca10caba615540d7b5eb19be"
+    },
+    "react-redux/react-redux.d.ts": {
+      "commit": "7c9f3114a756f052ca10caba615540d7b5eb19be"
+    },
+    "redux/redux.d.ts": {
+      "commit": "7c9f3114a756f052ca10caba615540d7b5eb19be"
     }
   }
 }

@@ -19,7 +19,7 @@ const ExpressStatus = ({expressInfo}) => {
             <div className="panel-heading">
             {expressInfo.com}
             </div>
-            <div className="panel-body" style={{display: 'table'}}>
+            <div className="panel-body">
                 {elements}
             </div>
         </div>

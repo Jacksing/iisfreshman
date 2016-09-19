@@ -2,23 +2,32 @@ import React from 'react'
 import ReactDom from 'react-dom'
 
 import ExpressStatusForm from './components/ExpressStatusForm'
+import PopupSelector from './components/doodad/PopupSelector'
 
-import express from './tests/express-data'
+// import express from './tests/express-data'
 
 import './styles/base'
 
-const jacksing = (express) => {
+const ShowExpressStatus = (express) => {
     ReactDom.render(
         <div>
-            <ExpressStatusForm modalType="express" expressInfo={express} />
+            <ExpressStatusForm modalType="express-status" expressInfo={express} />
         </div>,
         document.getElementById('example')
     )
 }
 
-// jacksing(express)
+const ShowCompanySelector = (elements, onItemClick) => {
+    ReactDom.render(
+        <div>
+            <PopupSelector modalType="company-selector" elements={elements} onItemClick={onItemClick} />
+        </div>,
+        document.getElementById('example')
+    )
+}
 
-window.jacksing = jacksing
+window.ShowExpressStatus = ShowExpressStatus
+window.ShowCompanySelector = ShowCompanySelector
 
 // ? What is the principle of the usage of module.hot.
 if (module.hot) {

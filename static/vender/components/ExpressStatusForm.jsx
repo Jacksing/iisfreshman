@@ -2,7 +2,7 @@ import React from 'react'
 
 import $ from 'jQuery'
 
-import ModalForm from './ModalForm'
+import ModalForm from './doodad/ModalForm'
 import ExpressStatus from './ExpressStatus'
 
 class ExpressStatusForm extends ModalForm {

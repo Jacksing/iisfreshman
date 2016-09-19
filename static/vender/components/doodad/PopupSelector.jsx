@@ -1,11 +1,11 @@
 import React from 'react'
 import ModalForm from './ModalForm'
 
-import {AlertDanger} from './doodad'
+import {AlertDanger} from './index'
 
-import './styles/approach-property-list'
+import './styles/popup-selector'
 
-export default class ApproachPropertyList extends ModalForm {
+export default class PopupSelector extends ModalForm {
     constructor(props) {
         super(props)
         this.state = {
@@ -16,13 +16,18 @@ export default class ApproachPropertyList extends ModalForm {
     }
     
     static propTypes = {
+        title: React.PropTypes.string,
         elements: React.PropTypes.array.isRequired,
         onItemClick: React.PropTypes.func,
     }
 
+    static defaultProps = {
+        title: 'Select',
+    }
+
     handleItemClick(code) {
         return () => {
-            let {onItemClick, onClosing} = this.props
+            let {onItemClick} = this.props
             if (onItemClick != null) {
                 let result = onItemClick(code)
                 if (result.message) {
@@ -42,8 +47,8 @@ export default class ApproachPropertyList extends ModalForm {
         })
 
         return (
-            <div id="prop-list" className="panel panel-primary" onClick={this.stopPropagation} >
-                <div className="panel-heading">Properties</div>
+            <div id="pop-selector" className="panel panel-primary" onClick={this.stopPropagation} >
+                <div className="panel-heading">{this.props.title}</div>
                 <div className="panel-body">
                     {this.state.message ? <AlertDanger message={this.state.message} /> : ''}
                     <ul className="list-groups">
